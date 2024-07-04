@@ -176,8 +176,10 @@ abstract class NetworkExceptions with _$NetworkExceptions {
       ];
     }, unauthorizedRequest: () {
       errorMessage = [
-        "Unauthorized Access",
-        "You need to log in to access this feature. Please log in and try again",
+        // "Unauthorized Access",
+        // "You need to log in to access this feature. Please log in and try again",
+        "Session Expired",
+        "Your session has expired. Please log in again",
         "assets/icons/login.svg"
       ];
     }, unexpectedError: () {

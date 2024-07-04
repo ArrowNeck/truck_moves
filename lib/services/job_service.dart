@@ -13,7 +13,7 @@ class JobService {
   static Result<List<JobHeader>> currentJobsHeader({required int skip}) async {
     try {
       final response = await CustomHttp.getDio().get(
-          "${Config.baseUrl}${Config.jobHeader}?\$filter=status eq 3 or status eq 4 or status eq 5 or status eq 6 or status eq 7 or status eq 8 or status eq 9&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip&\$expand=VehicleNavigation");
+          "${Config.baseUrl}${Config.jobHeader}?\$filter=status eq 3 or status eq 4 or status eq 5 or status eq 6 or status eq 7 or status eq 8 or status eq 9&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
       log(json.encode(response.data));
       return ApiResult.success(
           data: (response.data as List)
@@ -28,7 +28,7 @@ class JobService {
   static Result<List<JobHeader>> futureJobsHeader({required int skip}) async {
     try {
       final response = await CustomHttp.getDio().get(
-          "${Config.baseUrl}${Config.jobHeader}?\$filter=status eq 1 or status eq 2&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip&\$expand=VehicleNavigation");
+          "${Config.baseUrl}${Config.jobHeader}?\$filter=status eq 1 or status eq 2&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
       log(json.encode(response.data));
       return ApiResult.success(
           data: (response.data as List)
@@ -39,4 +39,18 @@ class JobService {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  // static Result<List<Checklist>> checklist() async {
+  //   try {
+  //     final response = await CustomHttp.getDio()
+  //         .get("${Config.baseUrl}${Config.getChecklist}");
+  //     return ApiResult.success(
+  //         data: (response.data as List)
+  //             .map((e) => Checklist.fromJson(e))
+  //             .toList());
+  //   } catch (e) {
+  //     ErrorLog.show(e);
+  //     return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+  //   }
+  // }
 }

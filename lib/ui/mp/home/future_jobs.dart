@@ -17,6 +17,7 @@ class FutureJobs extends StatefulWidget {
 class _FutureJobsState extends State<FutureJobs> {
   int skip = 0;
   bool allLoad = false;
+  bool inLoading = false;
   late ScrollController scrollController;
   @override
   void initState() {
@@ -35,7 +36,7 @@ class _FutureJobsState extends State<FutureJobs> {
   }
 
   void _scrollListener() {
-    if (!allLoad && scrollController.position.extentAfter == 0) {
+    if (!allLoad && !inLoading && scrollController.position.extentAfter == 0) {
       skip += 7;
       _getFutureJobs();
     }
@@ -43,8 +44,10 @@ class _FutureJobsState extends State<FutureJobs> {
 
   _getFutureJobs() async {
     PageLoader.showLoader(context);
+    inLoading = true;
     final res = await JobService.futureJobsHeader(skip: skip);
     if (mounted) Navigator.pop(context);
+    inLoading = false;
     res.when(success: (data) {
       if (data.length < 7) {
         allLoad = true;

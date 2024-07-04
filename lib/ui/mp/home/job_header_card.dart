@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:truck_moves/config.dart';
 import 'package:truck_moves/models/job_header.dart';
-import 'package:truck_moves/ui/mp/jobs/job_begin_page.dart';
+import 'package:truck_moves/providers/job_provider.dart';
+import 'package:truck_moves/ui/mp/jobs/job_details.dart';
 
 class JobHeaderCard extends StatelessWidget {
   final JobHeader job;
@@ -17,14 +19,17 @@ class JobHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => JobBeginPage(job: job)));
+        if (context.read<JobProvider>().canAccessThisJob(jobId: job.id)) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => JobDetails(job: job)));
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
-        decoration:
-            BoxDecoration(border: Border.all(color: const Color(0xFF416188))),
+        decoration: BoxDecoration(
+            color: job.status > 3 ? Colors.red.shade400 : Colors.transparent,
+            border: Border.all(color: const Color(0xFF416188))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,7 +81,9 @@ class JobHeaderCard extends StatelessWidget {
                       width: 8.w,
                     ),
                     Text(
-                      DateFormat("dd.MM.yyyy").format(job.pickupDate),
+                      job.pickupDate == null
+                          ? ""
+                          : DateFormat("dd.MM.yyyy").format(job.pickupDate!),
                       style: TextStyle(
                           fontSize: 14.sp,
                           color: const Color(0xFFFFFFFF),

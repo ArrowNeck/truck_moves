@@ -1,5 +1,8 @@
 [
     {
+        "Id": 2768,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
         "VehicleNavigation": {
             "Id": 190,
             "JobId": 2768,
@@ -10,10 +13,160 @@
             "Year": "2008",
             "Colour": "red"
         },
-        "Id": 2768,
+        "PickupDate": null,
+        "Status": 4,
+        "PreDepartureChecklist": {
+            "Id": 4,
+            "JobId": 2768,
+            "Water": "yas",
+            "SpareRim": "string",
+            "AllLightsAndIndicators": "string",
+            "JackAndTools": "string",
+            "OwnersManual": "string",
+            "AirAndElectrics": "string",
+            "TyresCondition": "string",
+            "VisuallyDipAndCheckTaps": "string",
+            "WindscreenDamageWipers": "string",
+            "VehicleCleanFreeOfRubbish": "string",
+            "KeysFobTotalKeys": "string",
+            "CheckInsideTruckTrailer": "string",
+            "Oil": "string",
+            "CheckTruckHeight": "string",
+            "LeftHandDamage": "string",
+            "RightHandDamage": "string",
+            "FrontDamage": "string",
+            "RearDamage": "string",
+            "FuelLevel": 0.0,
+            "Notes": [
+                {
+                    "Id": 4,
+                    "JobId": 2768,
+                    "VehicleId": null,
+                    "TrailerId": null,
+                    "PreDeparturechecklistId": 4,
+                    "VisibletoDriver": true,
+                    "NoteText": "sdsdf"
+                }
+            ]
+        }
+    },
+    {
+        "Id": 2781,
         "PickupLocation": "string",
         "DropOfLocation": "string",
+        "VehicleNavigation": null,
         "PickupDate": null,
-        "Status": 4
+        "Status": 4,
+        "PreDepartureChecklist": {
+            "Id": 2,
+            "JobId": 2781,
+            "Water": "YES",
+            "SpareRim": "NO",
+            "AllLightsAndIndicators": "YES",
+            "JackAndTools": "NO",
+            "OwnersManual": "string",
+            "AirAndElectrics": "string",
+            "TyresCondition": "string",
+            "VisuallyDipAndCheckTaps": "string",
+            "WindscreenDamageWipers": "string",
+            "VehicleCleanFreeOfRubbish": "string",
+            "KeysFobTotalKeys": "string",
+            "CheckInsideTruckTrailer": "string",
+            "Oil": "string",
+            "CheckTruckHeight": "string",
+            "LeftHandDamage": "string",
+            "RightHandDamage": "string",
+            "FrontDamage": "string",
+            "RearDamage": "string",
+            "FuelLevel": 0.0,
+            "Notes": []
+        }
+    },
+    {
+        "Id": 2623,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
+        "VehicleNavigation": null,
+        "PickupDate": null,
+        "Status": 3,
+        "PreDepartureChecklist": null
+    },
+    {
+        "Id": 2625,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
+        "VehicleNavigation": null,
+        "PickupDate": null,
+        "Status": 3,
+        "PreDepartureChecklist": null
+    },
+    {
+        "Id": 2626,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
+        "VehicleNavigation": null,
+        "PickupDate": null,
+        "Status": 3,
+        "PreDepartureChecklist": null
+    },
+    {
+        "Id": 2636,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
+        "VehicleNavigation": null,
+        "PickupDate": null,
+        "Status": 3,
+        "PreDepartureChecklist": null
+    },
+    {
+        "Id": 2698,
+        "PickupLocation": "string",
+        "DropOfLocation": "string",
+        "VehicleNavigation": {
+            "Id": 189,
+            "JobId": 2698,
+            "Make": "toyota",
+            "Model": "premio",
+            "Rego": "123123",
+            "Vin": "123123",
+            "Year": "2016",
+            "Colour": "red"
+        },
+        "PickupDate": null,
+        "Status": 3,
+        "PreDepartureChecklist": {
+            "Id": 1,
+            "JobId": 2698,
+            "Water": "YES",
+            "SpareRim": null,
+            "AllLightsAndIndicators": null,
+            "JackAndTools": null,
+            "OwnersManual": null,
+            "AirAndElectrics": null,
+            "TyresCondition": null,
+            "VisuallyDipAndCheckTaps": null,
+            "WindscreenDamageWipers": null,
+            "VehicleCleanFreeOfRubbish": null,
+            "KeysFobTotalKeys": null,
+            "CheckInsideTruckTrailer": null,
+            "Oil": null,
+            "CheckTruckHeight": null,
+            "LeftHandDamage": null,
+            "RightHandDamage": null,
+            "FrontDamage": null,
+            "RearDamage": null,
+            "FuelLevel": null,
+            "Notes": [
+                {
+                    "Id": 3,
+                    "JobId": 2698,
+                    "VehicleId": null,
+                    "TrailerId": null,
+                    "PreDeparturechecklistId": 1,
+                    "VisibletoDriver": false,
+                    "NoteText": "fff"
+                }
+            ]
+        }
     }
 ]

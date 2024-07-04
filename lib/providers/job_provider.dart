@@ -25,6 +25,17 @@ class JobProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  bool canAccessThisJob({required int jobId}) {
+    // int? higherStatusJobId;
+    // for (var job in currentJobs!) {
+    //   if (job.status > 3) {
+    //     higherStatusJobId = job.id;
+    //   }
+    // }
+    // return (higherStatusJobId == null || higherStatusJobId == jobId);
+    return true;
+  }
 }
 
 enum JobProviderState { idle, loading, error, success }

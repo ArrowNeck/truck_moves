@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -22,13 +25,16 @@ class CustomHttp {
         return handler.next(options);
       },
       onResponse: (response, handler) async {
-        print(response.realUri);
+        log('!----------RESPONSE-----------!');
+        log(response.realUri.toString());
+        log(json.encode(response.data));
+        log('!-----------------------------!');
         return handler.resolve(response);
       },
       onError: (error, handler) async {
         debugPrint('!----------Error-----------!');
         debugPrint(error.response.toString());
-        print("STATUS CODE : ${error.response?.statusCode}");
+        log("STATUS CODE : ${error.response?.statusCode}");
         debugPrint('!--------------------------!');
 
         return handler.next(error);

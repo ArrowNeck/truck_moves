@@ -49,5 +49,10 @@
 		<string>Truck Moves requires access to your Camera for take receipt image</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Truck Moves requires access to your Library for select receipt image</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>googlechromes</string>
+			<string>comgooglemaps</string>
+		</array>
 	</dict>
 </plist>

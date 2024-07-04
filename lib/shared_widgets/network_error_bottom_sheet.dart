@@ -28,7 +28,7 @@ class ErrorSheet {
               message: message,
               login: login,
               unAuth: NetworkExceptions.getErrorMessage(exception).first ==
-                  "Unauthorized Access",
+                  "Session Expired",
             ));
   }
 }
@@ -108,67 +108,61 @@ class NetworkErrorBottomSheet extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.h, bottom: 25.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 16.w,
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      if (!login && unAuth) {
-                        CacheManger.removeDriver().then((_) {
-                          CustomHttp.setInterceptor(token: null);
-                          context.read<AuthProvider>().removeDriver();
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const LoginPage()),
-                            (route) => false,
-                          );
-                        });
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                        // borderRadius: BorderRadius.circular(0.h),
-                        border:
-                            Border.all(color: AppColors.primaryColor, width: 2),
-                      ),
-                      child: Text(
-                        "CLOSE",
-                        style: TextStyle(
-                            color: const Color(0xFF010101),
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
+          if (!login && unAuth)
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.h, bottom: 25.h, left: 16.w, right: 16.w),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  CacheManger.removeDriver().then((_) {
+                    CustomHttp.setInterceptor(token: null);
+                    context.read<AuthProvider>().removeDriver();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginPage()),
+                      (route) => false,
+                    );
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 50.h,
+                  decoration: BoxDecoration(color: AppColors.primaryColor),
+                  child: Text(
+                    "Re-Login",
+                    style: TextStyle(
+                        color: const Color(0xFF010101),
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
-                if (onTap != null) ...[
+              ),
+            )
+          else
+            Padding(
+              padding: EdgeInsets.only(top: 20.h, bottom: 25.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
                   SizedBox(
                     width: 16.w,
                   ),
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        onTap!();
                         Navigator.pop(context);
                       },
                       child: Container(
                         alignment: Alignment.center,
                         height: 50.h,
                         decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(0.h),
-                            color: AppColors.primaryColor),
+                          // borderRadius: BorderRadius.circular(0.h),
+                          border: Border.all(
+                              color: AppColors.primaryColor, width: 2),
+                        ),
                         child: Text(
-                          "TRY AGAIN",
+                          "CLOSE",
                           style: TextStyle(
                               color: const Color(0xFF010101),
                               fontSize: 15.sp,
@@ -176,14 +170,40 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  if (onTap != null && !unAuth) ...[
+                    SizedBox(
+                      width: 16.w,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          onTap!();
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(0.h),
+                              color: AppColors.primaryColor),
+                          child: Text(
+                            "TRY AGAIN",
+                            style: TextStyle(
+                                color: const Color(0xFF010101),
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                  SizedBox(
+                    width: 16.w,
+                  ),
                 ],
-                SizedBox(
-                  width: 16.w,
-                ),
-              ],
-            ),
-          )
+              ),
+            )
         ],
       )),
     );
