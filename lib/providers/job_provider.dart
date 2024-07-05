@@ -36,18 +36,18 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addPrechecklist({required PreDepartureChecklist data}) {
-    int index = currentJobs!.indexWhere((job) => job.id == data.jobId);
-    currentJobs![index].preDepartureChecklist = data;
-    currentJobs![index].status = 4;
-    notifyListeners();
-  }
-
   // void addPrechecklist({required PreDepartureChecklist data}) {
-  //   currentlyRunningJob!.preDepartureChecklist = data;
-  //   currentlyRunningJob!.status = 4;
+  //   int index = currentJobs!.indexWhere((job) => job.id == data.jobId);
+  //   currentJobs![index].preDepartureChecklist = data;
+  //   currentJobs![index].status = 4;
   //   notifyListeners();
   // }
+
+  void addPrechecklist({required PreDepartureChecklist data}) {
+    currentlyRunningJob!.preDepartureChecklist = data;
+    currentlyRunningJob!.status = 4;
+    notifyListeners();
+  }
 
   bool canAccessThisJob({required int jobId}) {
     // int? higherStatusJobId;

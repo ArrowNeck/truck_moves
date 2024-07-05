@@ -52,7 +52,7 @@ class NetworkErrorBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 430.w,
+      width: 428.w,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

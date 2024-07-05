@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job_header.dart';
+import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/shared_widgets/app_bar.dart';
 import 'package:truck_moves/shared_widgets/confirmation_popup.dart';
+import 'package:truck_moves/shared_widgets/job_stop_bottom_sheet.dart';
 import 'package:truck_moves/ui/mp/jobs/add_purchase.dart';
 import 'package:truck_moves/ui/mp/jobs/map_view.dart';
 import 'package:truck_moves/ui/mp/jobs/pre_departure_checklist.dart';
@@ -19,6 +22,13 @@ class JobDetails extends StatefulWidget {
 }
 
 class _JobDetailsState extends State<JobDetails> {
+  bool running = false;
+  @override
+  void dispose() {
+    // context.read<JobProvider>().removeCurrentlyRunningJob();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +44,32 @@ class _JobDetailsState extends State<JobDetails> {
                             )));
               },
               icon: Icon(
-                widget.job.preDepartureChecklist == null
+                context
+                            .watch<JobProvider>()
+                            .currentlyRunningJob!
+                            .preDepartureChecklist ==
+                        null
                     ? Icons.assignment_add
                     : Icons.assignment_rounded,
+                color: Colors.white,
+              )),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    HeroDialogRoute(
+                      builder: (_) => ConfirmationPopup(
+                        title: "Breakdown/Delay",
+                        message:
+                            "Are you sure you want to perform this action?",
+                        leftBtnText: "No",
+                        rightBtnText: "Yes",
+                        onRightTap: () {},
+                      ),
+                    ));
+              },
+              icon: const Icon(
+                Icons.contact_phone_rounded,
                 color: Colors.white,
               )),
           IconButton(
@@ -83,65 +116,82 @@ class _JobDetailsState extends State<JobDetails> {
         )),
         bottomNavigationBar: GestureDetector(
           onTap: () {
-            if (widget.job.preDepartureChecklist == null) {
-              Navigator.push(
-                  context,
-                  HeroDialogRoute(
-                    builder: (_) => ConfirmationPopup(
-                      title: "Prechecking",
-                      message:
-                          "Before you depart you must complete the pre-departure checklist. Tap continue to begin.",
-                      leftBtnText: "Cancel",
-                      rightBtnText: "Continue",
-                      onRightTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => PreDepartureChecklistPage(
-                                      jobId: widget.job.id,
-                                      preChecklist:
-                                          widget.job.preDepartureChecklist,
-                                    )));
-                      },
-                    ),
-                  ));
+            if (running) {
+              showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      isDismissible: true,
+                      context: context,
+                      builder: (context) => const JobStopBottomSheet())
+                  .then((select) {
+                if (select != null) {
+                  setState(() {
+                    running = false;
+                  });
+                }
+              });
             } else {
-              Navigator.push(
-                  context,
-                  HeroDialogRoute(
-                    builder: (_) => ConfirmationPopup(
-                      title: "Acknowledgement",
-                      message:
-                          "I acknowledge that I am not under the influence of drugs or alcohol and am fit to drive.",
-                      leftBtnText: "Cancel",
-                      rightBtnText: "Agreed",
-                      onRightTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (_) => PreDepartureChecklistPage(
-                        //               jobId: widget.job.id,
-                        //               preChecklist:
-                        //                   widget.job.preDepartureChecklist,
-                        //             )));
-                      },
-                    ),
-                  ));
+              if (widget.job.preDepartureChecklist == null) {
+                Navigator.push(
+                    context,
+                    HeroDialogRoute(
+                      builder: (_) => ConfirmationPopup(
+                        title: "Prechecking",
+                        message:
+                            "Before you depart you must complete the pre-departure checklist. Tap continue to begin.",
+                        leftBtnText: "Cancel",
+                        rightBtnText: "Continue",
+                        onRightTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => PreDepartureChecklistPage(
+                                        jobId: widget.job.id,
+                                        preChecklist:
+                                            widget.job.preDepartureChecklist,
+                                      )));
+                        },
+                      ),
+                    ));
+              } else {
+                Navigator.push(
+                    context,
+                    HeroDialogRoute(
+                      builder: (_) => ConfirmationPopup(
+                        title: "Acknowledgement",
+                        message:
+                            "I acknowledge that I am not under the influence of drugs or alcohol and am fit to drive.",
+                        leftBtnText: "Cancel",
+                        rightBtnText: "Agreed",
+                        onRightTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (_) => PreDepartureChecklistPage(
+                          //               jobId: widget.job.id,
+                          //               preChecklist:
+                          //                   widget.job.preDepartureChecklist,
+                          //             )));
+                          setState(() {
+                            running = true;
+                          });
+                        },
+                      ),
+                    ));
+              }
             }
           },
-          child: BottomAppBar(
-            height: 60.h,
-            color: Colors.green,
-            child: Center(
-              child: Text(
-                'Start'.toUpperCase(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+          child: Container(
+            height: 80.h,
+            padding: EdgeInsets.symmetric(vertical: 20.h),
+            color: running ? Colors.redAccent : Colors.green,
+            child: Text(
+              (running ? "Stop" : 'Start').toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ));

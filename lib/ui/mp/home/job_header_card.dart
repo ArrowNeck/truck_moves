@@ -20,6 +20,7 @@ class JobHeaderCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (context.read<JobProvider>().canAccessThisJob(jobId: job.id)) {
+          context.read<JobProvider>().setCurrentlyRunningJob(job);
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => JobDetails(job: job)));
         }

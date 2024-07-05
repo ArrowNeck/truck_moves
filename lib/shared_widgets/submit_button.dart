@@ -9,6 +9,7 @@ class SubmitButton extends StatelessWidget {
   final double? width;
   final double? marginH;
   final double? marginW;
+  final double? radius;
   const SubmitButton(
       {super.key,
       required this.onTap,
@@ -16,7 +17,8 @@ class SubmitButton extends StatelessWidget {
       this.height,
       this.width,
       this.marginH,
-      this.marginW});
+      this.marginW,
+      this.radius});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class SubmitButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             vertical: marginH ?? 0, horizontal: marginW ?? 0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.h), color: primaryColor),
+            borderRadius: BorderRadius.circular(radius ?? 25.h),
+            color: primaryColor),
         child: Text(
           label,
           style: TextStyle(
