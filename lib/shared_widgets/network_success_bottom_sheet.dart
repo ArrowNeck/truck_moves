@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class SuccessSheet {
   static show({
@@ -92,7 +92,7 @@ class NetworkSuccessBottomSheet extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 height: 50.h,
-                decoration: BoxDecoration(color: AppColors.primaryColor),
+                decoration: BoxDecoration(color: primaryColor),
                 child: Text(
                   "CLOSE",
                   style: TextStyle(

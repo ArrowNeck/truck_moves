@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/services/auth_service.dart';
 import 'package:truck_moves/shared_widgets/input_field.dart';
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                                   rememberMe = value!;
                                 });
                               },
-                              activeColor: AppColors.primaryColor,
+                              activeColor: primaryColor,
                             ),
                           ),
                           const Text(
@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                           'Forgot password?',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
+                            color: primaryColor,
                           ),
                         ),
                       ),

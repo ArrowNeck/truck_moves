@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class InputField extends StatefulWidget {
   final String labelText;
@@ -49,7 +49,7 @@ class _InputFieldState extends State<InputField> {
             fontSize: 16.sp,
             decoration: TextDecoration.none),
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: AppColors.primaryColor,
+        cursorColor: primaryColor,
         keyboardType: widget.textInputType,
         obscureText: widget.obscureText ? isHide : widget.obscureText,
         maxLength: widget.maxLength,

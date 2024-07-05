@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/services/auth_service.dart';
 import 'package:truck_moves/shared_widgets/confirmation_popup.dart';
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.bgColor,
+        backgroundColor: bgColor,
         centerTitle: false,
         automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(
@@ -142,12 +142,8 @@ class _HomePageState extends State<HomePage> {
           height: 50.h,
           decoration: BoxDecoration(
               border: Border.all(
-                  color: _pageNo == index
-                      ? AppColors.primaryColor
-                      : Colors.transparent),
-              color: _pageNo == index
-                  ? AppColors.primaryColor
-                  : const Color(0xFF2E4867)),
+                  color: _pageNo == index ? primaryColor : Colors.transparent),
+              color: _pageNo == index ? primaryColor : const Color(0xFF2E4867)),
           child: FittedBox(
             alignment: Alignment.center,
             fit: BoxFit.scaleDown,

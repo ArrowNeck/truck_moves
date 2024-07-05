@@ -154,8 +154,8 @@ class PreDepartureChecklist {
 class Note {
   int id;
   int jobId;
-  dynamic vehicleId;
-  dynamic trailerId;
+  int? vehicleId;
+  int? trailerId;
   int preDeparturechecklistId;
   bool visibletoDriver;
   String noteText;

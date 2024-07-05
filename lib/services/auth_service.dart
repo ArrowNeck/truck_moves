@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/driver.dart';
 import 'package:truck_moves/utils/api_results/api_result.dart';
 import 'package:truck_moves/utils/custom_http.dart';
@@ -14,7 +14,7 @@ class AuthService {
     try {
       final params = {"userName": email, "password": password};
       final response = await CustomHttp.getDio()
-          .post("${Config.baseUrl}${Config.login}", data: json.encode(params));
+          .post(baseUrl + userLogin, data: json.encode(params));
       return ApiResult.success(data: Driver.fromJson(response.data));
     } catch (e) {
       ErrorLog.show(e);
@@ -24,7 +24,7 @@ class AuthService {
 
   static Result<bool> logout() async {
     try {
-      await CustomHttp.getDio().post("${Config.baseUrl}${Config.logout}");
+      await CustomHttp.getDio().post(baseUrl + userLogout);
       return const ApiResult.success(data: true);
     } catch (e) {
       ErrorLog.show(e);

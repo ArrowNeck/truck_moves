@@ -35,6 +35,7 @@ class CustomHttp {
         debugPrint('!----------Error-----------!');
         debugPrint(error.response.toString());
         log("STATUS CODE : ${error.response?.statusCode}");
+        log(error.response?.realUri.toString() ?? "");
         debugPrint('!--------------------------!');
 
         return handler.next(error);

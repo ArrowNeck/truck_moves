@@ -6,7 +6,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 
 class MapView extends StatefulWidget {
@@ -83,7 +83,7 @@ class MapViewState extends State<MapView> {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      googleApiKey: Config.googleMapApiKey,
+      googleApiKey: googleMapApiKey,
       request: PolylineRequest(
           origin: PointLatLng(start.latitude, start.longitude),
           destination: PointLatLng(end.latitude, end.longitude),
@@ -248,7 +248,7 @@ class MapViewState extends State<MapView> {
                           height: 50.h,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: AppColors.bgColor,
+                              color: bgColor,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(i == 0 ? 10.h : 0),
                                 topRight: Radius.circular(i == 0 ? 10.h : 0),
@@ -282,7 +282,7 @@ class MapViewState extends State<MapView> {
                         height: 55.h,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: AppColors.bgColor,
+                            color: bgColor,
                             borderRadius: BorderRadius.circular(10.h)),
                         child: Text(
                           "Cancel",

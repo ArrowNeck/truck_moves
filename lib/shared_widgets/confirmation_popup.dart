@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class ConfirmationPopup extends StatelessWidget {
   final String title;
@@ -33,15 +33,14 @@ class ConfirmationPopup extends StatelessWidget {
               width: 350.w,
               padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
               decoration: BoxDecoration(
-                  color: AppColors.bgColor,
-                  borderRadius: BorderRadius.circular(15.w)),
+                  color: bgColor, borderRadius: BorderRadius.circular(15.w)),
               child: Column(
                 children: [
                   Text(
                     title,
                     style: TextStyle(
                         fontSize: 20.sp,
-                        color: AppColors.primaryColor,
+                        color: primaryColor,
                         fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
@@ -63,8 +62,7 @@ class ConfirmationPopup extends StatelessWidget {
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
-                            splashColor:
-                                AppColors.primaryColor.withOpacity(0.4),
+                            splashColor: primaryColor.withOpacity(0.4),
                             customBorder: const StadiumBorder(),
                             onTap: () {
                               Navigator.pop(context);
@@ -78,8 +76,7 @@ class ConfirmationPopup extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(5.w),
                                     color: Colors.transparent,
                                     border: Border.all(
-                                        color: AppColors.primaryColor,
-                                        width: 1.5.w)),
+                                        color: primaryColor, width: 1.5.w)),
                                 width: 110.w,
                                 height: 45.h,
                                 child: SizedBox(
@@ -92,7 +89,7 @@ class ConfirmationPopup extends StatelessWidget {
                                       leftBtnText,
                                       style: TextStyle(
                                           fontSize: 15.sp,
-                                          color: AppColors.primaryColor,
+                                          color: primaryColor,
                                           fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.center,
                                     ),
@@ -102,8 +99,7 @@ class ConfirmationPopup extends StatelessWidget {
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
-                            splashColor:
-                                AppColors.primaryColor.withOpacity(0.4),
+                            splashColor: primaryColor.withOpacity(0.4),
                             customBorder: const StadiumBorder(),
                             onTap: () {
                               Navigator.pop(context);
@@ -113,10 +109,9 @@ class ConfirmationPopup extends StatelessWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5.w),
-                                    color: AppColors.primaryColor,
+                                    color: primaryColor,
                                     border: Border.all(
-                                        color: AppColors.primaryColor,
-                                        width: 1.5.w)),
+                                        color: primaryColor, width: 1.5.w)),
                                 width: 110.w,
                                 height: 45.h,
                                 child: SizedBox(

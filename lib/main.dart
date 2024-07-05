@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/driver.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/providers/job_provider.dart';
@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             // scaffoldMessengerKey: rootScaffoldMessengerKey,
             theme: ThemeData(
-              primaryColor: AppColors.bgColor,
-              scaffoldBackgroundColor: AppColors.bgColor,
+              primaryColor: bgColor,
+              scaffoldBackgroundColor: bgColor,
               // brightness: Brightness.dark,
               primarySwatch: const MaterialColor(0xFFFFD000, <int, Color>{
                 50: Color(0x0DFFD000),

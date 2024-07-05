@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class PageLoader {
   static showLoader(BuildContext context) {
@@ -27,7 +27,7 @@ class PageLoader {
         child: LoadingIndicator(
             indicatorType: Indicator.ballClipRotateMultiple,
             colors: [
-              AppColors.primaryColor,
+              primaryColor,
             ],
             strokeWidth: 3.0),
       ),

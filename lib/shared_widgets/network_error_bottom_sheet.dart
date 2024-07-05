@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/ui/landing/login_page/login_page.dart';
 import 'package:truck_moves/utils/cache_manager.dart';
@@ -128,7 +128,7 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   height: 50.h,
-                  decoration: BoxDecoration(color: AppColors.primaryColor),
+                  decoration: BoxDecoration(color: primaryColor),
                   child: Text(
                     "Re-Login",
                     style: TextStyle(
@@ -158,8 +158,7 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                         height: 50.h,
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.circular(0.h),
-                          border: Border.all(
-                              color: AppColors.primaryColor, width: 2),
+                          border: Border.all(color: primaryColor, width: 2),
                         ),
                         child: Text(
                           "CLOSE",
@@ -186,7 +185,7 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                           height: 50.h,
                           decoration: BoxDecoration(
                               // borderRadius: BorderRadius.circular(0.h),
-                              color: AppColors.primaryColor),
+                              color: primaryColor),
                           child: Text(
                             "TRY AGAIN",
                             style: TextStyle(

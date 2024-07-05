@@ -77,7 +77,7 @@
 //                 "Today you are driving a from ${widget.job.pickupLocation}, Australia to ${widget.job.dropOfLocation},Australia.",
 //                 style: TextStyle(
 //                     fontSize: 15.sp,
-//                     color: Colors.white,
+//                     color: primaryColor,
 //                     fontWeight: FontWeight.w500),
 //               ),
 //             ),

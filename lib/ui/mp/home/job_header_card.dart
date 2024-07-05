@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job_header.dart';
 import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/ui/mp/jobs/job_details.dart';
@@ -38,7 +38,7 @@ class JobHeaderCard extends StatelessWidget {
                   text: "Job No",
                   style: TextStyle(
                       fontSize: 15.sp,
-                      color: AppColors.primaryColor,
+                      color: primaryColor,
                       fontWeight: FontWeight.w600),
                   children: [
                     TextSpan(
@@ -135,7 +135,7 @@ class JobHeaderCard extends StatelessWidget {
                 label,
                 style: TextStyle(
                     fontSize: 15.sp,
-                    color: AppColors.primaryColor,
+                    color: primaryColor,
                     fontWeight: FontWeight.w500),
               ),
             ),

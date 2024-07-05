@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class MyAppBar {
   static AppBar build(
@@ -8,7 +8,7 @@ class MyAppBar {
       bool enableBackBtn = true,
       List<Widget>? actions}) {
     return AppBar(
-      backgroundColor: AppColors.bgColor,
+      backgroundColor: bgColor,
       centerTitle: true,
       automaticallyImplyLeading: enableBackBtn,
       iconTheme: const IconThemeData(

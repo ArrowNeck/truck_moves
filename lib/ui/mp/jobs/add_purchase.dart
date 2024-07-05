@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class AddPurchase extends StatefulWidget {
   const AddPurchase({super.key});
@@ -39,15 +39,14 @@ class _AddPurchaseState extends State<AddPurchase> {
             width: 350.w,
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             decoration: BoxDecoration(
-                color: AppColors.bgColor,
-                borderRadius: BorderRadius.circular(15.w)),
+                color: bgColor, borderRadius: BorderRadius.circular(15.w)),
             child: Column(
               children: [
                 Text(
                   "Add Purchase",
                   style: TextStyle(
                       fontSize: 20.sp,
-                      color: AppColors.primaryColor,
+                      color: primaryColor,
                       fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
@@ -132,7 +131,7 @@ class _AddPurchaseState extends State<AddPurchase> {
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
-                          splashColor: AppColors.primaryColor.withOpacity(0.4),
+                          splashColor: primaryColor.withOpacity(0.4),
                           customBorder: const StadiumBorder(),
                           onTap: () {
                             Navigator.pop(context);
@@ -143,8 +142,7 @@ class _AddPurchaseState extends State<AddPurchase> {
                                   borderRadius: BorderRadius.circular(5.w),
                                   color: Colors.transparent,
                                   border: Border.all(
-                                      color: AppColors.primaryColor,
-                                      width: 1.5.w)),
+                                      color: primaryColor, width: 1.5.w)),
                               width: 125.w,
                               height: 45.h,
                               child: SizedBox(
@@ -157,7 +155,7 @@ class _AddPurchaseState extends State<AddPurchase> {
                                     "Cancel",
                                     style: TextStyle(
                                         fontSize: 15.sp,
-                                        color: AppColors.primaryColor,
+                                        color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.center,
                                   ),
@@ -167,7 +165,7 @@ class _AddPurchaseState extends State<AddPurchase> {
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
-                          splashColor: AppColors.primaryColor.withOpacity(0.4),
+                          splashColor: primaryColor.withOpacity(0.4),
                           customBorder: const StadiumBorder(),
                           onTap: () {
                             Navigator.pop(context);
@@ -176,10 +174,9 @@ class _AddPurchaseState extends State<AddPurchase> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5.w),
-                                  color: AppColors.primaryColor,
+                                  color: primaryColor,
                                   border: Border.all(
-                                      color: AppColors.primaryColor,
-                                      width: 1.5.w)),
+                                      color: primaryColor, width: 1.5.w)),
                               width: 125.w,
                               height: 45.h,
                               child: SizedBox(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job_header.dart';
 import 'package:truck_moves/shared_widgets/app_bar.dart';
 import 'package:truck_moves/shared_widgets/confirmation_popup.dart';
@@ -144,52 +144,7 @@ class _JobDetailsState extends State<JobDetails> {
               ),
             ),
           ),
-        )
-        //  SafeArea(
-        // child: GestureDetector(
-        //   onTap: () {
-        //     if (widget.job.preDepartureChecklist == null) {
-        //       Navigator.push(
-        //           context,
-        //           HeroDialogRoute(
-        //             builder: (_) => ConfirmationPopup(
-        //               title: "Prechecking",
-        //               message:
-        //                   "Before you depart you must complete the pre-departure checklist. Tap continue to begin.",
-        //               leftBtnText: "Cancel",
-        //               rightBtnText: "Continue",
-        //               onRightTap: () {
-        //                 Navigator.push(
-        //                     context,
-        //                     MaterialPageRoute(
-        //                         builder: (_) => PreDepartureChecklistPage(
-        //                               jobId: widget.job.id,
-        //                               preChecklist:
-        //                                   widget.job.preDepartureChecklist,
-        //                             )));
-        //               },
-        //             ),
-        //           ));
-        //     }
-        //   },
-        //     child: Container(
-        //       height: 60.h,
-        //       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-        //       alignment: Alignment.center,
-        //       decoration: BoxDecoration(
-        //           color: AppColors.primaryColor,
-        //           borderRadius: BorderRadius.circular(10.h)),
-        //       child: Text(
-        //         "Start".toUpperCase(),
-        //         style: TextStyle(
-        //             color: const Color(0xFF010101),
-        //             fontSize: 18.sp,
-        //             fontWeight: FontWeight.w700),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        );
+        ));
   }
 
   _headerLabel(String label, IconData icon) {
@@ -202,7 +157,7 @@ class _JobDetailsState extends State<JobDetails> {
         decoration: BoxDecoration(
             border: Border.all(
               width: 2,
-              color: AppColors.primaryColor,
+              color: primaryColor,
             ),
             borderRadius: BorderRadius.circular(8.h)),
         child: Row(
@@ -235,7 +190,7 @@ class _JobDetailsState extends State<JobDetails> {
             text: title,
             style: TextStyle(
                 fontSize: 15.sp,
-                color: AppColors.primaryColor,
+                color: primaryColor,
                 fontWeight: FontWeight.w600),
             children: [
               TextSpan(
@@ -261,7 +216,7 @@ class _JobDetailsState extends State<JobDetails> {
       //       title,
       //       style: TextStyle(
       //           fontSize: 15.sp,
-      //           color: AppColors.primaryColor,
+      //           color: primaryColor,
       //           fontWeight: FontWeight.w500),
       //       textAlign: TextAlign.left,
       //     ),

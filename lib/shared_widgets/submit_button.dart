@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:truck_moves/constant.dart';
 
 class SubmitButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -29,8 +29,7 @@ class SubmitButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             vertical: marginH ?? 0, horizontal: marginW ?? 0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.h),
-            color: AppColors.primaryColor),
+            borderRadius: BorderRadius.circular(25.h), color: primaryColor),
         child: Text(
           label,
           style: TextStyle(

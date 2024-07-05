@@ -2,10 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:truck_moves/config.dart';
+import 'package:provider/provider.dart';
+import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job_header.dart';
 import 'package:truck_moves/models/pre_check.dart';
+import 'package:truck_moves/providers/job_provider.dart';
+import 'package:truck_moves/services/job_service.dart';
 import 'package:truck_moves/shared_widgets/app_bar.dart';
+import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/network_success_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/submit_button.dart';
@@ -138,26 +142,32 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
         {
           "id": 0,
           "jobId": widget.jobId,
-          "vehicleId": 0,
-          "trailerId": 0,
+          "vehicleId": null,
+          "trailerId": null,
           "preDeparturechecklistId": 0,
           "visibletoDriver": true,
           "noteText": _textController.text
         }
       ]
     };
-    if (mounted) Navigator.pop(context);
+    final res = await JobService.saveChecklist(data: data);
+    if (!mounted) return;
+    Navigator.pop(context);
 
-    log(data.toString());
-
-    SuccessSheet.show(
-      context: context,
-      title: "Success",
-      message: "Successfully submitted your pre departure checklist",
-      onTap: () {
-        Navigator.pop(context);
-      },
-    );
+    res.when(success: (data) {
+      log(data.toString());
+      SuccessSheet.show(
+        context: context,
+        title: "Success",
+        message: "Successfully submitted your pre departure checklist",
+        onTap: () {
+          Navigator.pop(context);
+        },
+      );
+      context.read<JobProvider>().addPrechecklist(data: data);
+    }, failure: (error) {
+      ErrorSheet.show(context: context, exception: error);
+    });
   }
 
   @override
@@ -183,7 +193,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                     "Please report faults that require attention",
                     style: TextStyle(
                         fontSize: 15.sp,
-                        color: AppColors.primaryColor,
+                        color: primaryColor,
                         fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
@@ -196,7 +206,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                         fontSize: 15.sp,
                         decoration: TextDecoration.none),
                     textAlignVertical: TextAlignVertical.center,
-                    cursorColor: AppColors.primaryColor,
+                    cursorColor: primaryColor,
                     keyboardType: TextInputType.text,
                     maxLines: 4,
                     readOnly: widget.preChecklist != null,
@@ -231,7 +241,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                       "Fuel Level",
                       style: TextStyle(
                           fontSize: 15.sp,
-                          color: AppColors.primaryColor,
+                          color: primaryColor,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
@@ -330,7 +340,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
               maxLines: 2,
               style: TextStyle(
                   fontSize: 15.sp,
-                  color: AppColors.primaryColor,
+                  color: primaryColor,
                   fontWeight: FontWeight.w500),
             ),
           ),
@@ -347,7 +357,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                     border: Border.all(color: const Color(0xFF416188))),
                 child: PopupMenuButton<int>(
                   padding: EdgeInsets.zero,
-                  color: AppColors.bgColor,
+                  color: bgColor,
                   constraints: BoxConstraints(
                     maxWidth: 60.h,
                   ),
