@@ -3,28 +3,36 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:truck_moves/constant.dart';
 
-class SuccessSheet {
-  static show({
-    required BuildContext context,
-    VoidCallback? onTap,
-    required String title,
-    required String message,
-  }) {
-    showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isDismissible: false,
-        context: context,
-        builder: (context) => NetworkSuccessBottomSheet(
-            onTap: onTap, title: title, message: message));
-  }
+showToastSheet({
+  required BuildContext context,
+  bool isError = false,
+  VoidCallback? onTap,
+  required String title,
+  required String message,
+}) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isDismissible: false,
+      context: context,
+      builder: (context) => ToastBottomSheet(
+            onTap: onTap,
+            title: title,
+            message: message,
+            isError: isError,
+          ));
 }
 
-class NetworkSuccessBottomSheet extends StatelessWidget {
+class ToastBottomSheet extends StatelessWidget {
   final VoidCallback? onTap;
+  final bool isError;
   final String title;
   final String message;
-  const NetworkSuccessBottomSheet(
-      {super.key, this.onTap, required this.title, required this.message});
+  const ToastBottomSheet(
+      {super.key,
+      this.onTap,
+      required this.title,
+      required this.message,
+      this.isError = false});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +70,7 @@ class NetworkSuccessBottomSheet extends StatelessWidget {
             ),
           ),
           SvgPicture.asset(
-            "assets/icons/success.svg",
+            "assets/icons/${isError ? "fail" : "success"}.svg",
             height: 225.w,
             width: 275.w,
             fit: BoxFit.fill,

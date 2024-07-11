@@ -47,20 +47,21 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
                     _btn(
                         title: "Stop for the \nnight",
                         icon: "assets/icons/bed-1.svg",
-                        select: 1),
+                        select: 0),
                     SizedBox(
                       width: 12.w,
                     ),
                     _btn(
                         title: "Delivered to final \nlocation",
                         icon: "assets/icons/truck.svg",
-                        select: 2),
+                        select: 1),
                   ],
                 ),
               ),
               SubmitButton(
                 onTap: () {
-                  Navigator.pop(context, selected);
+                  Navigator.pop(context,
+                      selected == 1); // if this true mean job is completed.
                 },
                 label: "Confirm",
                 radius: 10.h,

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
-import 'package:truck_moves/models/job_header.dart';
+import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/models/pre_check.dart';
 import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/services/job_service.dart';
 import 'package:truck_moves/shared_widgets/app_bar.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
-import 'package:truck_moves/shared_widgets/network_success_bottom_sheet.dart';
+import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/submit_button.dart';
 
@@ -32,8 +32,8 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
   @override
   void initState() {
-    _textController = TextEditingController(
-        text: widget.preChecklist?.notes.firstOrNull?.noteText);
+    _textController =
+        TextEditingController(text: widget.preChecklist?.notes.firstOrNull);
     fuelLevel = widget.preChecklist?.fuelLevel ?? 0;
     checklist = [
       PreCheck(
@@ -156,7 +156,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
     res.when(success: (data) {
       log(data.toString());
-      SuccessSheet.show(
+      showToastSheet(
         context: context,
         title: "Success",
         message: "Successfully submitted your pre departure checklist",
@@ -166,7 +166,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
       );
       context.read<JobProvider>().addPrechecklist(data: data);
     }, failure: (error) {
-      ErrorSheet.show(context: context, exception: error);
+      showErrorSheet(context: context, exception: error);
     });
   }
 

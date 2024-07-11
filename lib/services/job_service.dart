@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:truck_moves/constant.dart';
-import 'package:truck_moves/models/job_header.dart';
+import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/utils/api_results/api_result.dart';
 import 'package:truck_moves/utils/custom_http.dart';
 import 'package:truck_moves/utils/exceptions/error_log.dart';
@@ -10,30 +10,26 @@ import 'package:truck_moves/utils/exceptions/network_exceptions.dart';
 typedef Result<T> = Future<ApiResult<T>>;
 
 class JobService {
-  static Result<List<JobHeader>> currentJobsHeader({required int skip}) async {
+  static Result<List<Job>> currentJobsHeader({required int skip}) async {
     try {
       final response = await CustomHttp.getDio().get(
           "$baseUrl$jobHeader?\$filter=status eq 3 or status eq 4 or status eq 5 or status eq 6 or status eq 7 or status eq 8 or status eq 9&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
       log(json.encode(response.data));
       return ApiResult.success(
-          data: (response.data as List)
-              .map((e) => JobHeader.fromJson(e))
-              .toList());
+          data: (response.data as List).map((e) => Job.fromJson(e)).toList());
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 
-  static Result<List<JobHeader>> futureJobsHeader({required int skip}) async {
+  static Result<List<Job>> futureJobsHeader({required int skip}) async {
     try {
       final response = await CustomHttp.getDio().get(
           "$baseUrl$jobHeader?\$filter=status eq 1 or status eq 2&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
       log(json.encode(response.data));
       return ApiResult.success(
-          data: (response.data as List)
-              .map((e) => JobHeader.fromJson(e))
-              .toList());
+          data: (response.data as List).map((e) => Job.fromJson(e)).toList());
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -62,6 +58,44 @@ class JobService {
           .post("$baseUrl$saveDepartureChecklist", data: json.encode(data));
       return ApiResult.success(
           data: PreDepartureChecklist.fromJson(response.data));
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<Leg> createLeg(
+      {required int jobId, required String location}) async {
+    try {
+      final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
+        "id": 0,
+        "jobId": jobId,
+        "legNumber": 0,
+        "startLocation": location,
+        "endLocation": "",
+        "status": 0,
+        "acknowledged": true
+      });
+      return ApiResult.success(data: Leg.fromJson(response.data));
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<Leg> closeLeg(
+      {required Leg leg, required String location}) async {
+    try {
+      final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
+        "id": leg.id,
+        "jobId": leg.jobId,
+        "legNumber": leg.legNumber,
+        "startLocation": leg.startLocation,
+        "endLocation": location,
+        "status": leg.status,
+        "acknowledged": leg.acknowledged
+      });
+      return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));

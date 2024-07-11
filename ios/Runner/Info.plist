@@ -46,9 +46,15 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
 		<key>NSCameraUsageDescription</key>
-		<string>Truck Moves requires access to your Camera for take receipt image</string>
+		<string>Truck Moves app requires access to your Camera for take receipt image.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Truck Moves requires access to your Library for select receipt image</string>
+		<string>Truck Moves app requires access to your Library for select receipt image.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Truck Moves app required access your location for job functionality.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Truck Moves app required access your location for job functionality.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Truck Moves app required access your location for job functionality.</string>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>googlechromes</string>

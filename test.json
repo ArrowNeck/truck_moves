@@ -1,34 +1,125 @@
-{
-    "id": 0,
-    "jobId": 2623,
-    "water": "YES",
-    "spareRim": "NO",
-    "allLightsAndIndicators": "NA",
-    "jackAndTools": "YES",
-    "ownersManual": "YES",
-    "airAndElectrics": "YES",
-    "tyresCondition": "YES",
-    "visuallyDipAndCheckTaps": "YES",
-    "windscreenDamageWipers": "YES",
-    "vehicleCleanFreeOfRubbish": "YES",
-    "keysFobTotalKeys": "YES",
-    "checkInsideTruckTrailer": "YES",
-    "oil": "YES",
-    "checkTruckHeight": "NO",
-    "leftHandDamage": "YES",
-    "rightHandDamage": "NA",
-    "frontDamage": "YES",
-    "rearDamage": "NO",
-    "fuelLevel": 0.5,
-    "notes": [
-        {
-            "id": 0,
-            "jobId": 2623,
-            "vehicleId": 0,
-            "trailerId": 0,
-            "preDeparturechecklistId": 0,
-            "visibletoDriver": true,
-            "noteText": "abc benekdnk landslides sdslkdms "
-        }
-    ]
-}
+[
+    {
+        "id": 3868,
+        "status": 7,
+        "pickupLocation": "V7VG+2M Yarragundry NSW, Australia",
+        "dropOfLocation": "1335 Oura Rd, Oura NSW 2650, Australia",
+        "pickupCoordinates": "-35.1074089, 147.276732",
+        "dropOfCoordinates": "-35.1057, 147.5226853",
+        "pickupDate": "2024-07-10T18:29:59.06",
+        "estimatedDeliveryDate": "2024-07-10T18:29:59.06",
+        "vehicleId": 756,
+        "totalDistance": 25.963,
+        "totalDrivingTime": 21,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [
+                {
+                    "id": 104,
+                    "jobId": 3868,
+                    "vehicleId": 756,
+                    "trailerId": null,
+                    "permitAndPlatesId": null,
+                    "preDeparturechecklistId": null,
+                    "visibletoDriver": false,
+                    "noteText": "new note for driver"
+                },
+                {
+                    "id": 105,
+                    "jobId": 3868,
+                    "vehicleId": 756,
+                    "trailerId": null,
+                    "permitAndPlatesId": null,
+                    "preDeparturechecklistId": null,
+                    "visibletoDriver": true,
+                    "noteText": "new note for driver"
+                }
+            ],
+            "images": [],
+            "id": 756,
+            "jobId": 3868,
+            "make": "toyota",
+            "model": "corolla",
+            "rego": "12123",
+            "vin": "123123",
+            "year": "20",
+            "colour": null,
+            "jobStatus": null
+        },
+        "preDepartureChecklist": {
+            "id": 15,
+            "jobId": 3868,
+            "water": "YES",
+            "spareRim": "YES",
+            "allLightsAndIndicators": "YES",
+            "jackAndTools": "YES",
+            "ownersManual": "YES",
+            "airAndElectrics": "YES",
+            "tyresCondition": "YES",
+            "visuallyDipAndCheckTaps": "YES",
+            "windscreenDamageWipers": "YES",
+            "vehicleCleanFreeOfRubbish": "YES",
+            "keysFobTotalKeys": "YES",
+            "checkInsideTruckTrailer": "YES",
+            "oil": "YES",
+            "checkTruckHeight": "YES",
+            "leftHandDamage": "YES",
+            "rightHandDamage": "YES",
+            "frontDamage": "YES",
+            "rearDamage": "YES",
+            "fuelLevel": 0.5,
+            "notes": [
+                {
+                    "id": 108,
+                    "jobId": 3868,
+                    "vehicleId": null,
+                    "trailerId": null,
+                    "permitAndPlatesId": null,
+                    "preDeparturechecklistId": 15,
+                    "visibletoDriver": true,
+                    "noteText": "Nothing "
+                }
+            ]
+        },
+        "wayPoints": [],
+        "trailers": [
+            {
+                "hookupTypeNavigation": {
+                    "id": 1,
+                    "type": "HU_Single",
+                    "description": "HU Single",
+                    "trailers": []
+                },
+                "notes": [],
+                "images": [],
+                "id": 49,
+                "hookupType": 1,
+                "jobId": 3868,
+                "hookupLocation": "North Wagga Wagga NSW 2650, Australia",
+                "dropOffLocation": "Gumly Gumly NSW 2652, Australia",
+                "rego": "2344",
+                "type": "sdfdf"
+            }
+        ],
+        "legs": [
+            {
+                "id": 1,
+                "jobId": 3868,
+                "legNumber": 1,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false
+            },
+            {
+                "id": 2,
+                "jobId": 3868,
+                "legNumber": 2,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false
+            }
+        ]
+    }
+]

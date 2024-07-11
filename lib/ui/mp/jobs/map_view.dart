@@ -7,10 +7,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
 import 'package:truck_moves/constant.dart';
+import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 
 class MapView extends StatefulWidget {
-  const MapView({super.key});
+  final String pickupCords;
+  final String deliveryCords;
+  final String pickupLocation;
+  final String deliveryLocation;
+  final List<WayPoint> wayPoints;
+  const MapView(
+      {super.key,
+      required this.pickupCords,
+      required this.deliveryCords,
+      required this.wayPoints,
+      required this.pickupLocation,
+      required this.deliveryLocation});
 
   @override
   State<MapView> createState() => MapViewState();
@@ -23,12 +35,9 @@ class MapViewState extends State<MapView> {
   final Set<Marker> _markers = {};
   Map<PolylineId, Polyline> polylines = {};
 
-  final LatLng start = const LatLng(37.7749, -122.4194);
-  final LatLng end = const LatLng(34.0522, -118.2437);
-  final List<LatLng> waypoints = [
-    const LatLng(37.3382, -121.8863),
-    const LatLng(36.9741, -122.0308),
-  ];
+  late LatLng start;
+  late LatLng end;
+  List<LatLng> waypoints = [];
 
   @override
   void initState() {
@@ -42,6 +51,11 @@ class MapViewState extends State<MapView> {
   }
 
   initMap() async {
+    start = LatLng(double.parse(widget.pickupCords.split(", ").first),
+        double.parse(widget.pickupCords.split(", ").last));
+    end = LatLng(double.parse(widget.deliveryCords.split(", ").first),
+        double.parse(widget.deliveryCords.split(", ").last));
+
     generateMarkers();
     final coordinates = await getPolylinePoints();
     generatePolylineFromPoints(coordinates);
@@ -54,18 +68,24 @@ class MapViewState extends State<MapView> {
         icon: BitmapDescriptor.defaultMarker,
         onTap: () {
           luanchMap(
-              latitude: start.latitude, longitude: start.longitude, name: "");
+              latitude: start.latitude,
+              longitude: start.longitude,
+              name: widget.pickupLocation);
         }));
-    for (int i = 0; i < waypoints.length; i++) {
+    for (int i = 0; i < widget.wayPoints.length; i++) {
+      LatLng point = LatLng(
+          double.parse(widget.wayPoints[i].coordinates.split(", ").first),
+          double.parse(widget.wayPoints[i].coordinates.split(", ").last));
+      waypoints.add(point);
       _markers.add(Marker(
           markerId: MarkerId("$i"),
-          position: waypoints[i],
+          position: point,
           icon: BitmapDescriptor.defaultMarker,
           onTap: () {
             luanchMap(
-                latitude: waypoints[i].latitude,
-                longitude: waypoints[i].longitude,
-                name: "");
+                latitude: point.latitude,
+                longitude: point.longitude,
+                name: widget.wayPoints[i].location);
           }));
     }
     _markers.add(Marker(
@@ -73,7 +93,10 @@ class MapViewState extends State<MapView> {
         position: end,
         icon: BitmapDescriptor.defaultMarker,
         onTap: () {
-          luanchMap(latitude: end.latitude, longitude: end.longitude, name: "");
+          luanchMap(
+              latitude: end.latitude,
+              longitude: end.longitude,
+              name: widget.deliveryLocation);
         }));
 
     setState(() {});
@@ -133,6 +156,8 @@ class MapViewState extends State<MapView> {
                 target: start,
                 zoom: 8.0,
               ),
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
               mapType: _mapType,
               markers: _markers,
               polylines: Set<Polyline>.of(polylines.values),

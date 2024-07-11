@@ -9,28 +9,26 @@ import 'package:truck_moves/utils/cache_manager.dart';
 import 'package:truck_moves/utils/custom_http.dart';
 import 'package:truck_moves/utils/exceptions/network_exceptions.dart';
 
-class ErrorSheet {
-  static show(
-      {required BuildContext context,
-      required NetworkExceptions exception,
-      VoidCallback? onTap,
-      String? title,
-      String? message,
-      bool login = false}) {
-    showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isDismissible: false,
-        context: context,
-        builder: (context) => NetworkErrorBottomSheet(
-              exception: exception,
-              onTap: onTap,
-              title: title,
-              message: message,
-              login: login,
-              unAuth: NetworkExceptions.getErrorMessage(exception).first ==
-                  "Session Expired",
-            ));
-  }
+showErrorSheet(
+    {required BuildContext context,
+    required NetworkExceptions exception,
+    VoidCallback? onTap,
+    String? title,
+    String? message,
+    bool login = false}) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isDismissible: false,
+      context: context,
+      builder: (context) => NetworkErrorBottomSheet(
+            exception: exception,
+            onTap: onTap,
+            title: title,
+            message: message,
+            login: login,
+            unAuth: NetworkExceptions.getErrorMessage(exception).first ==
+                "Session Expired",
+          ));
 }
 
 class NetworkErrorBottomSheet extends StatelessWidget {
@@ -177,8 +175,8 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          onTap!();
                           Navigator.pop(context);
+                          onTap!();
                         },
                         child: Container(
                           alignment: Alignment.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:truck_moves/constant.dart';
+// import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/services/auth_service.dart';
 import 'package:truck_moves/shared_widgets/input_field.dart';
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  bool rememberMe = true;
+  // bool rememberMe = true;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       });
     }, failure: (error) {
-      ErrorSheet.show(context: context, exception: error, login: true);
+      showErrorSheet(context: context, exception: error, login: true);
     });
   }
 
@@ -129,48 +129,48 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Theme(
-                            data: ThemeData(
-                              unselectedWidgetColor: Colors.white,
-                            ),
-                            child: Checkbox(
-                              value: rememberMe,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  rememberMe = value!;
-                                });
-                              },
-                              activeColor: primaryColor,
-                            ),
-                          ),
-                          const Text(
-                            'Remember me',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Forgot password?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Row(
+                //         children: [
+                //           Theme(
+                //             data: ThemeData(
+                //               unselectedWidgetColor: Colors.white,
+                //             ),
+                //             child: Checkbox(
+                //               value: rememberMe,
+                //               onChanged: (bool? value) {
+                //                 setState(() {
+                //                   rememberMe = value!;
+                //                 });
+                //               },
+                //               activeColor: primaryColor,
+                //             ),
+                //           ),
+                //           const Text(
+                //             'Remember me',
+                //             style: TextStyle(
+                //               fontWeight: FontWeight.w400,
+                //               color: Colors.white,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       GestureDetector(
+                //         child: Text(
+                //           'Forgot password?',
+                //           style: TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //             color: primaryColor,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 30.h,
                 ),

@@ -5,7 +5,7 @@ import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/services/job_service.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
-import 'package:truck_moves/ui/mp/home/job_header_card.dart';
+import 'package:truck_moves/ui/mp/home/job_card.dart';
 
 class CurrentJobs extends StatefulWidget {
   const CurrentJobs({super.key});
@@ -54,10 +54,12 @@ class _CurrentJobsState extends State<CurrentJobs> {
       }
       context.read<JobProvider>().setCurrentJobs(data);
     }, failure: (error) {
-      ErrorSheet.show(
+      showErrorSheet(
         context: context,
         exception: error,
-        onTap: () => _getCurrentJobs,
+        onTap: () {
+          _getCurrentJobs();
+        },
       );
     });
   }
@@ -81,7 +83,7 @@ class _CurrentJobsState extends State<CurrentJobs> {
                     textAlign: TextAlign.center,
                   ),
                 )
-              : JobHeaderCard(job: currentJobs[index]);
+              : JobCard(job: currentJobs[index]);
         });
   }
 }

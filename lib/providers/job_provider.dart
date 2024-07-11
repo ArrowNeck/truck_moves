@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:truck_moves/models/job_header.dart';
+import 'package:truck_moves/models/job.dart';
 
 class JobProvider with ChangeNotifier {
   JobProviderState currentJobState = JobProviderState.idle;
   JobProviderState futureJobState = JobProviderState.idle;
 
-  List<JobHeader>? currentJobs;
-  List<JobHeader>? futureJobs;
+  List<Job>? currentJobs;
+  List<Job>? futureJobs;
 
-  JobHeader? currentlyRunningJob;
+  Job? currentlyRunningJob;
 
-  void setCurrentlyRunningJob(JobHeader job) {
+  void setCurrentlyRunningJob(Job job) {
     currentlyRunningJob = job;
+    notifyListeners();
   }
 
   void removeCurrentlyRunningJob() {
     currentlyRunningJob = null;
   }
 
-  void setCurrentJobs(List<JobHeader> jobs) {
+  void setCurrentJobs(List<Job> jobs) {
     if (currentJobs == null) {
       currentJobs = jobs;
     } else {
@@ -27,7 +28,7 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setFutureJobs(List<JobHeader> jobs) {
+  void setFutureJobs(List<Job> jobs) {
     if (futureJobs == null) {
       futureJobs = jobs;
     } else {
@@ -45,6 +46,19 @@ class JobProvider with ChangeNotifier {
 
   void addPrechecklist({required PreDepartureChecklist data}) {
     currentlyRunningJob!.preDepartureChecklist = data;
+    currentlyRunningJob!.status = 4;
+    notifyListeners();
+  }
+
+  void addLeg({required Leg data}) {
+    currentlyRunningJob!.legs.add(data);
+    currentlyRunningJob!.status = 6;
+    notifyListeners();
+  }
+
+  void updateLeg({required Leg data}) {
+    currentlyRunningJob!.legs[currentlyRunningJob!.legs
+        .indexWhere((leg) => leg.id == data.id)] = data;
     currentlyRunningJob!.status = 4;
     notifyListeners();
   }

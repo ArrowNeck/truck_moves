@@ -23,5 +23,6 @@ const String jobHeader = "Odata/Job/Get";
 const String getDepartureChecklist =
     "DepartureCheck/PreDepartureChecklistFields";
 const String saveDepartureChecklist = "Mobile/DepartureCheck/PostPut";
+const String legUrl = "Mobile/Leg/Post";
 
 //----------------------------------------------//

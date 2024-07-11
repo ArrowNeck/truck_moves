@@ -4,13 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
-import 'package:truck_moves/models/job_header.dart';
+import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/ui/mp/jobs/job_details.dart';
 
-class JobHeaderCard extends StatelessWidget {
-  final JobHeader job;
-  const JobHeaderCard({
+class JobCard extends StatelessWidget {
+  final Job job;
+  const JobCard({
     super.key,
     required this.job,
   });
@@ -22,7 +22,7 @@ class JobHeaderCard extends StatelessWidget {
         if (context.read<JobProvider>().canAccessThisJob(jobId: job.id)) {
           context.read<JobProvider>().setCurrentlyRunningJob(job);
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => JobDetails(job: job)));
+              context, MaterialPageRoute(builder: (_) => const JobDetails()));
         }
       },
       child: Container(
@@ -104,7 +104,7 @@ class JobHeaderCard extends StatelessWidget {
                       width: 8.w,
                     ),
                     Text(
-                      job.vehicleNavigation?.model ?? "",
+                      job.vehicleDetails?.model ?? "",
                       maxLines: 1,
                       style: TextStyle(
                           overflow: TextOverflow.ellipsis,
@@ -126,6 +126,7 @@ class JobHeaderCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 2,
