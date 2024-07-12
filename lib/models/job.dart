@@ -271,7 +271,7 @@ class PreDepartureChecklist {
   String frontDamage;
   String rearDamage;
   double fuelLevel;
-  List<String> notes;
+  List<Note> notes;
 
   PreDepartureChecklist({
     required this.id,
@@ -321,9 +321,7 @@ class PreDepartureChecklist {
         frontDamage: json["frontDamage"] ?? "NA",
         rearDamage: json["rearDamage"] ?? "NA",
         fuelLevel: json["fuelLevel"] ?? 0,
-        notes: (json["notes"] as List<dynamic>)
-            .map((x) => x["noteText"] as String)
-            .toList(),
+        notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -348,6 +346,50 @@ class PreDepartureChecklist {
         "frontDamage": frontDamage,
         "rearDamage": rearDamage,
         "fuelLevel": fuelLevel,
-        "notes": notes,
+        "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
+      };
+}
+
+class Note {
+  int id;
+  int jobId;
+  int? vehicleId;
+  int? trailerId;
+  int? permitAndPlatesId;
+  int? preDeparturechecklistId;
+  bool? visibletoDriver;
+  String noteText;
+
+  Note({
+    required this.id,
+    required this.jobId,
+    this.vehicleId,
+    this.trailerId,
+    this.permitAndPlatesId,
+    this.preDeparturechecklistId,
+    this.visibletoDriver,
+    required this.noteText,
+  });
+
+  factory Note.fromJson(Map<String, dynamic> json) => Note(
+        id: json["id"],
+        jobId: json["jobId"],
+        vehicleId: json["vehicleId"],
+        trailerId: json["trailerId"],
+        permitAndPlatesId: json["permitAndPlatesId"],
+        preDeparturechecklistId: json["preDeparturechecklistId"],
+        visibletoDriver: json["visibletoDriver"],
+        noteText: json["noteText"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "jobId": jobId,
+        "vehicleId": vehicleId,
+        "trailerId": trailerId,
+        "permitAndPlatesId": permitAndPlatesId,
+        "preDeparturechecklistId": preDeparturechecklistId,
+        "visibletoDriver": visibletoDriver,
+        "noteText": noteText,
       };
 }

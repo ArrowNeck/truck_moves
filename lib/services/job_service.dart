@@ -84,7 +84,9 @@ class JobService {
   }
 
   static Result<Leg> closeLeg(
-      {required Leg leg, required String location}) async {
+      {required Leg leg,
+      required String location,
+      required bool isCompleted}) async {
     try {
       final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
         "id": leg.id,
@@ -93,7 +95,8 @@ class JobService {
         "startLocation": leg.startLocation,
         "endLocation": location,
         "status": leg.status,
-        "acknowledged": leg.acknowledged
+        // "acknowledged": leg.acknowledged
+        "isCompleted": isCompleted
       });
       return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {

@@ -5,20 +5,22 @@ import 'package:truck_moves/constant.dart';
 
 showToastSheet({
   required BuildContext context,
-  bool isError = false,
-  VoidCallback? onTap,
   required String title,
   required String message,
+  VoidCallback? onTap,
+  bool isError = false,
+  String? icon,
 }) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       isDismissible: false,
       context: context,
       builder: (context) => ToastBottomSheet(
-            onTap: onTap,
             title: title,
             message: message,
+            onTap: onTap,
             isError: isError,
+            icon: icon,
           ));
 }
 
@@ -27,12 +29,14 @@ class ToastBottomSheet extends StatelessWidget {
   final bool isError;
   final String title;
   final String message;
+  final String? icon;
   const ToastBottomSheet(
       {super.key,
       this.onTap,
       required this.title,
       required this.message,
-      this.isError = false});
+      this.isError = false,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,7 @@ class ToastBottomSheet extends StatelessWidget {
             ),
           ),
           SvgPicture.asset(
-            "assets/icons/${isError ? "fail" : "success"}.svg",
+            "assets/icons/${icon ?? (isError ? "fail" : "success")}.svg",
             height: 225.w,
             width: 275.w,
             fit: BoxFit.fill,

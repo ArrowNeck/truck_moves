@@ -17,8 +17,12 @@ import 'package:truck_moves/shared_widgets/submit_button.dart';
 class PreDepartureChecklistPage extends StatefulWidget {
   final int jobId;
   final PreDepartureChecklist? preChecklist;
+  final bool isArrival;
   const PreDepartureChecklistPage(
-      {super.key, required this.jobId, this.preChecklist});
+      {super.key,
+      required this.jobId,
+      this.preChecklist,
+      this.isArrival = false});
 
   @override
   State<PreDepartureChecklistPage> createState() =>
@@ -32,8 +36,8 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
   @override
   void initState() {
-    _textController =
-        TextEditingController(text: widget.preChecklist?.notes.firstOrNull);
+    _textController = TextEditingController(
+        text: widget.preChecklist?.notes.firstOrNull?.noteText);
     fuelLevel = widget.preChecklist?.fuelLevel ?? 0;
     checklist = [
       PreCheck(
@@ -134,18 +138,22 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   _savePreChecklist() async {
     PageLoader.showLoader(context);
     Map<String, dynamic> data = {
-      "id": 0,
+      "id": widget.preChecklist?.id ?? 0,
       "jobId": widget.jobId,
       for (var c in checklist) c.id: c.isSelect.txt,
       "fuelLevel": fuelLevel,
       "notes": [
         {
-          "id": 0,
+          "id": widget.preChecklist?.notes.firstOrNull?.id ?? 0,
           "jobId": widget.jobId,
           "vehicleId": null,
           "trailerId": null,
-          "preDeparturechecklistId": 0,
+          "permitAndPlatesId": null,
+          "preDeparturechecklistId":
+              widget.preChecklist?.notes.firstOrNull?.preDeparturechecklistId ??
+                  0,
           "visibletoDriver": true,
+          "accommodationId": null,
           "noteText": _textController.text
         }
       ]
@@ -159,7 +167,8 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
       showToastSheet(
         context: context,
         title: "Success",
-        message: "Successfully submitted your pre departure checklist",
+        message:
+            "Successfully ${(context.read<JobProvider>().currentlyRunningJob!.status < 4) ? "submitted" : "updated"} your pre departure checklist",
         onTap: () {
           Navigator.pop(context);
         },
@@ -173,7 +182,8 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.build(label: "Precheck"),
+      appBar: MyAppBar.build(
+          label: widget.isArrival ? "Arrival-Checklist" : "Pre-Checklist"),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
@@ -209,7 +219,13 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                     cursorColor: primaryColor,
                     keyboardType: TextInputType.text,
                     maxLines: 4,
-                    readOnly: widget.preChecklist != null,
+                    readOnly: widget.isArrival
+                        ? false
+                        : (context
+                                .read<JobProvider>()
+                                .currentlyRunningJob!
+                                .status >
+                            4),
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
@@ -228,7 +244,10 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
               ),
             ),
             IgnorePointer(
-              ignoring: widget.preChecklist != null,
+              ignoring: (widget.isArrival
+                  ? false
+                  : context.read<JobProvider>().currentlyRunningJob!.status >
+                      4),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
                 padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
@@ -270,13 +289,18 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
           ],
         )),
       ),
-      bottomNavigationBar: widget.preChecklist == null
+      bottomNavigationBar: (widget.isArrival ||
+              context.read<JobProvider>().currentlyRunningJob!.status < 5)
           ? SafeArea(
               child: SubmitButton(
               onTap: () {
                 _savePreChecklist();
               },
-              label: "Submit",
+              label: (widget.isArrival ||
+                      context.read<JobProvider>().currentlyRunningJob!.status <
+                          4)
+                  ? "Submit"
+                  : "Update",
               marginW: 16.w,
               marginH: 8.h,
             ))
@@ -348,7 +372,9 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
             width: 12.w,
           ),
           IgnorePointer(
-            ignoring: widget.preChecklist != null,
+            ignoring: widget.isArrival
+                ? false
+                : (context.read<JobProvider>().currentlyRunningJob!.status > 4),
             child: Container(
                 height: 25.h,
                 width: 25.h,

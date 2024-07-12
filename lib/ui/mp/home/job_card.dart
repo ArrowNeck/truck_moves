@@ -77,6 +77,8 @@ class JobCard extends StatelessWidget {
                       "assets/icons/calendar.svg",
                       width: 20.h,
                       height: 20.h,
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 8.w,
@@ -96,9 +98,11 @@ class JobCard extends StatelessWidget {
                     child: Row(
                   children: [
                     SvgPicture.asset(
-                      "assets/icons/box.svg",
-                      width: 20.h,
-                      height: 20.h,
+                      "assets/icons/truck-front.svg",
+                      width: 22.5.h,
+                      height: 22.5.h,
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 8.w,

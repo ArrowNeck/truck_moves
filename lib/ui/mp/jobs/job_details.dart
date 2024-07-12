@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -134,12 +135,15 @@ class _JobDetailsState extends State<JobDetails> {
 
     final res = await JobService.closeLeg(
         leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
-        location: location);
+        location: location,
+        isCompleted: isJobCompleted);
     if (!mounted) return;
     Navigator.pop(context);
 
     res.when(success: (data) {
-      context.read<JobProvider>().updateLeg(data: data);
+      context
+          .read<JobProvider>()
+          .updateLeg(data: data, isCompleted: isJobCompleted);
     }, failure: (error) {
       showErrorSheet(context: context, exception: error);
     });
@@ -151,49 +155,61 @@ class _JobDetailsState extends State<JobDetails> {
     return Scaffold(
         appBar: MyAppBar.build(label: job.id.toString(), actions: [
           IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => PreDepartureChecklistPage(
-                              jobId: job.id,
-                              preChecklist: job.preDepartureChecklist,
-                            )));
-              },
-              icon: Icon(
-                job.preDepartureChecklist == null
-                    ? Icons.assignment_add
-                    : Icons.assignment_rounded,
-                color: Colors.white,
-              )),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => PreDepartureChecklistPage(
+                            jobId: job.id,
+                            preChecklist: job.preDepartureChecklist,
+                          )));
+            },
+            visualDensity: VisualDensity.compact,
+            icon: SvgPicture.asset(
+              "assets/icons/checklist-${job.status < 5 ? "edit" : "done"}.svg",
+              width: 22.5.h,
+              height: 22.5.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
           IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    HeroDialogRoute(
-                      builder: (_) => ConfirmationPopup(
-                        title: "Breakdown/Delay",
-                        message:
-                            "Are you sure you want to perform this action?",
-                        leftBtnText: "No",
-                        rightBtnText: "Yes",
-                        onRightTap: () {},
-                      ),
-                    ));
-              },
-              icon: const Icon(
-                Icons.contact_phone_rounded,
-                color: Colors.white,
-              )),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  HeroDialogRoute(
+                    builder: (_) => ConfirmationPopup(
+                      title: "Breakdown/Delay",
+                      message: "Are you sure you want to perform this action?",
+                      leftBtnText: "No",
+                      rightBtnText: "Yes",
+                      onRightTap: () {},
+                    ),
+                  ));
+            },
+            visualDensity: VisualDensity.compact,
+            icon: SvgPicture.asset(
+              "assets/icons/truck-tow.svg",
+              width: 22.5.h,
+              height: 22.5.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
           IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    HeroDialogRoute(builder: (_) => const AddPurchase()));
-              },
-              icon: const Icon(
-                Icons.add_a_photo_outlined,
-                color: Colors.white,
-              ))
+            onPressed: () {
+              Navigator.push(context,
+                  HeroDialogRoute(builder: (_) => const AddPurchase()));
+            },
+            visualDensity: VisualDensity.compact,
+            icon: SvgPicture.asset(
+              "assets/icons/purchase.svg",
+              width: 22.5.h,
+              height: 22.5.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          )
         ]),
         body: SafeArea(
             child: Padding(
@@ -202,7 +218,7 @@ class _JobDetailsState extends State<JobDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _headerLabel("Trip Details", Icons.location_on_outlined),
+                _headerLabel("Trip Details", "trip_details"),
                 _dataItem2("Pickup Address", job.pickupLocation),
                 _dataItem2("Pickup Date", job.pickupDate?.format ?? ""),
                 _dataItem2("Delivery Address", job.dropOfLocation),
@@ -215,7 +231,7 @@ class _JobDetailsState extends State<JobDetails> {
                   deliveryLocation: job.dropOfLocation,
                   wayPoints: job.wayPoints,
                 ),
-                _headerLabel("Vehicle Details", Icons.car_crash_outlined),
+                _headerLabel("Vehicle Details", "truck-side"),
                 Row(
                   children: [
                     Expanded(
@@ -254,7 +270,7 @@ class _JobDetailsState extends State<JobDetails> {
                 if (job.vehicleDetails?.notes.isNotEmpty ?? false)
                   _noteView(job.vehicleDetails?.notes ?? []),
                 if (job.trailers.isNotEmpty)
-                  _headerLabel("Trailer Details", Icons.fire_truck_outlined),
+                  _headerLabel("Trailer Details", "trailer"),
                 ListView.builder(
                   key: Key('builder ${selected.toString()}'),
                   physics: const NeverScrollableScrollPhysics(),
@@ -350,6 +366,14 @@ class _JobDetailsState extends State<JobDetails> {
                   _closeLeg(isJobCompleted: select);
                 }
               });
+            } else if (job.status == 9) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => PreDepartureChecklistPage(
+                            jobId: job.id,
+                            isArrival: true,
+                          )));
             } else {
               if (job.preDepartureChecklist == null) {
                 Navigator.push(
@@ -367,7 +391,6 @@ class _JobDetailsState extends State<JobDetails> {
                               MaterialPageRoute(
                                   builder: (_) => PreDepartureChecklistPage(
                                         jobId: job.id,
-                                        preChecklist: job.preDepartureChecklist,
                                       )));
                         },
                       ),
@@ -393,11 +416,20 @@ class _JobDetailsState extends State<JobDetails> {
           child: Container(
             height: 80.h,
             padding: EdgeInsets.symmetric(vertical: 20.h),
-            color: job.status == 6 ? Colors.redAccent : Colors.green,
+            color: job.status == 6
+                ? Colors.redAccent
+                : job.status == 9
+                    ? primaryColor
+                    : Colors.green,
             child: Text(
-              (job.status == 6 ? "Stop" : 'Start').toUpperCase(),
+              (job.status == 6
+                      ? "Stop"
+                      : job.status == 9
+                          ? "Next"
+                          : 'Start')
+                  .toUpperCase(),
               style: TextStyle(
-                color: Colors.white,
+                color: job.status == 9 ? Colors.black : Colors.white,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
@@ -407,7 +439,7 @@ class _JobDetailsState extends State<JobDetails> {
         ));
   }
 
-  _headerLabel(String label, IconData icon) {
+  _headerLabel(String label, String icon) {
     return Padding(
       padding: EdgeInsets.only(top: 25.h),
       child: Container(
@@ -431,11 +463,13 @@ class _JobDetailsState extends State<JobDetails> {
                   color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            Icon(
-              icon,
-              color: Colors.white,
-              size: 25.h,
-            )
+            SvgPicture.asset(
+              "assets/icons/$icon.svg",
+              width: 22.5.h,
+              height: 22.5.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
           ],
         ),
       ),

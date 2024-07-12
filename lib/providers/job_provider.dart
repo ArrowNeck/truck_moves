@@ -56,10 +56,10 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateLeg({required Leg data}) {
+  void updateLeg({required Leg data, required bool isCompleted}) {
     currentlyRunningJob!.legs[currentlyRunningJob!.legs
         .indexWhere((leg) => leg.id == data.id)] = data;
-    currentlyRunningJob!.status = 4;
+    currentlyRunningJob!.status = isCompleted ? 9 : 7;
     notifyListeners();
   }
 
