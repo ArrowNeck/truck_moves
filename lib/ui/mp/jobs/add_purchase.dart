@@ -3,7 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
+import 'package:truck_moves/providers/auth_provider.dart';
+import 'package:truck_moves/providers/job_provider.dart';
+import 'package:truck_moves/services/job_service.dart';
+import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
+import 'package:truck_moves/shared_widgets/page_loaders.dart';
+import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
 
 class AddPurchase extends StatefulWidget {
   const AddPurchase({super.key});
@@ -22,6 +29,33 @@ class _AddPurchaseState extends State<AddPurchase> {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  _uploadReceipt() async {
+    PageLoader.showLoader(context);
+    final imageRes = await JobService.upload(path: file!.path);
+    imageRes.when(success: (data) async {
+      final purchaseRes = await JobService.addPurchase(
+          driverId: context.read<AuthProvider>().driver.id,
+          jobId: context.read<JobProvider>().currentlyRunningJob!.id,
+          url: data);
+
+      purchaseRes.when(success: (data) {
+        Navigator.pop(context);
+        showToastSheet(
+          context: context,
+          title: "Upload Successful",
+          message: "You have successfully uploaded your purchase receipt.",
+          onTap: () => Navigator.pop(context),
+        );
+      }, failure: (error) {
+        Navigator.pop(context);
+        showErrorSheet(context: context, exception: error);
+      });
+    }, failure: (error) {
+      Navigator.pop(context);
+      showErrorSheet(context: context, exception: error);
+    });
   }
 
   @override
@@ -168,7 +202,9 @@ class _AddPurchaseState extends State<AddPurchase> {
                           splashColor: primaryColor.withOpacity(0.4),
                           customBorder: const StadiumBorder(),
                           onTap: () {
-                            Navigator.pop(context);
+                            if (file != null) {
+                              _uploadReceipt();
+                            }
                           },
                           child: Container(
                               alignment: Alignment.center,

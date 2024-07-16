@@ -52,7 +52,7 @@ class _JobDetailsState extends State<JobDetails> {
       if (!mounted) return;
       showToastSheet(
           context: context,
-          title: "Error",
+          title: "Error!",
           message: "Location services are disabled.",
           isError: true);
     }
@@ -66,7 +66,7 @@ class _JobDetailsState extends State<JobDetails> {
         if (!mounted) return;
         showToastSheet(
             context: context,
-            title: "Error",
+            title: "Error!",
             message: "Location permissions are denied.",
             isError: true);
         // return Future.error('Location permissions are denied');
@@ -78,7 +78,7 @@ class _JobDetailsState extends State<JobDetails> {
       if (!mounted) return;
       showToastSheet(
           context: context,
-          title: "Error",
+          title: "Error!",
           message:
               "Location permissions are permanently denied, we cannot request permissions.",
           isError: true);
@@ -103,7 +103,7 @@ class _JobDetailsState extends State<JobDetails> {
       if (!mounted) return;
       showToastSheet(
           context: context,
-          title: "Error",
+          title: "Error!",
           message: "Unable to get your current location for this time.",
           isError: true);
     }
@@ -122,6 +122,12 @@ class _JobDetailsState extends State<JobDetails> {
 
     res.when(success: (data) {
       context.read<JobProvider>().addLeg(data: data);
+      showToastSheet(
+          context: context,
+          title: "All Set to Drive!",
+          icon: "ready",
+          message:
+              "Your job has been successfully initiated, and you are now ready to begin driving.");
     }, failure: (error) {
       showErrorSheet(context: context, exception: error);
     });
@@ -144,6 +150,12 @@ class _JobDetailsState extends State<JobDetails> {
       context
           .read<JobProvider>()
           .updateLeg(data: data, isCompleted: isJobCompleted);
+      showToastSheet(
+          context: context,
+          title: "Stopped Driving!",
+          icon: isJobCompleted ? "final-destination" : "stay-night",
+          message:
+              "You have successfully stopped ${isJobCompleted ? "your current job upon reaching the final destination" : "driving and will stay for the night"}.");
     }, failure: (error) {
       showErrorSheet(context: context, exception: error);
     });

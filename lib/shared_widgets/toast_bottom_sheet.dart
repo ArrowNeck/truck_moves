@@ -14,6 +14,7 @@ showToastSheet({
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       isDismissible: false,
+      enableDrag: false,
       context: context,
       builder: (context) => ToastBottomSheet(
             title: title,
@@ -52,18 +53,8 @@ class ToastBottomSheet extends StatelessWidget {
           child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 7.5.h, bottom: 15.h),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                width: 36.h,
-                height: 5.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2.5.h),
-                    color: const Color(0xFF7F7F7F)),
-              ),
-            ),
+          SizedBox(
+            height: 20.h,
           ),
           Text(
             title,

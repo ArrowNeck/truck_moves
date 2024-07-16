@@ -20,7 +20,7 @@ class CustomHttp {
             token == null ? null : "Bearer $token";
         options.connectTimeout = const Duration(milliseconds: 25000);
         options.receiveTimeout = const Duration(milliseconds: 20000);
-        options.sendTimeout = const Duration(milliseconds: 1000);
+        options.sendTimeout = const Duration(milliseconds: 20000);
 
         return handler.next(options);
       },

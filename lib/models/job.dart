@@ -64,9 +64,17 @@ class Job {
         totalDistance: json["totalDistance"]?.toDouble(),
         totalDrivingTime: json["totalDrivingTime"],
         estimatedDaysofTravel: json["estimatedDaysofTravel"],
-        preDepartureChecklist: json["preDepartureChecklist"] != null
-            ? PreDepartureChecklist.fromJson(json["preDepartureChecklist"])
-            : null,
+
+        // preDepartureChecklist: json["preDepartureChecklist"] != null
+        //     ? PreDepartureChecklist.fromJson(json["preDepartureChecklist"])
+        //     : null,
+
+        preDepartureChecklist: (json["checklists"] as List).isEmpty
+            ? null
+            : PreDepartureChecklist.fromJson(
+                (json["checklists"] as List<dynamic>)
+                    .firstWhere((item) => item["isPre"] == true)),
+
         vehicleDetails: json["vehicleNavigation"] != null
             ? VehicleDetails.fromJson(json["vehicleNavigation"])
             : null,
@@ -271,6 +279,7 @@ class PreDepartureChecklist {
   String frontDamage;
   String rearDamage;
   double fuelLevel;
+  bool isPre;
   List<Note> notes;
 
   PreDepartureChecklist({
@@ -295,6 +304,7 @@ class PreDepartureChecklist {
     required this.frontDamage,
     required this.rearDamage,
     required this.fuelLevel,
+    required this.isPre,
     required this.notes,
   });
 
@@ -321,6 +331,7 @@ class PreDepartureChecklist {
         frontDamage: json["frontDamage"] ?? "NA",
         rearDamage: json["rearDamage"] ?? "NA",
         fuelLevel: json["fuelLevel"] ?? 0,
+        isPre: json["isPre"],
         notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
       );
 
@@ -346,6 +357,7 @@ class PreDepartureChecklist {
         "frontDamage": frontDamage,
         "rearDamage": rearDamage,
         "fuelLevel": fuelLevel,
+        "isPre": isPre,
         "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
       };
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/utils/api_results/api_result.dart';
@@ -74,7 +75,8 @@ class JobService {
         "startLocation": location,
         "endLocation": "",
         "status": 0,
-        "acknowledged": true
+        "acknowledged": true,
+        "isCompleted": false
       });
       return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {
@@ -95,10 +97,57 @@ class JobService {
         "startLocation": leg.startLocation,
         "endLocation": location,
         "status": leg.status,
-        // "acknowledged": leg.acknowledged
+        "acknowledged": leg.acknowledged,
         "isCompleted": isCompleted
       });
       return ApiResult.success(data: Leg.fromJson(response.data));
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<dynamic> addPurchase(
+      {required int driverId, required int jobId, required String url}) async {
+    try {
+      final response =
+          await CustomHttp.getDio().post("$baseUrl$purchase", data: {
+        "id": 0,
+        "jobId": jobId,
+        "status": 1,
+        "driver": driverId,
+        "fromMobile": true,
+        "organiseNow": false,
+        "assignee": null,
+        "reciptUrl": url,
+        "isFuel": null,
+        "vendor": null,
+        "liters": null,
+        "cost": null,
+        "itemDescription": null
+      });
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<String> upload({required String path}) async {
+    try {
+      String fileName = path.split('/').last;
+
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(path, filename: fileName),
+        "Ispurchase": true,
+      });
+
+      final response = await CustomHttp.getDio().post(
+          // options: Options(sendTimeout: const Duration(seconds: 5)),
+          "$baseUrl$imageUpload",
+          data: formData);
+
+      return ApiResult.success(data: response.data);
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));

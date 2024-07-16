@@ -1,87 +1,264 @@
 [
     {
-        "id": 3868,
+        "id": 3911,
         "status": 7,
-        "pickupLocation": "V7VG+2M Yarragundry NSW, Australia",
-        "dropOfLocation": "1335 Oura Rd, Oura NSW 2650, Australia",
-        "pickupCoordinates": "-35.1074089, 147.276732",
-        "dropOfCoordinates": "-35.1057, 147.5226853",
-        "pickupDate": "2024-07-10T18:29:59.06",
-        "estimatedDeliveryDate": "2024-07-10T18:29:59.06",
-        "vehicleId": 756,
-        "totalDistance": 25.963,
-        "totalDrivingTime": 21,
+        "pickupLocation": "H7W2+MW De Rose Hill SA, Australia",
+        "dropOfLocation": "Mundarlo Rd, Mundarlo NSW 2729, Australia",
+        "pickupCoordinates": "-26.4033418, 133.2522714",
+        "dropOfCoordinates": "-35.1897676, 147.7664961",
+        "pickupDate": "2024-07-12T18:29:59.06",
+        "estimatedDeliveryDate": "2024-07-14T12:59:59.06",
+        "vehicleId": 760,
+        "totalDistance": 2244.544,
+        "totalDrivingTime": 1416,
+        "estimatedDaysofTravel": 3,
+        "vehicleNavigation": {
+            "notes": [
+                {
+                    "id": 111,
+                    "jobId": 3911,
+                    "vehicleId": 760,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": false,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "this is my new vhl"
+                },
+                {
+                    "id": 112,
+                    "jobId": 3911,
+                    "vehicleId": 760,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": true,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "this is my new vhl"
+                }
+            ],
+            "images": [],
+            "id": 760,
+            "jobId": 3911,
+            "make": "Toyota",
+            "model": "yaris",
+            "rego": "12333123",
+            "vin": "123123",
+            "year": "2012",
+            "colour": "blue",
+            "jobStatus": null
+        },
+        "checklists": [
+            {
+                "id": 5,
+                "jobId": 3911,
+                "water": "YES",
+                "spareRim": "YES",
+                "allLightsAndIndicators": "YES",
+                "jackAndTools": "YES",
+                "ownersManual": "YES",
+                "airAndElectrics": "YES",
+                "tyresCondition": "YES",
+                "visuallyDipAndCheckTaps": "YES",
+                "windscreenDamageWipers": "YES",
+                "vehicleCleanFreeOfRubbish": "YES",
+                "keysFobTotalKeys": "YES",
+                "checkInsideTruckTrailer": "YES",
+                "oil": "YES",
+                "checkTruckHeight": "NA",
+                "leftHandDamage": "YES",
+                "rightHandDamage": "YES",
+                "frontDamage": "YES",
+                "rearDamage": "NO",
+                "fuelLevel": 0.75,
+                "isPre": true,
+                "notes": [
+                    {
+                        "id": 144,
+                        "jobId": 3911,
+                        "vehicleId": null,
+                        "trailerId": null,
+                        "checklistId": 5,
+                        "visibletoDriver": true,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "noteText": "Nothing…."
+                    }
+                ]
+            }
+        ],
+        "wayPoints": [
+            {
+                "id": 58708,
+                "jobId": 3911,
+                "location": "4QWRX45P+8J",
+                "coordinates": "-31.0416534, 136.1366176"
+            },
+            {
+                "id": 58709,
+                "jobId": 3911,
+                "location": "HPWJ+QX Winnininnie SA, Australia",
+                "coordinates": "-32.4030183, 139.7324509"
+            }
+        ],
+        "trailers": [],
+        "legs": [
+            {
+                "id": 5,
+                "jobId": 3911,
+                "legNumber": 1,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false
+            }
+        ]
+    },
+    {
+        "id": 3912,
+        "status": 6,
+        "pickupLocation": "7VF9+P8 Bannerton VIC, Australia",
+        "dropOfLocation": "Hardrock, 939 Mountain Ash Road, Gundary NSW 2580, Australia",
+        "pickupCoordinates": "-34.7257139, 142.8682829",
+        "dropOfCoordinates": "-34.810601, 149.8249159",
+        "pickupDate": "2024-07-12T18:29:59.06",
+        "estimatedDeliveryDate": "2024-07-12T18:29:59.06",
+        "vehicleId": 762,
+        "totalDistance": 777.544,
+        "totalDrivingTime": 505,
         "estimatedDaysofTravel": 1,
         "vehicleNavigation": {
             "notes": [
                 {
-                    "id": 104,
-                    "jobId": 3868,
-                    "vehicleId": 756,
+                    "id": 113,
+                    "jobId": 3912,
+                    "vehicleId": 762,
                     "trailerId": null,
-                    "permitAndPlatesId": null,
-                    "preDeparturechecklistId": null,
+                    "checklistId": null,
                     "visibletoDriver": false,
-                    "noteText": "new note for driver"
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new notte: dfsdf sdfsdfs sdfsdf sdfsdfsdf sdf sdf sdfsdfsdf"
                 },
                 {
-                    "id": 105,
-                    "jobId": 3868,
-                    "vehicleId": 756,
+                    "id": 114,
+                    "jobId": 3912,
+                    "vehicleId": 762,
                     "trailerId": null,
-                    "permitAndPlatesId": null,
-                    "preDeparturechecklistId": null,
+                    "checklistId": null,
                     "visibletoDriver": true,
-                    "noteText": "new note for driver"
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new notte: dfsdf sdfsdfs sdfsdf sdfsdfsdf sdf sdf sdfsdfsdf"
+                },
+                {
+                    "id": 115,
+                    "jobId": 3912,
+                    "vehicleId": 762,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": true,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new notte: dfsdf sdfsdfs sdfsdf sdfsdfsdf sdf sdf sdfsdfsdf"
+                },
+                {
+                    "id": 116,
+                    "jobId": 3912,
+                    "vehicleId": 762,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": true,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new notte: dfsdf sdfsdfs sdfsdf sdfsdfsdf sdf sdf sdfsdfsdfsdfgdfgdfgdfg"
+                },
+                {
+                    "id": 117,
+                    "jobId": 3912,
+                    "vehicleId": 762,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": true,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new notte: dfsdf sdfsdfs sdfsdf sdfsdfsdf sdf sdf sdfsdfsdfsdfgdfgdfgdfg"
                 }
             ],
             "images": [],
-            "id": 756,
-            "jobId": 3868,
-            "make": "toyota",
-            "model": "corolla",
-            "rego": "12123",
-            "vin": "123123",
-            "year": "20",
-            "colour": null,
+            "id": 762,
+            "jobId": 3912,
+            "make": "ferarri",
+            "model": "gt28",
+            "rego": "w34234",
+            "vin": "3252345",
+            "year": "2020",
+            "colour": "black",
             "jobStatus": null
         },
-        "preDepartureChecklist": {
-            "id": 15,
-            "jobId": 3868,
-            "water": "YES",
-            "spareRim": "YES",
-            "allLightsAndIndicators": "YES",
-            "jackAndTools": "YES",
-            "ownersManual": "YES",
-            "airAndElectrics": "YES",
-            "tyresCondition": "YES",
-            "visuallyDipAndCheckTaps": "YES",
-            "windscreenDamageWipers": "YES",
-            "vehicleCleanFreeOfRubbish": "YES",
-            "keysFobTotalKeys": "YES",
-            "checkInsideTruckTrailer": "YES",
-            "oil": "YES",
-            "checkTruckHeight": "YES",
-            "leftHandDamage": "YES",
-            "rightHandDamage": "YES",
-            "frontDamage": "YES",
-            "rearDamage": "YES",
-            "fuelLevel": 0.5,
-            "notes": [
-                {
-                    "id": 108,
-                    "jobId": 3868,
-                    "vehicleId": null,
-                    "trailerId": null,
-                    "permitAndPlatesId": null,
-                    "preDeparturechecklistId": 15,
-                    "visibletoDriver": true,
-                    "noteText": "Nothing "
-                }
-            ]
-        },
-        "wayPoints": [],
+        "checklists": [
+            {
+                "id": 4,
+                "jobId": 3912,
+                "water": "YES",
+                "spareRim": "YES",
+                "allLightsAndIndicators": "YES",
+                "jackAndTools": "YES",
+                "ownersManual": "YES",
+                "airAndElectrics": "YES",
+                "tyresCondition": "YES",
+                "visuallyDipAndCheckTaps": "YES",
+                "windscreenDamageWipers": "YES",
+                "vehicleCleanFreeOfRubbish": "YES",
+                "keysFobTotalKeys": "YES",
+                "checkInsideTruckTrailer": "YES",
+                "oil": "YES",
+                "checkTruckHeight": "YES",
+                "leftHandDamage": "YES",
+                "rightHandDamage": "YES",
+                "frontDamage": "NO",
+                "rearDamage": "NA",
+                "fuelLevel": 0.5,
+                "isPre": true,
+                "notes": [
+                    {
+                        "id": 143,
+                        "jobId": 3912,
+                        "vehicleId": null,
+                        "trailerId": null,
+                        "checklistId": 4,
+                        "visibletoDriver": true,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "noteText": "Nothing"
+                    }
+                ]
+            }
+        ],
+        "wayPoints": [
+            {
+                "id": 60075,
+                "jobId": 3912,
+                "location": "Sturt Hwy, Hay South NSW 2711, Australia",
+                "coordinates": "-34.6129557, 144.476902"
+            },
+            {
+                "id": 60076,
+                "jobId": 3912,
+                "location": "5RCV+CR Grong Grong NSW, Australia",
+                "coordinates": "-34.8289517, 146.8445665"
+            }
+        ],
         "trailers": [
             {
                 "hookupTypeNavigation": {
@@ -92,33 +269,62 @@
                 },
                 "notes": [],
                 "images": [],
-                "id": 49,
+                "id": 50,
                 "hookupType": 1,
-                "jobId": 3868,
-                "hookupLocation": "North Wagga Wagga NSW 2650, Australia",
-                "dropOffLocation": "Gumly Gumly NSW 2652, Australia",
+                "jobId": 3912,
+                "hookupLocation": "7VF9+P8 Bannerton VIC, Australia",
+                "dropOffLocation": "Hardrock, 939 Mountain Ash Road, Gundary NSW 2580, Australia",
+                "rego": "2344",
+                "type": "ascsac"
+            },
+            {
+                "hookupTypeNavigation": {
+                    "id": 3,
+                    "type": "FOUR_RA",
+                    "description": "4RA (4 Rigid Axle )",
+                    "trailers": []
+                },
+                "notes": [],
+                "images": [],
+                "id": 51,
+                "hookupType": 3,
+                "jobId": 3912,
+                "hookupLocation": "FV95+FW, Benerembah NSW 2680, Australia",
+                "dropOffLocation": "Tangmangaroo Rd, Kangiara NSW 2582, Australia",
                 "rego": "2344",
                 "type": "sdfdf"
             }
         ],
         "legs": [
             {
-                "id": 1,
-                "jobId": 3868,
+                "id": 3,
+                "jobId": 3912,
                 "legNumber": 1,
                 "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
-                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
-                "status": 3,
-                "acknowledged": false
+                "endLocation": "",
+                "status": 2,
+                "acknowledged": false,
+                "isCompleted": false
             },
             {
-                "id": 2,
-                "jobId": 3868,
+                "id": 6,
+                "jobId": 3912,
                 "legNumber": 2,
                 "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
                 "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
                 "status": 3,
-                "acknowledged": false
+                "acknowledged": false,
+                "isCompleted": false
+            },
+            {
+                "id": 7,
+                "jobId": 3912,
+                "legNumber": 3,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "",
+                "status": 2,
+                "acknowledged": false,
+                "isCompleted": false
             }
         ]
     }

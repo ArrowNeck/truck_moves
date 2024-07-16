@@ -22,7 +22,9 @@ const String userLogout = "logout";
 const String jobHeader = "Odata/Job/Get";
 const String getDepartureChecklist =
     "DepartureCheck/PreDepartureChecklistFields";
-const String saveDepartureChecklist = "Mobile/DepartureCheck/PostPut";
+const String saveDepartureChecklist = "Mobile/CheckList/PostPut";
 const String legUrl = "Mobile/Leg/Post";
+const String purchase = "Mobile/Purchase/PostPut";
+const String imageUpload = "Shared/ImageAndAttachments/Upload";
 
 //----------------------------------------------//

@@ -142,6 +142,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
       "jobId": widget.jobId,
       for (var c in checklist) c.id: c.isSelect.txt,
       "fuelLevel": fuelLevel,
+      "isPre": !widget.isArrival,
       "notes": [
         {
           "id": widget.preChecklist?.notes.firstOrNull?.id ?? 0,
@@ -164,16 +165,31 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
     res.when(success: (data) {
       log(data.toString());
-      showToastSheet(
-        context: context,
-        title: "Success",
-        message:
-            "Successfully ${(context.read<JobProvider>().currentlyRunningJob!.status < 4) ? "submitted" : "updated"} your pre departure checklist",
-        onTap: () {
-          Navigator.pop(context);
-        },
-      );
-      context.read<JobProvider>().addPrechecklist(data: data);
+      if (widget.isArrival) {
+        showToastSheet(
+          context: context,
+          title: "Well Done!",
+          message:
+              "Congratulations! \nYou have successfully completed job number ${widget.jobId}.",
+          icon: "complete",
+          onTap: () {
+            context.read<JobProvider>().jobClose(jobId: widget.jobId);
+            int count = 0;
+            Navigator.of(context).popUntil((_) => count++ >= 2);
+          },
+        );
+      } else {
+        showToastSheet(
+          context: context,
+          title: "Success!",
+          message:
+              "You have successfully ${(context.read<JobProvider>().currentlyRunningJob!.status < 4) ? "submitted" : "updated"} your pre-departure checklist.",
+          onTap: () {
+            context.read<JobProvider>().addPrechecklist(data: data);
+            Navigator.pop(context);
+          },
+        );
+      }
     }, failure: (error) {
       showErrorSheet(context: context, exception: error);
     });
