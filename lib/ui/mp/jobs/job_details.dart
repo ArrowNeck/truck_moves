@@ -185,29 +185,31 @@ class _JobDetailsState extends State<JobDetails> {
                   const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  HeroDialogRoute(
-                    builder: (_) => ConfirmationPopup(
-                      title: "Breakdown/Delay",
-                      message: "Are you sure you want to perform this action?",
-                      leftBtnText: "No",
-                      rightBtnText: "Yes",
-                      onRightTap: () {},
-                    ),
-                  ));
-            },
-            visualDensity: VisualDensity.compact,
-            icon: SvgPicture.asset(
-              "assets/icons/truck-tow.svg",
-              width: 22.5.h,
-              height: 22.5.h,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          if (!(job.status == 9))
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    HeroDialogRoute(
+                      builder: (_) => ConfirmationPopup(
+                        title: "Breakdown/Delay",
+                        message:
+                            "Are you sure you want to perform this action?",
+                        leftBtnText: "No",
+                        rightBtnText: "Yes",
+                        onRightTap: () {},
+                      ),
+                    ));
+              },
+              visualDensity: VisualDensity.compact,
+              icon: SvgPicture.asset(
+                "assets/icons/truck-tow.svg",
+                width: 22.5.h,
+                height: 22.5.h,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              ),
             ),
-          ),
           IconButton(
             onPressed: () {
               Navigator.push(context,

@@ -71,12 +71,8 @@ class JobService {
       final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
         "id": 0,
         "jobId": jobId,
-        "legNumber": 0,
         "startLocation": location,
-        "endLocation": "",
-        "status": 0,
-        "acknowledged": true,
-        "isCompleted": false
+        "acknowledged": true
       });
       return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {
@@ -93,11 +89,8 @@ class JobService {
       final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
         "id": leg.id,
         "jobId": leg.jobId,
-        "legNumber": leg.legNumber,
         "startLocation": leg.startLocation,
         "endLocation": location,
-        "status": leg.status,
-        "acknowledged": leg.acknowledged,
         "isCompleted": isCompleted
       });
       return ApiResult.success(data: Leg.fromJson(response.data));

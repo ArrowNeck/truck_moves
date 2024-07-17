@@ -108,39 +108,39 @@ class Job {
 class Leg {
   int id;
   int jobId;
-  int legNumber;
-  String startLocation;
-  String endLocation;
-  int status;
+  // int legNumber;
+  String? startLocation;
+  String? endLocation;
+  // int status;
   bool acknowledged;
 
   Leg({
     required this.id,
     required this.jobId,
-    required this.legNumber,
-    required this.startLocation,
-    required this.endLocation,
-    required this.status,
+    // required this.legNumber,
+    this.startLocation,
+    this.endLocation,
+    // required this.status,
     required this.acknowledged,
   });
 
   factory Leg.fromJson(Map<String, dynamic> json) => Leg(
         id: json["id"],
         jobId: json["jobId"],
-        legNumber: json["legNumber"],
-        startLocation: json["startLocation"],
-        endLocation: json["endLocation"],
-        status: json["status"],
+        // legNumber: json["legNumber"],
+        startLocation: json["startLocation"] ?? "",
+        endLocation: json["endLocation"] ?? "",
+        // status: json["status"],
         acknowledged: json["acknowledged"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "jobId": jobId,
-        "legNumber": legNumber,
+        // "legNumber": legNumber,
         "startLocation": startLocation,
         "endLocation": endLocation,
-        "status": status,
+        // "status": status,
         "acknowledged": acknowledged,
       };
 }

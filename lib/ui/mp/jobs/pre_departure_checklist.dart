@@ -13,6 +13,7 @@ import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/submit_button.dart';
+import 'package:truck_moves/ui/mp/home/home_page.dart';
 
 class PreDepartureChecklistPage extends StatefulWidget {
   final int jobId;
@@ -173,15 +174,21 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
               "Congratulations! \nYou have successfully completed job number ${widget.jobId}.",
           icon: "complete",
           onTap: () {
-            context.read<JobProvider>().jobClose(jobId: widget.jobId);
-            int count = 0;
-            Navigator.of(context).popUntil((_) => count++ >= 2);
+            // context.read<JobProvider>().jobClose(jobId: widget.jobId);
+            // int count = 0;
+            // Navigator.of(context).popUntil((_) => count++ >= 2);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePage()),
+              (route) => false,
+            );
           },
         );
       } else {
         showToastSheet(
           context: context,
           title: "Success!",
+          icon: "checklist",
           message:
               "You have successfully ${(context.read<JobProvider>().currentlyRunningJob!.status < 4) ? "submitted" : "updated"} your pre-departure checklist.",
           onTap: () {

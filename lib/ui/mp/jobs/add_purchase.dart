@@ -150,7 +150,7 @@ class _AddPurchaseState extends State<AddPurchase> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Text("Please take a photo of the receipt",
+                Text("Please take/select a photo of the receipt",
                     style: TextStyle(
                       fontSize: 16.sp,
                       color: Colors.white,

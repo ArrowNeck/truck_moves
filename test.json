@@ -1,5 +1,136 @@
 [
     {
+        "id": 2475,
+        "status": 9,
+        "pickupLocation": "sadasd",
+        "dropOfLocation": "asfas",
+        "pickupCoordinates": "sacasfasf",
+        "dropOfCoordinates": "asfasf",
+        "pickupDate": "2024-07-16T07:37:14.533",
+        "estimatedDeliveryDate": "2024-07-16T07:37:14.533",
+        "vehicleId": 768,
+        "totalDistance": 0,
+        "totalDrivingTime": 0,
+        "estimatedDaysofTravel": 0,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 768,
+            "jobId": 2475,
+            "make": "fsdf",
+            "model": "string",
+            "rego": "string",
+            "vin": "string",
+            "year": "string",
+            "colour": "string",
+            "jobStatus": null
+        },
+        "checklists": [
+            {
+                "id": 2,
+                "jobId": 2475,
+                "water": "string",
+                "spareRim": "string",
+                "allLightsAndIndicators": "string",
+                "jackAndTools": "string",
+                "ownersManual": "string",
+                "airAndElectrics": "string",
+                "tyresCondition": "string",
+                "visuallyDipAndCheckTaps": "string",
+                "windscreenDamageWipers": "string",
+                "vehicleCleanFreeOfRubbish": "string",
+                "keysFobTotalKeys": "string",
+                "checkInsideTruckTrailer": "string",
+                "oil": "string",
+                "checkTruckHeight": "string",
+                "leftHandDamage": "string",
+                "rightHandDamage": "string",
+                "frontDamage": "string",
+                "rearDamage": "string",
+                "fuelLevel": 0.0,
+                "isPre": true,
+                "notes": [
+                    {
+                        "id": 141,
+                        "jobId": 2475,
+                        "vehicleId": null,
+                        "trailerId": null,
+                        "checklistId": 2,
+                        "visibletoDriver": true,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "noteText": "sdsdf"
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "jobId": 2475,
+                "water": "string",
+                "spareRim": "string",
+                "allLightsAndIndicators": "string",
+                "jackAndTools": "string",
+                "ownersManual": "string",
+                "airAndElectrics": "string",
+                "tyresCondition": "string",
+                "visuallyDipAndCheckTaps": "string",
+                "windscreenDamageWipers": "string",
+                "vehicleCleanFreeOfRubbish": "string",
+                "keysFobTotalKeys": "string",
+                "checkInsideTruckTrailer": "string",
+                "oil": "string",
+                "checkTruckHeight": "string",
+                "leftHandDamage": "string",
+                "rightHandDamage": "string",
+                "frontDamage": "string",
+                "rearDamage": "string",
+                "fuelLevel": 0.0,
+                "isPre": false,
+                "notes": [
+                    {
+                        "id": 142,
+                        "jobId": 2475,
+                        "vehicleId": null,
+                        "trailerId": null,
+                        "checklistId": 3,
+                        "visibletoDriver": true,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "noteText": "sdsdf"
+                    }
+                ]
+            }
+        ],
+        "wayPoints": [],
+        "trailers": [],
+        "legs": [
+            {
+                "id": 10,
+                "jobId": 2475,
+                "legNumber": 1,
+                "startLocation": "string",
+                "endLocation": "string",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            },
+            {
+                "id": 11,
+                "jobId": 2475,
+                "legNumber": 2,
+                "startLocation": "string",
+                "endLocation": "string",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            }
+        ]
+    },
+    {
         "id": 3911,
         "status": 7,
         "pickupLocation": "H7W2+MW De Rose Hill SA, Australia",
@@ -114,13 +245,36 @@
                 "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
                 "status": 3,
                 "acknowledged": false,
-                "isCompleted": false
+                "isCompleted": false,
+                "jobStatus": null
+            },
+            {
+                "id": 8,
+                "jobId": 3911,
+                "legNumber": 2,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            },
+            {
+                "id": 12,
+                "jobId": 3911,
+                "legNumber": 3,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
             }
         ]
     },
     {
         "id": 3912,
-        "status": 6,
+        "status": 7,
         "pickupLocation": "7VF9+P8 Bannerton VIC, Australia",
         "dropOfLocation": "Hardrock, 939 Mountain Ash Road, Gundary NSW 2580, Australia",
         "pickupCoordinates": "-34.7257139, 142.8682829",
@@ -304,7 +458,8 @@
                 "endLocation": "",
                 "status": 2,
                 "acknowledged": false,
-                "isCompleted": false
+                "isCompleted": false,
+                "jobStatus": null
             },
             {
                 "id": 6,
@@ -314,17 +469,127 @@
                 "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
                 "status": 3,
                 "acknowledged": false,
-                "isCompleted": false
+                "isCompleted": false,
+                "jobStatus": null
             },
             {
                 "id": 7,
                 "jobId": 3912,
                 "legNumber": 3,
                 "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            }
+        ]
+    },
+    {
+        "id": 3868,
+        "status": 6,
+        "pickupLocation": "V7VG+2M Yarragundry NSW, Australia",
+        "dropOfLocation": "1335 Oura Rd, Oura NSW 2650, Australia",
+        "pickupCoordinates": "-35.1074089, 147.276732",
+        "dropOfCoordinates": "-35.1057, 147.5226853",
+        "pickupDate": "2024-07-10T18:29:59.06",
+        "estimatedDeliveryDate": "2024-07-10T18:29:59.06",
+        "vehicleId": 756,
+        "totalDistance": 25.963,
+        "totalDrivingTime": 21,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [
+                {
+                    "id": 104,
+                    "jobId": 3868,
+                    "vehicleId": 756,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": false,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new note for driver"
+                },
+                {
+                    "id": 105,
+                    "jobId": 3868,
+                    "vehicleId": 756,
+                    "trailerId": null,
+                    "checklistId": null,
+                    "visibletoDriver": true,
+                    "permitAndPlatesId": null,
+                    "accommodationId": null,
+                    "publicTransportId": null,
+                    "noteText": "new note for driver"
+                }
+            ],
+            "images": [],
+            "id": 756,
+            "jobId": 3868,
+            "make": "toyota",
+            "model": "corolla",
+            "rego": "12123",
+            "vin": "123123",
+            "year": "20",
+            "colour": null,
+            "jobStatus": null
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [
+            {
+                "hookupTypeNavigation": {
+                    "id": 1,
+                    "type": "HU_Single",
+                    "description": "HU Single",
+                    "trailers": []
+                },
+                "notes": [],
+                "images": [],
+                "id": 49,
+                "hookupType": 1,
+                "jobId": 3868,
+                "hookupLocation": "North Wagga Wagga NSW 2650, Australia",
+                "dropOffLocation": "Gumly Gumly NSW 2652, Australia",
+                "rego": "2344",
+                "type": "sdfdf"
+            }
+        ],
+        "legs": [
+            {
+                "id": 1,
+                "jobId": 3868,
+                "legNumber": 1,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            },
+            {
+                "id": 2,
+                "jobId": 3868,
+                "legNumber": 2,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "isCompleted": false,
+                "jobStatus": null
+            },
+            {
+                "id": 4,
+                "jobId": 3868,
+                "legNumber": 3,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
                 "endLocation": "",
                 "status": 2,
                 "acknowledged": false,
-                "isCompleted": false
+                "isCompleted": false,
+                "jobStatus": null
             }
         ]
     }

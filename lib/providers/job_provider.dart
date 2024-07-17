@@ -50,11 +50,11 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void jobClose({required int jobId}) {
-    currentlyRunningJob = null;
-    currentJobs!.removeWhere((job) => job.id == jobId);
-    notifyListeners();
-  }
+  // void jobClose({required int jobId}) {
+  //   currentlyRunningJob = null;
+  //   currentJobs!.removeWhere((job) => job.id == jobId);
+  //   notifyListeners();
+  // }
 
   void addLeg({required Leg data}) {
     currentlyRunningJob!.legs.add(data);

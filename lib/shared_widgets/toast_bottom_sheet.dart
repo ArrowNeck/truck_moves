@@ -87,10 +87,10 @@ class ToastBottomSheet extends StatelessWidget {
                 top: 20.h, bottom: 25.h, left: 16.w, right: 16.w),
             child: GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 if (onTap != null) {
                   onTap!();
                 }
-                Navigator.pop(context);
               },
               child: Container(
                 alignment: Alignment.center,
