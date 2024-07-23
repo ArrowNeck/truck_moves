@@ -70,14 +70,14 @@ class JobProvider with ChangeNotifier {
   }
 
   bool canAccessThisJob({required int jobId}) {
-    // int? higherStatusJobId;
-    // for (var job in currentJobs!) {
-    //   if (job.status > 3) {
-    //     higherStatusJobId = job.id;
-    //   }
-    // }
-    // return (higherStatusJobId == null || higherStatusJobId == jobId);
-    return true;
+    int? higherStatusJobId;
+    for (var job in currentJobs!) {
+      if (job.status > 3) {
+        higherStatusJobId = job.id;
+      }
+    }
+    return (higherStatusJobId == null || higherStatusJobId == jobId);
+    // return true;
   }
 }
 

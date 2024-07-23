@@ -37,26 +37,13 @@ class JobService {
     }
   }
 
-  // static Result<List<Checklist>> checklist() async {
-  //   try {
-  //     final response = await CustomHttp.getDio()
-  //         .get("${baseUrl}${getChecklist}");
-  //     return ApiResult.success(
-  //         data: (response.data as List)
-  //             .map((e) => Checklist.fromJson(e))
-  //             .toList());
-  //   } catch (e) {
-  //     ErrorLog.show(e);
-  //     return ApiResult.failure(error: NetworkExceptions.getDioException(e));
-  //   }
-  // }
-
   static Result<PreDepartureChecklist> saveChecklist(
       {required Map<String, dynamic> data}) async {
-    log(json.encode(data));
     try {
-      final response = await CustomHttp.getDio()
-          .post("$baseUrl$saveDepartureChecklist", data: json.encode(data));
+      final response = await CustomHttp.getDio().post(
+          "$baseUrl$saveDepartureChecklist",
+          options: Options(headers: {"jobId": data["jobId"]}),
+          data: json.encode(data));
       return ApiResult.success(
           data: PreDepartureChecklist.fromJson(response.data));
     } catch (e) {
@@ -68,12 +55,14 @@ class JobService {
   static Result<Leg> createLeg(
       {required int jobId, required String location}) async {
     try {
-      final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
-        "id": 0,
-        "jobId": jobId,
-        "startLocation": location,
-        "acknowledged": true
-      });
+      final response = await CustomHttp.getDio().post("$baseUrl$legUrl",
+          options: Options(headers: {"jobId": jobId}),
+          data: {
+            "id": 0,
+            "jobId": jobId,
+            "startLocation": location,
+            "acknowledged": true
+          });
       return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {
       ErrorLog.show(e);
@@ -86,13 +75,15 @@ class JobService {
       required String location,
       required bool isCompleted}) async {
     try {
-      final response = await CustomHttp.getDio().post("$baseUrl$legUrl", data: {
-        "id": leg.id,
-        "jobId": leg.jobId,
-        "startLocation": leg.startLocation,
-        "endLocation": location,
-        "isCompleted": isCompleted
-      });
+      final response = await CustomHttp.getDio().post("$baseUrl$legUrl",
+          options: Options(headers: {"jobId": leg.jobId}),
+          data: {
+            "id": leg.id,
+            "jobId": leg.jobId,
+            "startLocation": leg.startLocation,
+            "endLocation": location,
+            "isCompleted": isCompleted
+          });
       return ApiResult.success(data: Leg.fromJson(response.data));
     } catch (e) {
       ErrorLog.show(e);
@@ -103,22 +94,23 @@ class JobService {
   static Result<dynamic> addPurchase(
       {required int driverId, required int jobId, required String url}) async {
     try {
-      final response =
-          await CustomHttp.getDio().post("$baseUrl$purchase", data: {
-        "id": 0,
-        "jobId": jobId,
-        "status": 1,
-        "driver": driverId,
-        "fromMobile": true,
-        "organiseNow": false,
-        "assignee": null,
-        "reciptUrl": url,
-        "isFuel": null,
-        "vendor": null,
-        "liters": null,
-        "cost": null,
-        "itemDescription": null
-      });
+      final response = await CustomHttp.getDio().post("$baseUrl$purchase",
+          options: Options(headers: {"jobId": jobId}),
+          data: {
+            "id": 0,
+            "jobId": jobId,
+            "status": 1,
+            "driver": driverId,
+            "fromMobile": true,
+            "organiseNow": false,
+            "assignee": null,
+            "reciptUrl": url,
+            "isFuel": null,
+            "vendor": null,
+            "liters": null,
+            "cost": null,
+            "itemDescription": null
+          });
       return ApiResult.success(data: response.data);
     } catch (e) {
       ErrorLog.show(e);

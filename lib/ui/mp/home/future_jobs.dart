@@ -54,7 +54,13 @@ class _FutureJobsState extends State<FutureJobs> {
       }
       context.read<JobProvider>().setFutureJobs(data);
     }, failure: (error) {
-      showErrorSheet(context: context, exception: error);
+      showErrorSheet(
+        context: context,
+        exception: error,
+        onTap: () {
+          _getFutureJobs();
+        },
+      );
     });
   }
 

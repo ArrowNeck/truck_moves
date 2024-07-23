@@ -41,7 +41,7 @@ class _JobDetailsState extends State<JobDetails> {
     super.dispose();
   }
 
-  _getCurrentLocation() async {
+  Future<String> _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -49,12 +49,7 @@ class _JobDetailsState extends State<JobDetails> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Location services are not enabled, handle appropriately
-      if (!mounted) return;
-      showToastSheet(
-          context: context,
-          title: "Error!",
-          message: "Location services are disabled.",
-          isError: true);
+      return Future.error("Location services are disabled.");
     }
 
     permission = await Geolocator.checkPermission();
@@ -63,27 +58,14 @@ class _JobDetailsState extends State<JobDetails> {
 
       if (permission == LocationPermission.denied) {
         // Permissions are denied, handle appropriately
-        if (!mounted) return;
-        showToastSheet(
-            context: context,
-            title: "Error!",
-            message: "Location permissions are denied.",
-            isError: true);
-        // return Future.error('Location permissions are denied');
+        return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are permanently denied, handle appropriately
-      if (!mounted) return;
-      showToastSheet(
-          context: context,
-          title: "Error!",
-          message:
-              "Location permissions are permanently denied, we cannot request permissions.",
-          isError: true);
-      // return Future.error(
-      //     'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     Position position = await Geolocator.getCurrentPosition(
@@ -91,74 +73,86 @@ class _JobDetailsState extends State<JobDetails> {
     return _getAddressFromLatLng(position);
   }
 
-  _getAddressFromLatLng(Position position) async {
+  Future<String> _getAddressFromLatLng(Position position) async {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-
       Placemark place = placemarks[0];
-
       return "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
     } catch (e) {
-      if (!mounted) return;
-      showToastSheet(
-          context: context,
-          title: "Error!",
-          message: "Unable to get your current location for this time.",
-          isError: true);
+      return Future.error("Unable to get your current location for this time.");
     }
   }
 
   _createLeg() async {
-    String location = await _getCurrentLocation();
-    if (!mounted) return;
-    PageLoader.showLoader(context);
+    try {
+      PageLoader.showLoader(context);
+      String location = await _getCurrentLocation();
+      if (!mounted) return;
 
-    final res = await JobService.createLeg(
-        jobId: context.read<JobProvider>().currentlyRunningJob!.id,
-        location: location);
-    if (!mounted) return;
-    Navigator.pop(context);
+      final res = await JobService.createLeg(
+          jobId: context.read<JobProvider>().currentlyRunningJob!.id,
+          location: location);
+      if (mounted) Navigator.pop(context);
 
-    res.when(success: (data) {
-      context.read<JobProvider>().addLeg(data: data);
-      showToastSheet(
-          context: context,
-          title: "All Set to Drive!",
-          icon: "ready",
-          message:
-              "Your job has been successfully initiated, and you are now ready to begin driving.");
-    }, failure: (error) {
-      showErrorSheet(context: context, exception: error);
-    });
+      res.when(success: (data) {
+        context.read<JobProvider>().addLeg(data: data);
+        showToastSheet(
+            context: context,
+            title: "All Set to Drive!",
+            icon: "ready",
+            message:
+                "Your job has been successfully initiated, and you are now ready to begin driving.");
+      }, failure: (error) {
+        showErrorSheet(context: context, exception: error);
+      });
+    } catch (e) {
+      if (mounted) {
+        Navigator.pop(context);
+        showToastSheet(
+            context: context,
+            title: "Error!",
+            message: e.toString(),
+            isError: true);
+      }
+    }
   }
 
   _closeLeg({required bool isJobCompleted}) async {
-    // print(isJobCompleted);
-    String location = await _getCurrentLocation();
-    if (!mounted) return;
-    PageLoader.showLoader(context);
+    try {
+      PageLoader.showLoader(context);
+      String location = await _getCurrentLocation();
+      if (!mounted) return;
 
-    final res = await JobService.closeLeg(
-        leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
-        location: location,
-        isCompleted: isJobCompleted);
-    if (!mounted) return;
-    Navigator.pop(context);
+      final res = await JobService.closeLeg(
+          leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
+          location: location,
+          isCompleted: isJobCompleted);
+      if (mounted) Navigator.pop(context);
 
-    res.when(success: (data) {
-      context
-          .read<JobProvider>()
-          .updateLeg(data: data, isCompleted: isJobCompleted);
-      showToastSheet(
-          context: context,
-          title: "Stopped Driving!",
-          icon: isJobCompleted ? "final-destination" : "stay-night",
-          message:
-              "You have successfully stopped ${isJobCompleted ? "your current job upon reaching the final destination" : "driving and will stay for the night"}.");
-    }, failure: (error) {
-      showErrorSheet(context: context, exception: error);
-    });
+      res.when(success: (data) {
+        context
+            .read<JobProvider>()
+            .updateLeg(data: data, isCompleted: isJobCompleted);
+        showToastSheet(
+            context: context,
+            title: "Stopped Driving!",
+            icon: isJobCompleted ? "final-destination" : "stay-night",
+            message:
+                "You have successfully stopped ${isJobCompleted ? "your current job upon reaching the final destination" : "driving and will stay for the night"}.");
+      }, failure: (error) {
+        showErrorSheet(context: context, exception: error);
+      });
+    } catch (e) {
+      if (mounted) {
+        Navigator.pop(context);
+        showToastSheet(
+            context: context,
+            title: "Error!",
+            message: e.toString(),
+            isError: true);
+      }
+    }
   }
 
   @override
@@ -244,6 +238,7 @@ class _JobDetailsState extends State<JobDetails> {
                   pickupLocation: job.pickupLocation,
                   deliveryLocation: job.dropOfLocation,
                   wayPoints: job.wayPoints,
+                  trailers: job.trailers,
                 ),
                 _headerLabel("Vehicle Details", "truck-side"),
                 Row(

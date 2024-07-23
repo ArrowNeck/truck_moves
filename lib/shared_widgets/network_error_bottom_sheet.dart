@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/providers/auth_provider.dart';
 import 'package:truck_moves/ui/landing/login_page/login_page.dart';
+import 'package:truck_moves/ui/mp/home/home_page.dart';
 import 'package:truck_moves/utils/cache_manager.dart';
 import 'package:truck_moves/utils/custom_http.dart';
 import 'package:truck_moves/utils/exceptions/network_exceptions.dart';
@@ -67,9 +68,12 @@ class NetworkErrorBottomSheet extends StatelessWidget {
           ),
           Text(
             title ??
-                ((login && unAuth)
-                    ? "Access Denied"
-                    : NetworkExceptions.getErrorMessage(exception).first),
+                ((NetworkExceptions.getErrorMessage(exception).first ==
+                        "Invalid Request")
+                    ? "Notice of Job Assign"
+                    : (login && unAuth)
+                        ? "Access Denied"
+                        : NetworkExceptions.getErrorMessage(exception).first),
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w700,
@@ -86,9 +90,12 @@ class NetworkErrorBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Text(
               message ??
-                  ((login && unAuth)
-                      ? "The email or password you entered is incorrect. Please check your credentials and try again"
-                      : NetworkExceptions.getErrorMessage(exception)[1]),
+                  ((NetworkExceptions.getErrorMessage(exception).first ==
+                          "Invalid Request")
+                      ? "You are no longer assigned to this job, and it will be continued by someone else."
+                      : (login && unAuth)
+                          ? "The email or password you entered is incorrect. Please check your credentials and try again."
+                          : NetworkExceptions.getErrorMessage(exception)[1]),
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
@@ -97,7 +104,34 @@ class NetworkErrorBottomSheet extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          if (!login && unAuth)
+          if (NetworkExceptions.getErrorMessage(exception).first ==
+              "Invalid Request")
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.h, bottom: 25.h, left: 16.w, right: 16.w),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomePage()),
+                    (route) => false,
+                  );
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 50.h,
+                  decoration: BoxDecoration(color: primaryColor),
+                  child: Text(
+                    "Close",
+                    style: TextStyle(
+                        color: const Color(0xFF010101),
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+            )
+          else if (!login && unAuth)
             Padding(
               padding: EdgeInsets.only(
                   top: 20.h, bottom: 25.h, left: 16.w, right: 16.w),

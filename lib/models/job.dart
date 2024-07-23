@@ -156,19 +156,22 @@ class Trailer {
   String dropOffLocation;
   String rego;
   String type;
+  String? hookupCoordinate;
+  String? dropoffCoordinate;
 
-  Trailer({
-    required this.hookupTypeNavigation,
-    required this.notes,
-    required this.images,
-    required this.id,
-    required this.hookupType,
-    required this.jobId,
-    required this.hookupLocation,
-    required this.dropOffLocation,
-    required this.rego,
-    required this.type,
-  });
+  Trailer(
+      {required this.hookupTypeNavigation,
+      required this.notes,
+      required this.images,
+      required this.id,
+      required this.hookupType,
+      required this.jobId,
+      required this.hookupLocation,
+      required this.dropOffLocation,
+      required this.rego,
+      required this.type,
+      this.hookupCoordinate,
+      this.dropoffCoordinate});
 
   factory Trailer.fromJson(Map<String, dynamic> json) => Trailer(
         hookupTypeNavigation:
@@ -182,8 +185,10 @@ class Trailer {
         jobId: json["jobId"],
         hookupLocation: json["hookupLocation"],
         dropOffLocation: json["dropOffLocation"],
-        rego: json["rego"],
-        type: json["type"],
+        rego: json["rego"] ?? "-",
+        type: json["type"] ?? "-",
+        hookupCoordinate: json["hookupCoordinate"],
+        dropoffCoordinate: json["dropoffCoordinate"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -197,6 +202,8 @@ class Trailer {
         "dropOffLocation": dropOffLocation,
         "rego": rego,
         "type": type,
+        "hookupCoordinate": hookupCoordinate,
+        "dropoffCoordinate": dropoffCoordinate
       };
 }
 
@@ -230,14 +237,14 @@ class HookupTypeNavigation {
 }
 
 class WayPoint {
-  int id;
-  int jobId;
+  int? id;
+  int? jobId;
   String location;
   String coordinates;
 
   WayPoint({
-    required this.id,
-    required this.jobId,
+    this.id,
+    this.jobId,
     required this.location,
     required this.coordinates,
   });

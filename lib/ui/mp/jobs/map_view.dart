@@ -16,13 +16,15 @@ class MapView extends StatefulWidget {
   final String pickupLocation;
   final String deliveryLocation;
   final List<WayPoint> wayPoints;
+  final List<Trailer> trailers;
   const MapView(
       {super.key,
       required this.pickupCords,
       required this.deliveryCords,
       required this.wayPoints,
       required this.pickupLocation,
-      required this.deliveryLocation});
+      required this.deliveryLocation,
+      required this.trailers});
 
   @override
   State<MapView> createState() => MapViewState();
@@ -38,6 +40,7 @@ class MapViewState extends State<MapView> {
   late LatLng start;
   late LatLng end;
   List<LatLng> waypoints = [];
+  List<WayPoint> totalWaypoints = [];
 
   @override
   void initState() {
@@ -55,16 +58,31 @@ class MapViewState extends State<MapView> {
         double.parse(widget.pickupCords.split(", ").last));
     end = LatLng(double.parse(widget.deliveryCords.split(", ").first),
         double.parse(widget.deliveryCords.split(", ").last));
-
+    totalWaypoints = widget.wayPoints;
+    for (var item in widget.trailers) {
+      if (item.hookupCoordinate != null) {
+        totalWaypoints.add(WayPoint(
+            location: item.hookupLocation,
+            coordinates: item.hookupCoordinate!));
+      }
+      if (item.dropoffCoordinate != null) {
+        totalWaypoints.add(WayPoint(
+            location: item.dropOffLocation,
+            coordinates: item.dropoffCoordinate!));
+      }
+    }
     generateMarkers();
     final coordinates = await getPolylinePoints();
     generatePolylineFromPoints(coordinates);
   }
 
-  void generateMarkers() {
+  void generateMarkers() async {
     _markers.add(Marker(
         markerId: const MarkerId("Start"),
         position: start,
+        // icon: await BitmapDescriptor.asset(
+        //     const ImageConfiguration(size: Size(32, 32)),
+        //     'assets/images/logo-vtm.png'),
         icon: BitmapDescriptor.defaultMarker,
         onTap: () {
           luanchMap(
@@ -72,10 +90,10 @@ class MapViewState extends State<MapView> {
               longitude: start.longitude,
               name: widget.pickupLocation);
         }));
-    for (int i = 0; i < widget.wayPoints.length; i++) {
+    for (int i = 0; i < totalWaypoints.length; i++) {
       LatLng point = LatLng(
-          double.parse(widget.wayPoints[i].coordinates.split(", ").first),
-          double.parse(widget.wayPoints[i].coordinates.split(", ").last));
+          double.parse(totalWaypoints[i].coordinates.split(", ").first),
+          double.parse(totalWaypoints[i].coordinates.split(", ").last));
       waypoints.add(point);
       _markers.add(Marker(
           markerId: MarkerId("$i"),
@@ -85,7 +103,7 @@ class MapViewState extends State<MapView> {
             luanchMap(
                 latitude: point.latitude,
                 longitude: point.longitude,
-                name: widget.wayPoints[i].location);
+                name: totalWaypoints[i].location);
           }));
     }
     _markers.add(Marker(
