@@ -232,14 +232,16 @@ class _JobDetailsState extends State<JobDetails> {
                 _dataItem2("Delivery Address", job.dropOfLocation),
                 _dataItem2(
                     "Delivery Date", job.estimatedDeliveryDate?.format ?? ""),
-                MapView(
-                  pickupCords: job.pickupCoordinates,
-                  deliveryCords: job.dropOfCoordinates,
-                  pickupLocation: job.pickupLocation,
-                  deliveryLocation: job.dropOfLocation,
-                  wayPoints: job.wayPoints,
-                  trailers: job.trailers,
-                ),
+                if ((job.pickupCoordinates?.isNotEmpty ?? true) &&
+                    (job.dropOfCoordinates?.isNotEmpty ?? true))
+                  MapView(
+                    pickupCords: job.pickupCoordinates!,
+                    deliveryCords: job.dropOfCoordinates!,
+                    pickupLocation: job.pickupLocation,
+                    deliveryLocation: job.dropOfLocation,
+                    wayPoints: job.wayPoints,
+                    trailers: job.trailers,
+                  ),
                 _headerLabel("Vehicle Details", "truck-side"),
                 Row(
                   children: [

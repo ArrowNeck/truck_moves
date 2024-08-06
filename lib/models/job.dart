@@ -13,8 +13,8 @@ class Job {
   int status;
   String pickupLocation;
   String dropOfLocation;
-  String pickupCoordinates;
-  String dropOfCoordinates;
+  String? pickupCoordinates;
+  String? dropOfCoordinates;
   DateTime? pickupDate;
   DateTime? estimatedDeliveryDate;
   int? vehicleId;
@@ -32,8 +32,8 @@ class Job {
     required this.status,
     required this.pickupLocation,
     required this.dropOfLocation,
-    required this.pickupCoordinates,
-    required this.dropOfCoordinates,
+    this.pickupCoordinates,
+    this.dropOfCoordinates,
     this.pickupDate,
     this.estimatedDeliveryDate,
     this.vehicleId,
@@ -50,8 +50,8 @@ class Job {
   factory Job.fromJson(Map<String, dynamic> json) => Job(
         id: json["id"],
         status: json["status"],
-        pickupLocation: json["pickupLocation"],
-        dropOfLocation: json["dropOfLocation"],
+        pickupLocation: json["pickupLocation"] ?? " -",
+        dropOfLocation: json["dropOfLocation"] ?? " -",
         pickupCoordinates: json["pickupCoordinates"],
         dropOfCoordinates: json["dropOfCoordinates"],
         pickupDate: json["pickupDate"] != null
@@ -64,17 +64,11 @@ class Job {
         totalDistance: json["totalDistance"]?.toDouble(),
         totalDrivingTime: json["totalDrivingTime"],
         estimatedDaysofTravel: json["estimatedDaysofTravel"],
-
-        // preDepartureChecklist: json["preDepartureChecklist"] != null
-        //     ? PreDepartureChecklist.fromJson(json["preDepartureChecklist"])
-        //     : null,
-
         preDepartureChecklist: (json["checklists"] as List).isEmpty
             ? null
             : PreDepartureChecklist.fromJson(
                 (json["checklists"] as List<dynamic>)
                     .firstWhere((item) => item["isPre"] == true)),
-
         vehicleDetails: json["vehicleNavigation"] != null
             ? VehicleDetails.fromJson(json["vehicleNavigation"])
             : null,
@@ -177,7 +171,9 @@ class Trailer {
         hookupTypeNavigation:
             HookupTypeNavigation.fromJson(json["hookupTypeNavigation"]),
         notes: (json["notes"] as List<dynamic>)
-            .map((x) => x["noteText"] as String)
+            .map((x) => (x["noteText"]))
+            .toList()
+            .whereType<String>()
             .toList(),
         images: List<dynamic>.from(json["images"].map((x) => x)),
         id: json["id"],
@@ -185,8 +181,8 @@ class Trailer {
         jobId: json["jobId"],
         hookupLocation: json["hookupLocation"],
         dropOffLocation: json["dropOffLocation"],
-        rego: json["rego"] ?? "-",
-        type: json["type"] ?? "-",
+        rego: json["rego"] ?? " -",
+        type: json["type"] ?? " -",
         hookupCoordinate: json["hookupCoordinate"],
         dropoffCoordinate: json["dropoffCoordinate"],
       );
