@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:truck_moves/models/vehicle_details.dart';
 
 List<Job> jobFromJson(String str) =>
@@ -284,32 +283,33 @@ class PreDepartureChecklist {
   double fuelLevel;
   bool isPre;
   List<Note> notes;
+  List<String> images;
 
-  PreDepartureChecklist({
-    required this.id,
-    required this.jobId,
-    required this.water,
-    required this.spareRim,
-    required this.allLightsAndIndicators,
-    required this.jackAndTools,
-    required this.ownersManual,
-    required this.airAndElectrics,
-    required this.tyresCondition,
-    required this.visuallyDipAndCheckTaps,
-    required this.windscreenDamageWipers,
-    required this.vehicleCleanFreeOfRubbish,
-    required this.keysFobTotalKeys,
-    required this.checkInsideTruckTrailer,
-    required this.oil,
-    required this.checkTruckHeight,
-    required this.leftHandDamage,
-    required this.rightHandDamage,
-    required this.frontDamage,
-    required this.rearDamage,
-    required this.fuelLevel,
-    required this.isPre,
-    required this.notes,
-  });
+  PreDepartureChecklist(
+      {required this.id,
+      required this.jobId,
+      required this.water,
+      required this.spareRim,
+      required this.allLightsAndIndicators,
+      required this.jackAndTools,
+      required this.ownersManual,
+      required this.airAndElectrics,
+      required this.tyresCondition,
+      required this.visuallyDipAndCheckTaps,
+      required this.windscreenDamageWipers,
+      required this.vehicleCleanFreeOfRubbish,
+      required this.keysFobTotalKeys,
+      required this.checkInsideTruckTrailer,
+      required this.oil,
+      required this.checkTruckHeight,
+      required this.leftHandDamage,
+      required this.rightHandDamage,
+      required this.frontDamage,
+      required this.rearDamage,
+      required this.fuelLevel,
+      required this.isPre,
+      required this.notes,
+      required this.images});
 
   factory PreDepartureChecklist.fromJson(Map<String, dynamic> json) =>
       PreDepartureChecklist(
@@ -336,6 +336,7 @@ class PreDepartureChecklist {
         fuelLevel: json["fuelLevel"] ?? 0,
         isPre: json["isPre"],
         notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
+        images: List<String>.from(json["checkListImages"].map((x) => x["url"])),
       );
 
   Map<String, dynamic> toJson() => {
@@ -362,49 +363,30 @@ class PreDepartureChecklist {
         "fuelLevel": fuelLevel,
         "isPre": isPre,
         "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
+        "checkListImages": images,
       };
 }
 
 class Note {
   int id;
-  int jobId;
-  int? vehicleId;
-  int? trailerId;
-  int? permitAndPlatesId;
-  int? preDeparturechecklistId;
-  bool? visibletoDriver;
+  int checklistId;
   String noteText;
 
   Note({
     required this.id,
-    required this.jobId,
-    this.vehicleId,
-    this.trailerId,
-    this.permitAndPlatesId,
-    this.preDeparturechecklistId,
-    this.visibletoDriver,
+    required this.checklistId,
     required this.noteText,
   });
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
         id: json["id"],
-        jobId: json["jobId"],
-        vehicleId: json["vehicleId"],
-        trailerId: json["trailerId"],
-        permitAndPlatesId: json["permitAndPlatesId"],
-        preDeparturechecklistId: json["preDeparturechecklistId"],
-        visibletoDriver: json["visibletoDriver"],
+        checklistId: json["checklistId"] ?? 0,
         noteText: json["noteText"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "jobId": jobId,
-        "vehicleId": vehicleId,
-        "trailerId": trailerId,
-        "permitAndPlatesId": permitAndPlatesId,
-        "preDeparturechecklistId": preDeparturechecklistId,
-        "visibletoDriver": visibletoDriver,
+        "checklistId": checklistId,
         "noteText": noteText,
       };
 }

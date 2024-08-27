@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:path/path.dart' as pt;
 import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/utils/api_results/api_result.dart';
@@ -133,6 +134,36 @@ class JobService {
           data: formData);
 
       return ApiResult.success(data: response.data);
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<List<String>> uploadMultiple(
+      {required List<String> paths}) async {
+    try {
+      FormData formData = FormData();
+      for (String path in paths) {
+        formData.files.add(
+          MapEntry(
+            'files',
+            await MultipartFile.fromFile(
+              path,
+              filename: pt.basename(path),
+            ),
+          ),
+        );
+      }
+
+      final response = await CustomHttp.getDio().post(
+          "$baseUrl$multipleImageUpload?IsCheckList=true",
+          data: formData);
+
+      return ApiResult.success(
+          data: (response.data as List<dynamic>)
+              .map((x) => x as String)
+              .toList());
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));

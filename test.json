@@ -1,207 +1,22 @@
 [
     {
-        "id": 3869,
-        "status": 2,
-        "pickupLocation": "MQVC+CH Parilla SA, Australia",
-        "dropOfLocation": "MFV5+QP Bungendore NSW, Australia",
-        "pickupCoordinates": "-35.3064445, 140.7713832",
-        "dropOfCoordinates": "-35.30550789999999, 149.4593116",
-        "pickupDate": "2024-07-12T18:29:59.06",
-        "estimatedDeliveryDate": "2024-07-13T18:29:59.06",
-        "vehicleId": 758,
-        "totalDistance": 1030.315,
-        "totalDrivingTime": 666,
-        "estimatedDaysofTravel": 2,
-        
-        "checklists": [],
-        "wayPoints": [
-            {
-                "id": 58678,
-                "jobId": 3869,
-                "location": "4RQ5JM43+8Q",
-                "coordinates": "-34.3942354, 143.6544943"
-            }
-        ],
-        "trailers": [],
-        "legs": []
+        "id": 20,
+        "checklistId": 33,
+        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/f7b1c4f6-d531-4f2c-81c7-f3d47a6d1db0_CAP7606471492099871813.jpg"
     },
     {
-        "id": 4066,
-        "status": 1,
-        "pickupLocation": "Sturt Hwy, Yarragundry NSW 2650, Australia",
-        "dropOfLocation": "3779 Sturt Hwy, Forest Hill NSW 2651, Australia",
-        "pickupCoordinates": "-35.105957, 147.2049022",
-        "dropOfCoordinates": "-35.1312725, 147.438333",
-        "pickupDate": "2024-07-23T18:29:59.06",
-        "estimatedDeliveryDate": "2024-07-23T18:29:59.06",
-        "vehicleId": null,
-        "totalDistance": 25.599,
-        "totalDrivingTime": 25,
-        "estimatedDaysofTravel": 1,
-        "checklists": [],
-        "wayPoints": [],
-        "trailers": [
-            {
-                "hookupTypeNavigation": {
-                    "id": 1,
-                    "type": "HU_Single",
-                    "description": "HU Single",
-                    "trailers": []
-                },
-                "notes": [],
-                "images": [],
-                "id": 58,
-                "hookupType": 1,
-                "jobId": 4066,
-                "hookupLocation": "Perth WA, Australia",
-                "dropOffLocation": "1638 Steve Irwin Way, Beerwah QLD 4519, Australia",
-                "rego": null,
-                "type": null,
-                "hookupCoordinate": "-31.9513993, 115.8616783",
-                "dropoffCoordinate": "-26.836731, 152.9595009"
-            }
-        ],
-        "legs": []
+        "id": 21,
+        "checklistId": 33,
+        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/7c13e867-8890-4b93-ac06-e60e972aef70_CAP4941410417361638771.jpg"
     },
     {
-        "id": 3862,
-        "status": 1,
-        "pickupLocation": "8870 B64, Stuart SA 5320, Australia",
-        "dropOfLocation": "88VG+6V Bundanoon NSW, Australia",
-        "pickupCoordinates": "-34.00905340000001, 139.7125807",
-        "dropOfCoordinates": "-34.6569446, 150.3272077",
-        "pickupDate": "2024-07-10T18:29:59.06",
-        "estimatedDeliveryDate": "2024-07-11T12:59:59.06",
-        "vehicleId": null,
-        "totalDistance": 1132.7,
-        "totalDrivingTime": 725,
-        "estimatedDaysofTravel": 2,
-        "vehicleNavigation": {
-            "notes": [
-                {
-                    "id": 99,
-                    "jobId": 3862,
-                    "vehicleId": 714,
-                    "trailerId": null,
-                    "checklistId": null,
-                    "visibletoDriver": true,
-                    "permitAndPlatesId": null,
-                    "accommodationId": null,
-                    "publicTransportId": null,
-                    "noteText": "new note for you bla bla"
-                },
-                {
-                    "id": 100,
-                    "jobId": 3862,
-                    "vehicleId": 714,
-                    "trailerId": null,
-                    "checklistId": null,
-                    "visibletoDriver": true,
-                    "permitAndPlatesId": null,
-                    "accommodationId": null,
-                    "publicTransportId": null,
-                    "noteText": "second new note for you bla bla"
-                }
-            ],
-            "images": [],
-            "id": 714,
-            "jobId": 3862,
-            "make": "Toyota",
-            "model": "corolla",
-            "rego": "12322",
-            "vin": "123123",
-            "year": "2008",
-            "colour": "black",
-            "jobStatus": null
-        },
-        "checklists": [],
-        "wayPoints": [
-            {
-                "id": 58535,
-                "jobId": 3862,
-                "location": "Sturt Hwy, Maude NSW 2711, Australia",
-                "coordinates": "-34.6898884, 144.0498703"
-            }
-        ],
-        "trailers": [
-            {
-                "hookupTypeNavigation": {
-                    "id": 1,
-                    "type": "HU_Single",
-                    "description": "HU Single",
-                    "trailers": []
-                },
-                "notes": [
-                    {
-                        "id": 101,
-                        "jobId": 3862,
-                        "vehicleId": null,
-                        "trailerId": 47,
-                        "checklistId": null,
-                        "visibletoDriver": null,
-                        "permitAndPlatesId": null,
-                        "accommodationId": null,
-                        "publicTransportId": null,
-                        "noteText": "I AM THE new Trailer"
-                    }
-                ],
-                "images": [],
-                "id": 47,
-                "hookupType": 1,
-                "jobId": 3862,
-                "hookupLocation": "Coolamon NSW 2701, Australia",
-                "dropOffLocation": "Canberra ACT, Australia",
-                "rego": "2344",
-                "type": "ascsac",
-                "hookupCoordinate": null,
-                "dropoffCoordinate": null
-            },
-            {
-                "hookupTypeNavigation": {
-                    "id": 2,
-                    "type": "HU_Double",
-                    "description": "HU Double",
-                    "trailers": []
-                },
-                "notes": [],
-                "images": [],
-                "id": 48,
-                "hookupType": 2,
-                "jobId": 3862,
-                "hookupLocation": "4RQ2QXWW+CX",
-                "dropOffLocation": "88VG+6V Bundanoon NSW, Australia",
-                "rego": "2344",
-                "type": "ascsac",
-                "hookupCoordinate": null,
-                "dropoffCoordinate": null
-            }
-        ],
-        "legs": []
+        "id": 0,
+        "checklistId": 0,
+        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/f7b1c4f6-d531-4f2c-81c7-f3d47a6d1db0_CAP7606471492099871813.jpg"
     },
     {
-        "id": 4053,
-        "status": 1,
-        "pickupLocation": "Sturt Hwy, Yarragundry NSW 2650, Australia",
-        "dropOfLocation": "Parkins Rd, Eunanoreenya NSW 2650, Australia",
-        "pickupCoordinates": "-35.1145892, 147.2433195",
-        "dropOfCoordinates": "-35.0940714, 147.4842112",
-        "pickupDate": "2024-07-08T18:29:59.06",
-        "estimatedDeliveryDate": "2024-07-08T18:29:59.06",
-        "vehicleId": null,
-        "totalDistance": 55.638,
-        "totalDrivingTime": 42,
-        "estimatedDaysofTravel": 1,
-        "vehicleNavigation": null,
-        "checklists": [],
-        "wayPoints": [
-            {
-                "id": 166314,
-                "jobId": 4053,
-                "location": "V3WR+W2 Collingullie NSW, Australia",
-                "coordinates": "-35.1026261, 147.0900573"
-            }
-        ],
-        "trailers": [],
-        "legs": []
+        "id": 0,
+        "checklistId": 0,
+        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/7c13e867-8890-4b93-ac06-e60e972aef70_CAP4941410417361638771.jpg"
     }
 ]

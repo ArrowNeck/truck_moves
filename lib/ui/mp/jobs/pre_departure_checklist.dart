@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:multiple_image_camera/camera_file.dart';
+import 'package:multiple_image_camera/multiple_image_camera.dart';
 import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
 import 'package:truck_moves/models/job.dart';
@@ -34,88 +39,90 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   late TextEditingController _textController;
   double fuelLevel = 0;
   List<PreCheck> checklist = [];
+  List<String> images = [];
+  List<String> imagesAlreadyHave = [];
 
   @override
   void initState() {
+    images = [];
+    log(json.encode(widget.preChecklist));
     _textController = TextEditingController(
         text: widget.preChecklist?.notes.firstOrNull?.noteText);
     fuelLevel = widget.preChecklist?.fuelLevel ?? 0;
+    imagesAlreadyHave = widget.preChecklist?.images ?? [];
     checklist = [
       PreCheck(
           id: "water",
           name: "Water (Used Vehicles)",
-          isSelect: _getCheckType(widget.preChecklist?.water)),
+          type: _getCheckType(widget.preChecklist?.water)),
       PreCheck(
           id: "spareRim",
           name: "Spare Rim",
-          isSelect: _getCheckType(widget.preChecklist?.spareRim)),
+          type: _getCheckType(widget.preChecklist?.spareRim)),
       PreCheck(
           id: "allLightsAndIndicators",
           name: "All lights & Indicators",
-          isSelect: _getCheckType(widget.preChecklist?.allLightsAndIndicators)),
+          type: _getCheckType(widget.preChecklist?.allLightsAndIndicators)),
       PreCheck(
           id: "jackAndTools",
           name: "Jack and Tools",
-          isSelect: _getCheckType(widget.preChecklist?.jackAndTools)),
+          type: _getCheckType(widget.preChecklist?.jackAndTools)),
       PreCheck(
           id: "ownersManual",
           name: "Owners Manual",
-          isSelect: _getCheckType(widget.preChecklist?.ownersManual)),
+          type: _getCheckType(widget.preChecklist?.ownersManual)),
       PreCheck(
           id: "airAndElectrics",
           name: "Air & Electrics [Secure]",
-          isSelect: _getCheckType(widget.preChecklist?.airAndElectrics)),
+          type: _getCheckType(widget.preChecklist?.airAndElectrics)),
       PreCheck(
           id: "tyresCondition",
           name: "Tyres Condition",
-          isSelect: _getCheckType(widget.preChecklist?.tyresCondition)),
+          type: _getCheckType(widget.preChecklist?.tyresCondition)),
       PreCheck(
           id: "visuallyDipAndCheckTaps",
           name: "Visually Dip Fuel & Check Taps",
-          isSelect:
-              _getCheckType(widget.preChecklist?.visuallyDipAndCheckTaps)),
+          type: _getCheckType(widget.preChecklist?.visuallyDipAndCheckTaps)),
       PreCheck(
           id: "windscreenDamageWipers",
           name: "Windscreen Damage / Wipers",
-          isSelect: _getCheckType(widget.preChecklist?.windscreenDamageWipers)),
+          type: _getCheckType(widget.preChecklist?.windscreenDamageWipers)),
       PreCheck(
           id: "vehicleCleanFreeOfRubbish",
           name: "Vehicle Clean & Free of Rubbish",
-          isSelect:
-              _getCheckType(widget.preChecklist?.vehicleCleanFreeOfRubbish)),
+          type: _getCheckType(widget.preChecklist?.vehicleCleanFreeOfRubbish)),
       PreCheck(
           id: "keysFobTotalKeys",
           name: "Keys / Fob - Total Keys",
-          isSelect: _getCheckType(widget.preChecklist?.keysFobTotalKeys)),
+          type: _getCheckType(widget.preChecklist?.keysFobTotalKeys)),
       PreCheck(
           id: "checkInsideTruckTrailer",
           name: "Check Inside Truck & Trailer for loose or unrestrained loads",
-          isSelect:
-              _getCheckType(widget.preChecklist?.checkInsideTruckTrailer)),
+          type: _getCheckType(widget.preChecklist?.checkInsideTruckTrailer)),
       PreCheck(
           id: "oil",
           name: "Oil (Used Vehicles)",
-          isSelect: _getCheckType(widget.preChecklist?.oil)),
+          type: _getCheckType(widget.preChecklist?.oil)),
       PreCheck(
           id: "checkTruckHeight",
           name: "Check Truck Height (4.3m)",
-          isSelect: _getCheckType(widget.preChecklist?.checkTruckHeight)),
+          type: _getCheckType(widget.preChecklist?.checkTruckHeight)),
       PreCheck(
           id: "leftHandDamage",
           name: "Left Hand Damage",
-          isSelect: _getCheckType(widget.preChecklist?.leftHandDamage)),
+          type: _getCheckType(widget.preChecklist?.leftHandDamage)),
       PreCheck(
           id: "rightHandDamage",
           name: "Right Hand Damage",
-          isSelect: _getCheckType(widget.preChecklist?.rightHandDamage)),
+          type: _getCheckType(widget.preChecklist?.rightHandDamage)),
       PreCheck(
           id: "frontDamage",
           name: "Front Damage",
-          isSelect: _getCheckType(widget.preChecklist?.frontDamage)),
+          type: _getCheckType(widget.preChecklist?.frontDamage)),
       PreCheck(
           id: "rearDamage",
           name: "Rear Damage",
-          isSelect: _getCheckType(widget.preChecklist?.rearDamage)),
+          type: _getCheckType(widget.preChecklist?.rearDamage)),
     ];
     super.initState();
   }
@@ -128,12 +135,60 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
   _getCheckType(String? value) {
     if (value == "NO") {
-      return false;
+      return 0;
+    }
+    if (value == "YES") {
+      return 1;
     }
     if (value == "NA") {
-      return null;
+      return 2;
     }
-    return true;
+    return 3;
+  }
+
+  _imageFromCamera() async {
+    try {
+      List<MediaModel> imgs =
+          await MultipleImageCamera.capture(context: context);
+
+      images.addAll(imgs.map((file) => file.file.path).toList());
+      if ((imagesAlreadyHave.length + images.length) > 5) {
+        images.removeRange((5 - imagesAlreadyHave.length), images.length);
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  _uploadImages() async {
+    if (checklist.any((x) => x.type > 2)) {
+      showToastSheet(
+          context: context,
+          title: "Checklist Incomplete!",
+          message:
+              "Checklist Not Completed. Please ensure all required items are checked off before proceeding.",
+          isError: true);
+    } else {
+      if (images.isNotEmpty) {
+        PageLoader.showLoader(context);
+        final res = await JobService.uploadMultiple(paths: images);
+        if (!mounted) return;
+        Navigator.pop(context);
+
+        res.when(success: (data) {
+          setState(() {
+            images = [];
+            imagesAlreadyHave.addAll(data);
+          });
+          _savePreChecklist();
+        }, failure: (error) {
+          showErrorSheet(context: context, exception: error);
+        });
+      } else {
+        _savePreChecklist();
+      }
+    }
   }
 
   _savePreChecklist() async {
@@ -141,24 +196,27 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
     Map<String, dynamic> data = {
       "id": widget.preChecklist?.id ?? 0,
       "jobId": widget.jobId,
-      for (var c in checklist) c.id: c.isSelect.txt,
+      for (var c in checklist) c.id: c.type.txt,
       "fuelLevel": fuelLevel,
       "isPre": !widget.isArrival,
       "notes": [
         {
           "id": widget.preChecklist?.notes.firstOrNull?.id ?? 0,
-          "jobId": widget.jobId,
+          "jobId": null,
           "vehicleId": null,
           "trailerId": null,
-          "permitAndPlatesId": null,
-          "preDeparturechecklistId":
-              widget.preChecklist?.notes.firstOrNull?.preDeparturechecklistId ??
-                  0,
+          "checklistId":
+              widget.preChecklist?.notes.firstOrNull?.checklistId ?? 0,
           "visibletoDriver": true,
+          "permitAndPlatesId": null,
           "accommodationId": null,
+          "publicTransportId": null,
           "noteText": _textController.text
-        }
-      ]
+        },
+      ],
+      "checkListImages": imagesAlreadyHave
+          .map((x) => {"id": 0, "checklistId": 0, "url": x})
+          .toList()
     };
     final res = await JobService.saveChecklist(data: data);
     if (!mounted) return;
@@ -174,9 +232,6 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
               "Congratulations! \nYou have successfully completed job number ${widget.jobId}.",
           icon: "complete",
           onTap: () {
-            // context.read<JobProvider>().jobClose(jobId: widget.jobId);
-            // int count = 0;
-            // Navigator.of(context).popUntil((_) => count++ >= 2);
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomePage()),
@@ -308,7 +363,175 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                   ],
                 ),
               ),
-            )
+            ),
+            (images.isNotEmpty || imagesAlreadyHave.isNotEmpty)
+                ? Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFF416188))),
+                    child: GridView.count(
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      children: [
+                        ...imagesAlreadyHave.map((url) => ClipRRect(
+                              borderRadius: BorderRadius.circular(8.h),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl: url,
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Center(
+                                                child: SizedBox(
+                                      height: 30.h,
+                                      width: 30.h,
+                                      child: CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                        color: Colors.white,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                primaryColor),
+                                      ),
+                                    )),
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Center(
+                                            child: SizedBox(
+                                      height: 30.h,
+                                      width: 30.h,
+                                      child: const Icon(
+                                        Icons.error,
+                                        color: Colors.redAccent,
+                                      ),
+                                    )),
+                                  ),
+                                  if (!(widget.isArrival
+                                      ? false
+                                      : context
+                                              .read<JobProvider>()
+                                              .currentlyRunningJob!
+                                              .status >
+                                          4))
+                                    Positioned(
+                                      top: 2.5,
+                                      right: 2.5,
+                                      child: GestureDetector(
+                                        onTap: () => setState(() {
+                                          imagesAlreadyHave.remove(url);
+                                        }),
+                                        child: Icon(
+                                          Icons.cancel_outlined,
+                                          color: Colors.redAccent,
+                                          size: 30.h,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            )),
+                        ...images.map((file) => ClipRRect(
+                              borderRadius: BorderRadius.circular(8.h),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.file(
+                                    File(file),
+                                    // height: 250.h,
+                                    // width: 300.w,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Positioned(
+                                    top: 2.5,
+                                    right: 2.5,
+                                    child: GestureDetector(
+                                      onTap: () => setState(() {
+                                        images.remove(file);
+                                      }),
+                                      child: Icon(
+                                        Icons.cancel_outlined,
+                                        color: Colors.redAccent,
+                                        size: 30.h,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                        if ((!(widget.isArrival
+                                ? false
+                                : context
+                                        .read<JobProvider>()
+                                        .currentlyRunningJob!
+                                        .status >
+                                    4)) &&
+                            ((images.length + imagesAlreadyHave.length) < 5))
+                          IconButton(
+                            onPressed: () => _imageFromCamera(),
+                            icon: Icon(
+                              Icons.add_a_photo_rounded,
+                              color: primaryColor,
+                              // size: 35.h,
+                            ),
+                          ),
+                      ],
+                    ))
+                : ((widget.isArrival
+                        ? false
+                        : context
+                                .read<JobProvider>()
+                                .currentlyRunningJob!
+                                .status >
+                            4))
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () {
+                          _imageFromCamera();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 4.h, horizontal: 16.w),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20.h, horizontal: 12.w),
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: const Color(0xFF416188))),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Tap here to take photos",
+                                style: TextStyle(
+                                    fontSize: 15.sp,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                "(Maximum 5 photos allowed)",
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
           ],
         )),
       ),
@@ -317,7 +540,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
           ? SafeArea(
               child: SubmitButton(
               onTap: () {
-                _savePreChecklist();
+                _uploadImages();
               },
               label: (widget.isArrival ||
                       context.read<JobProvider>().currentlyRunningJob!.status <
@@ -411,13 +634,13 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                     maxWidth: 60.h,
                   ),
                   child: Icon(
-                    data.isSelect.icon,
-                    color: data.isSelect.clr,
+                    data.type.icon,
+                    color: data.type.clr,
                     size: 20.h,
                   ),
                   onSelected: (int result) {
                     setState(() {
-                      data.isSelect = result == 2 ? null : result == 1;
+                      data.type = result;
                     });
                   },
                   itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
@@ -451,6 +674,16 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                         ),
                       ),
                     ),
+                    PopupMenuItem<int>(
+                      value: 2,
+                      child: Center(
+                        child: Icon(
+                          Icons.more_horiz_rounded,
+                          size: 25.h,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                   ],
                 )),
           )
@@ -460,38 +693,50 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   }
 }
 
-extension GetIcon on bool? {
+extension GetIcon on int {
   IconData get icon {
-    if (this == null) {
-      return Icons.remove;
-    } else if (this!) {
-      return Icons.check;
-    } else {
+    if (this == 0) {
       return Icons.close_rounded;
     }
-  }
-}
-
-extension GetIconColor on bool? {
-  Color get clr {
-    if (this == null) {
-      return Colors.white;
-    } else if (this!) {
-      return Colors.greenAccent;
+    if (this == 1) {
+      return Icons.check;
+    }
+    if (this == 2) {
+      return Icons.remove;
     } else {
-      return Colors.redAccent;
+      return Icons.more_horiz_rounded;
     }
   }
 }
 
-extension GetStatusText on bool? {
-  String get txt {
-    if (this == null) {
-      return "NA";
-    } else if (this!) {
-      return "YES";
+extension GetIconColor on int {
+  Color get clr {
+    if (this == 0) {
+      return Colors.redAccent;
+    }
+    if (this == 1) {
+      return Colors.greenAccent;
+    }
+    if (this == 2) {
+      return Colors.white;
     } else {
+      return Colors.grey;
+    }
+  }
+}
+
+extension GetStatusText on int {
+  String get txt {
+    if (this == 0) {
       return "NO";
+    }
+    if (this == 1) {
+      return "YES";
+    }
+    if (this == 2) {
+      return "NA";
+    } else {
+      return "...";
     }
   }
 }

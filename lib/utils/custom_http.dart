@@ -20,15 +20,13 @@ class CustomHttp {
             token == null ? null : "Bearer $token";
         options.connectTimeout = const Duration(milliseconds: 25000);
         options.receiveTimeout = const Duration(milliseconds: 20000);
-        options.sendTimeout = const Duration(milliseconds: 20000);
+        options.sendTimeout = const Duration(milliseconds: 25000);
 
         return handler.next(options);
       },
       onResponse: (response, handler) async {
-        log('!----------RESPONSE-----------!');
-        log(response.realUri.toString());
-        log(json.encode(response.data));
-        log('!-----------------------------!');
+        log("URL : ${response.realUri}");
+        log("RESPONSE : ${json.encode(response.data)}");
         return handler.resolve(response);
       },
       onError: (error, handler) async {

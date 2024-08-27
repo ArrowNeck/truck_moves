@@ -16,7 +16,7 @@ class VehicleDetails {
   String? vin;
   String? year;
   String? colour;
-  int? jobStatus;
+  // int? jobStatus;
 
   VehicleDetails({
     required this.notes,
@@ -29,7 +29,7 @@ class VehicleDetails {
     this.vin,
     this.year,
     this.colour,
-    this.jobStatus,
+    // this.jobStatus,
   });
 
   factory VehicleDetails.fromJson(Map<String, dynamic> json) => VehicleDetails(
@@ -45,7 +45,7 @@ class VehicleDetails {
         vin: json["vin"],
         year: json["year"],
         colour: json["colour"],
-        jobStatus: json["jobStatus"],
+        // jobStatus: json["jobStatus"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +59,6 @@ class VehicleDetails {
         "vin": vin,
         "year": year,
         "colour": colour,
-        "jobStatus": jobStatus,
+        // "jobStatus": jobStatus,
       };
 }

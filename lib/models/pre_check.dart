@@ -1,7 +1,7 @@
 class PreCheck {
   String id;
   String name;
-  bool? isSelect;
+  int type;
 
-  PreCheck({required this.id, required this.name, this.isSelect});
+  PreCheck({required this.id, required this.name, required this.type});
 }
