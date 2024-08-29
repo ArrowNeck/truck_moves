@@ -67,6 +67,29 @@ dev_dependencies:
   build_runner: ^2.4.11
   freezed: ^2.5.2
 
+  #Get native splash screen
+  flutter_native_splash: ^2.1.6
+
+# Splash Screen configurations
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  # background_image: "assets/images/background.png"
+  color: "#1E3959"
+  image: "assets/images/logo.png"
+  branding: "assets/images/branding.png"
+
+  android_gravity: center
+  ios_content_mode: center
+  
+  android_12:
+    color: "#1E3959"
+    image: "assets/images/android_logo.png"
+    branding: "assets/images/android_branding.png"
+
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

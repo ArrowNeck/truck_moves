@@ -1,22 +1,39 @@
-[
-    {
-        "id": 20,
-        "checklistId": 33,
-        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/f7b1c4f6-d531-4f2c-81c7-f3d47a6d1db0_CAP7606471492099871813.jpg"
-    },
-    {
-        "id": 21,
-        "checklistId": 33,
-        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/7c13e867-8890-4b93-ac06-e60e972aef70_CAP4941410417361638771.jpg"
-    },
-    {
-        "id": 0,
-        "checklistId": 0,
-        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/f7b1c4f6-d531-4f2c-81c7-f3d47a6d1db0_CAP7606471492099871813.jpg"
-    },
-    {
-        "id": 0,
-        "checklistId": 0,
-        "url": "https://vtmtruckmove.api.dev.riverina.digital:444/uploads/Vehicle//Images/7c13e867-8890-4b93-ac06-e60e972aef70_CAP4941410417361638771.jpg"
-    }
-]
+{
+    "id": 0,
+    "jobId": 4101,
+    "water": "YES",
+    "spareRim": "YES",
+    "allLightsAndIndicators": "YES",
+    "jackAndTools": "YES",
+    "ownersManual": "YES",
+    "airAndElectrics": "YES",
+    "tyresCondition": "YES",
+    "visuallyDipAndCheckTaps": "YES",
+    "windscreenDamageWipers": "YES",
+    "vehicleCleanFreeOfRubbish": "YES",
+    "keysFobTotalKeys": "YES",
+    "checkInsideTruckTrailer": "YES",
+    "oil": "YES",
+    "checkTruckHeight": "YES",
+    "leftHandDamage": "YES",
+    "rightHandDamage": "YES",
+    "frontDamage": "YES",
+    "rearDamage": "NO",
+    "fuelLevel": 0.25,
+    "isPre": false,
+    "notes": [
+        {
+            "id": 0,
+            "jobId": null,
+            "vehicleId": null,
+            "trailerId": null,
+            "checklistId": 0,
+            "visibletoDriver": true,
+            "permitAndPlatesId": null,
+            "accommodationId": null,
+            "publicTransportId": null,
+            "noteText": "Job Completed"
+        }
+    ],
+    "checkListImages": []
+}

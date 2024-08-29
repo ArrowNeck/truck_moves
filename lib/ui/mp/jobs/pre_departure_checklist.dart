@@ -198,7 +198,7 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
       "jobId": widget.jobId,
       for (var c in checklist) c.id: c.type.txt,
       "fuelLevel": fuelLevel,
-      "isPre": !widget.isArrival,
+      "isPre": !(widget.isArrival),
       "notes": [
         {
           "id": widget.preChecklist?.notes.firstOrNull?.id ?? 0,
@@ -218,6 +218,8 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
           .map((x) => {"id": 0, "checklistId": 0, "url": x})
           .toList()
     };
+
+    log(json.encode(data));
     final res = await JobService.saveChecklist(data: data);
     if (!mounted) return;
     Navigator.pop(context);

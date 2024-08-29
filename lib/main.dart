@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:truck_moves/constant.dart';
@@ -9,13 +10,22 @@ import 'package:truck_moves/ui/landing/login_page/login_page.dart';
 import 'package:truck_moves/ui/mp/home/home_page.dart';
 import 'package:truck_moves/utils/cache_manager.dart';
 import 'package:truck_moves/utils/custom_http.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   Driver? driver = await CacheManger.getDriver();
   CustomHttp.setInterceptor(token: driver?.jwtToken);
+  await Future.delayed(const Duration(seconds: 1));
+  FlutterNativeSplash.remove();
   runApp(MyApp(driver: driver));
 }
 

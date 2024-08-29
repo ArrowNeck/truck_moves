@@ -21,7 +21,6 @@ import 'package:truck_moves/utils/extensions.dart';
 import 'package:truck_moves/utils/hero_dialog_route.dart';
 
 class JobDetails extends StatefulWidget {
-  // final Job job;
   const JobDetails({super.key});
 
   @override
@@ -155,6 +154,16 @@ class _JobDetailsState extends State<JobDetails> {
     }
   }
 
+  _breakDownOrDelay(bool delayOccurred) async {
+    // PageLoader.showLoader(context);
+    // final res = await JobService.breakDown(
+    //     jobId: context.read<JobProvider>().currentlyRunningJob!.id,
+    //     delayOccurred: true);
+    // if (!mounted) return;
+
+    // res.when(success: (data) {}, failure: (error) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Job job = context.watch<JobProvider>().currentlyRunningJob!;
@@ -175,33 +184,47 @@ class _JobDetailsState extends State<JobDetails> {
               "assets/icons/checklist-${job.status < 5 ? "edit" : "done"}.svg",
               width: 22.5.h,
               height: 22.5.h,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                  job.status < 5 ? Colors.white : primaryColor,
+                  BlendMode.srcIn),
             ),
           ),
           if (!(job.status == 9))
             IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    HeroDialogRoute(
-                      builder: (_) => ConfirmationPopup(
-                        title: "Breakdown/Delay",
-                        message:
-                            "Are you sure you want to perform this action?",
-                        leftBtnText: "No",
-                        rightBtnText: "Yes",
-                        onRightTap: () {},
-                      ),
-                    ));
+                if (job.status == 6) {
+                  showToastSheet(
+                      context: context,
+                      title: "Stop Job to Report",
+                      message:
+                          "You need to stop this job first to report a breakdown or delay.",
+                      isError: true);
+                } else {
+                  Navigator.push(
+                      context,
+                      HeroDialogRoute(
+                        builder: (_) => ConfirmationPopup(
+                          title: job.status == 8
+                              ? "Breakdown/Delay Resolved"
+                              : "Breakdown/Delay",
+                          message: job.status == 8
+                              ? "Are you sure you want to mark the breakdown/delay as complete?"
+                              : "Are you sure you want to perform this action?",
+                          leftBtnText: "No",
+                          rightBtnText: "Yes",
+                          onRightTap: () => _breakDownOrDelay(job.status != 8),
+                        ),
+                      ));
+                }
               },
               visualDensity: VisualDensity.compact,
               icon: SvgPicture.asset(
                 "assets/icons/truck-tow.svg",
                 width: 22.5.h,
                 height: 22.5.h,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    job.status == 8 ? Colors.redAccent : Colors.white,
+                    BlendMode.srcIn),
               ),
             ),
           IconButton(

@@ -169,4 +169,18 @@ class JobService {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  static Result<bool> breakDown(
+      {required int jobId, required bool delayOccurred}) async {
+    try {
+      await CustomHttp.getDio().post(
+        "$baseUrl$updateStatus?jobId=$jobId&QA_Done=false&delayOccurred=$delayOccurred&Inprogarass=false",
+        options: Options(headers: {"jobId": jobId}),
+      );
+      return const ApiResult.success(data: true);
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }
