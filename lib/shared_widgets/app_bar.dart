@@ -5,10 +5,11 @@ import 'package:truck_moves/constant.dart';
 class MyAppBar {
   static AppBar build(
       {required String label,
+      Color? bgclr,
       bool enableBackBtn = true,
       List<Widget>? actions}) {
     return AppBar(
-      backgroundColor: bgColor,
+      backgroundColor: bgclr ?? bgColor,
       centerTitle: true,
       automaticallyImplyLeading: enableBackBtn,
       iconTheme: const IconThemeData(

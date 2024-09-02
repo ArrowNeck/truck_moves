@@ -27,6 +27,6 @@ const String legUrl = "Mobile/Leg/Post";
 const String purchase = "Mobile/Purchase/PostPut";
 const String imageUpload = "Shared/ImageAndAttachments/Upload";
 const String multipleImageUpload = "Shared/ImageAndAttachments/UploadMutiple";
-const String updateStatus = "Job/UpdateStatus";
+const String updateStatus = "Mobile/UpdateStatus";
 
 //----------------------------------------------//

@@ -79,7 +79,7 @@ flutter_native_splash:
   # background_image: "assets/images/background.png"
   color: "#1E3959"
   image: "assets/images/logo.png"
-  branding: "assets/images/branding.png"
+  branding: "assets/images/branding_vtm.png"
 
   android_gravity: center
   ios_content_mode: center
@@ -87,7 +87,7 @@ flutter_native_splash:
   android_12:
     color: "#1E3959"
     image: "assets/images/android_logo.png"
-    branding: "assets/images/android_branding.png"
+    branding: "assets/images/android_branding_vtm.png"
 
 
 # For information on the generic Dart part of this file, see the

@@ -128,10 +128,8 @@ class JobService {
         "Ispurchase": true,
       });
 
-      final response = await CustomHttp.getDio().post(
-          // options: Options(sendTimeout: const Duration(seconds: 5)),
-          "$baseUrl$imageUpload",
-          data: formData);
+      final response = await CustomHttp.getDio()
+          .post("$baseUrl$imageUpload", data: formData);
 
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -174,7 +172,7 @@ class JobService {
       {required int jobId, required bool delayOccurred}) async {
     try {
       await CustomHttp.getDio().post(
-        "$baseUrl$updateStatus?jobId=$jobId&QA_Done=false&delayOccurred=$delayOccurred&Inprogarass=false",
+        "$baseUrl$updateStatus?jobId=$jobId&delayOccurred=$delayOccurred&Stoped=${!delayOccurred}",
         options: Options(headers: {"jobId": jobId}),
       );
       return const ApiResult.success(data: true);

@@ -155,93 +155,101 @@ class _JobDetailsState extends State<JobDetails> {
   }
 
   _breakDownOrDelay(bool delayOccurred) async {
-    // PageLoader.showLoader(context);
-    // final res = await JobService.breakDown(
-    //     jobId: context.read<JobProvider>().currentlyRunningJob!.id,
-    //     delayOccurred: true);
-    // if (!mounted) return;
-
-    // res.when(success: (data) {}, failure: (error) {});
+    PageLoader.showLoader(context);
+    final res = await JobService.breakDown(
+        jobId: context.read<JobProvider>().currentlyRunningJob!.id,
+        delayOccurred: delayOccurred);
+    if (!mounted) return;
+    Navigator.pop(context);
+    res.when(success: (data) {
+      context.read<JobProvider>().breakdownStatus(delayOccurred);
+    }, failure: (error) {
+      showErrorSheet(context: context, exception: error);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Job job = context.watch<JobProvider>().currentlyRunningJob!;
     return Scaffold(
-        appBar: MyAppBar.build(label: job.id.toString(), actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => PreDepartureChecklistPage(
-                            jobId: job.id,
-                            preChecklist: job.preDepartureChecklist,
-                          )));
-            },
-            visualDensity: VisualDensity.compact,
-            icon: SvgPicture.asset(
-              "assets/icons/checklist-${job.status < 5 ? "edit" : "done"}.svg",
-              width: 22.5.h,
-              height: 22.5.h,
-              colorFilter: ColorFilter.mode(
-                  job.status < 5 ? Colors.white : primaryColor,
-                  BlendMode.srcIn),
-            ),
-          ),
-          if (!(job.status == 9))
-            IconButton(
-              onPressed: () {
-                if (job.status == 6) {
-                  showToastSheet(
-                      context: context,
-                      title: "Stop Job to Report",
-                      message:
-                          "You need to stop this job first to report a breakdown or delay.",
-                      isError: true);
-                } else {
+        appBar: MyAppBar.build(
+            bgclr: job.status == 8 ? Colors.redAccent : null,
+            label: job.id.toString(),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      HeroDialogRoute(builder: (_) => const AddPurchase()));
+                },
+                visualDensity: VisualDensity.compact,
+                icon: SvgPicture.asset(
+                  "assets/icons/purchase.svg",
+                  width: 22.5.h,
+                  height: 22.5.h,
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
                   Navigator.push(
                       context,
-                      HeroDialogRoute(
-                        builder: (_) => ConfirmationPopup(
-                          title: job.status == 8
-                              ? "Breakdown/Delay Resolved"
-                              : "Breakdown/Delay",
-                          message: job.status == 8
-                              ? "Are you sure you want to mark the breakdown/delay as complete?"
-                              : "Are you sure you want to perform this action?",
-                          leftBtnText: "No",
-                          rightBtnText: "Yes",
-                          onRightTap: () => _breakDownOrDelay(job.status != 8),
-                        ),
-                      ));
-                }
-              },
-              visualDensity: VisualDensity.compact,
-              icon: SvgPicture.asset(
-                "assets/icons/truck-tow.svg",
-                width: 22.5.h,
-                height: 22.5.h,
-                colorFilter: ColorFilter.mode(
-                    job.status == 8 ? Colors.redAccent : Colors.white,
-                    BlendMode.srcIn),
+                      MaterialPageRoute(
+                          builder: (_) => PreDepartureChecklistPage(
+                                jobId: job.id,
+                                preChecklist: job.preDepartureChecklist,
+                              )));
+                },
+                visualDensity: VisualDensity.compact,
+                icon: SvgPicture.asset(
+                  "assets/icons/checklist-${job.status < 5 ? "edit" : "done"}.svg",
+                  width: 22.5.h,
+                  height: 22.5.h,
+                  colorFilter: ColorFilter.mode(
+                      job.status < 5 ? Colors.white : const Color(0xFFC0C0C0),
+                      BlendMode.srcIn),
+                ),
               ),
-            ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  HeroDialogRoute(builder: (_) => const AddPurchase()));
-            },
-            visualDensity: VisualDensity.compact,
-            icon: SvgPicture.asset(
-              "assets/icons/purchase.svg",
-              width: 22.5.h,
-              height: 22.5.h,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            ),
-          )
-        ]),
+              if (!(job.status == 9))
+                IconButton(
+                  onPressed: () {
+                    if (job.status == 6) {
+                      showToastSheet(
+                          context: context,
+                          title: "Stop Job to Report",
+                          message:
+                              "You need to stop this job first to report a breakdown or delay.",
+                          isError: true);
+                    } else {
+                      Navigator.push(
+                          context,
+                          HeroDialogRoute(
+                            builder: (_) => ConfirmationPopup(
+                              title: job.status == 8
+                                  ? "Breakdown/Delay Resolved"
+                                  : "Breakdown/Delay",
+                              message: job.status == 8
+                                  ? "Are you sure you want to mark the breakdown/delay as complete?"
+                                  : "Are you sure you want to perform this action?",
+                              leftBtnText: "No",
+                              rightBtnText: "Yes",
+                              onRightTap: () =>
+                                  _breakDownOrDelay(job.status != 8),
+                            ),
+                          ));
+                    }
+                  },
+                  visualDensity: VisualDensity.compact,
+                  icon: SvgPicture.asset(
+                    "assets/icons/delay.svg",
+                    width: 22.5.h,
+                    height: 22.5.h,
+                    colorFilter: ColorFilter.mode(
+                        job.status == 8 ? Colors.black : Colors.white,
+                        BlendMode.srcIn),
+                  ),
+                ),
+            ]),
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 5.h),
@@ -387,90 +395,93 @@ class _JobDetailsState extends State<JobDetails> {
             ),
           ),
         )),
-        bottomNavigationBar: GestureDetector(
-          onTap: () {
-            if (job.status == 6) {
-              showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      isDismissible: true,
-                      context: context,
-                      builder: (context) => const JobStopBottomSheet())
-                  .then((select) {
-                if (select != null) {
-                  _closeLeg(isJobCompleted: select);
-                }
-              });
-            } else if (job.status == 9) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => PreDepartureChecklistPage(
-                            jobId: job.id,
-                            isArrival: true,
-                          )));
-            } else {
-              if (job.preDepartureChecklist == null) {
-                Navigator.push(
-                    context,
-                    HeroDialogRoute(
-                      builder: (_) => ConfirmationPopup(
-                        title: "Prechecking",
-                        message:
-                            "Before you depart you must complete the pre-departure checklist. Tap continue to begin.",
-                        leftBtnText: "Cancel",
-                        rightBtnText: "Continue",
-                        onRightTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => PreDepartureChecklistPage(
-                                        jobId: job.id,
-                                      )));
-                        },
-                      ),
-                    ));
-              } else {
-                Navigator.push(
-                    context,
-                    HeroDialogRoute(
-                      builder: (_) => ConfirmationPopup(
-                        title: "Acknowledgement",
-                        message:
-                            "I acknowledge that I am not under the influence of drugs or alcohol and am fit to drive.",
-                        leftBtnText: "Cancel",
-                        rightBtnText: "Agreed",
-                        onRightTap: () {
-                          _createLeg();
-                        },
-                      ),
-                    ));
-              }
-            }
-          },
-          child: Container(
-            height: 80.h,
-            padding: EdgeInsets.symmetric(vertical: 20.h),
-            color: job.status == 6
-                ? Colors.redAccent
-                : job.status == 9
-                    ? primaryColor
-                    : Colors.green,
-            child: Text(
-              (job.status == 6
-                      ? "Stop"
+        bottomNavigationBar: job.status == 8
+            ? null
+            : GestureDetector(
+                onTap: () {
+                  if (job.status == 6) {
+                    showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            isDismissible: true,
+                            context: context,
+                            builder: (context) => const JobStopBottomSheet())
+                        .then((select) {
+                      if (select != null) {
+                        _closeLeg(isJobCompleted: select);
+                      }
+                    });
+                  } else if (job.status == 9) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => PreDepartureChecklistPage(
+                                  jobId: job.id,
+                                  isArrival: true,
+                                )));
+                  } else {
+                    if (job.preDepartureChecklist == null) {
+                      Navigator.push(
+                          context,
+                          HeroDialogRoute(
+                            builder: (_) => ConfirmationPopup(
+                              title: "Prechecking",
+                              message:
+                                  "Before you depart you must complete the pre-departure checklist. Tap continue to begin.",
+                              leftBtnText: "Cancel",
+                              rightBtnText: "Continue",
+                              onRightTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            PreDepartureChecklistPage(
+                                              jobId: job.id,
+                                            )));
+                              },
+                            ),
+                          ));
+                    } else {
+                      Navigator.push(
+                          context,
+                          HeroDialogRoute(
+                            builder: (_) => ConfirmationPopup(
+                              title: "Acknowledgement",
+                              message:
+                                  "I acknowledge that I am not under the influence of drugs or alcohol and am fit to drive.",
+                              leftBtnText: "Cancel",
+                              rightBtnText: "Agreed",
+                              onRightTap: () {
+                                _createLeg();
+                              },
+                            ),
+                          ));
+                    }
+                  }
+                },
+                child: Container(
+                  height: 80.h,
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  color: job.status == 6
+                      ? Colors.redAccent
                       : job.status == 9
-                          ? "Next"
-                          : 'Start')
-                  .toUpperCase(),
-              style: TextStyle(
-                color: job.status == 9 ? Colors.black : Colors.white,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ));
+                          ? primaryColor
+                          : Colors.green,
+                  child: Text(
+                    (job.status == 6
+                            ? "Stop"
+                            : job.status == 9
+                                ? "Next"
+                                : 'Start')
+                        .toUpperCase(),
+                    style: TextStyle(
+                      color: job.status == 9 ? Colors.black : Colors.white,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ));
   }
 
   _headerLabel(String label, String icon) {

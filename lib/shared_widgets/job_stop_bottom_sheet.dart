@@ -46,7 +46,7 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
                   children: [
                     _btn(
                         title: "Stop for the \nnight",
-                        icon: "assets/icons/bed-1.svg",
+                        icon: "assets/icons/bed.svg",
                         select: 0),
                     SizedBox(
                       width: 12.w,

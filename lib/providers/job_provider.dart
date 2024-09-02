@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:truck_moves/models/job.dart';
 
 class JobProvider with ChangeNotifier {
-  JobProviderState currentJobState = JobProviderState.idle;
-  JobProviderState futureJobState = JobProviderState.idle;
-
   List<Job>? currentJobs;
   List<Job>? futureJobs;
 
@@ -37,24 +34,16 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void addPrechecklist({required PreDepartureChecklist data}) {
-  //   int index = currentJobs!.indexWhere((job) => job.id == data.jobId);
-  //   currentJobs![index].preDepartureChecklist = data;
-  //   currentJobs![index].status = 4;
-  //   notifyListeners();
-  // }
+  void breakdownStatus(bool occurred) {
+    currentlyRunningJob!.status = occurred ? 8 : 7;
+    notifyListeners();
+  }
 
   void addPrechecklist({required PreDepartureChecklist data}) {
     currentlyRunningJob!.preDepartureChecklist = data;
     currentlyRunningJob!.status = 4;
     notifyListeners();
   }
-
-  // void jobClose({required int jobId}) {
-  //   currentlyRunningJob = null;
-  //   currentJobs!.removeWhere((job) => job.id == jobId);
-  //   notifyListeners();
-  // }
 
   void addLeg({required Leg data}) {
     currentlyRunningJob!.legs.add(data);
@@ -80,5 +69,3 @@ class JobProvider with ChangeNotifier {
     // return true;
   }
 }
-
-enum JobProviderState { idle, loading, error, success }
