@@ -7,6 +7,7 @@ class ConfirmationPopup extends StatelessWidget {
   final String message;
   final String leftBtnText;
   final String rightBtnText;
+  final Color? rightBtnColor;
   final VoidCallback? onLeftTap;
   final VoidCallback onRightTap;
   const ConfirmationPopup(
@@ -16,7 +17,8 @@ class ConfirmationPopup extends StatelessWidget {
       required this.title,
       required this.message,
       required this.leftBtnText,
-      required this.rightBtnText});
+      required this.rightBtnText,
+      this.rightBtnColor});
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +111,10 @@ class ConfirmationPopup extends StatelessWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5.w),
-                                    color: primaryColor,
+                                    color: rightBtnColor ?? primaryColor,
                                     border: Border.all(
-                                        color: primaryColor, width: 1.5.w)),
+                                        color: rightBtnColor ?? primaryColor,
+                                        width: 1.5.w)),
                                 width: 110.w,
                                 height: 45.h,
                                 child: SizedBox(
@@ -124,7 +127,9 @@ class ConfirmationPopup extends StatelessWidget {
                                       rightBtnText,
                                       style: TextStyle(
                                           fontSize: 15.sp,
-                                          color: Colors.black,
+                                          color: rightBtnColor != null
+                                              ? Colors.white
+                                              : Colors.black,
                                           fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.center,
                                     ),

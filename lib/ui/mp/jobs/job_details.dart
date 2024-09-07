@@ -154,7 +154,38 @@ class _JobDetailsState extends State<JobDetails> {
     }
   }
 
-  _breakDownOrDelay(bool delayOccurred) async {
+  _breakDownOrDelay(bool inProgress, bool delayOccurred) async {
+    if (inProgress) {
+      try {
+        PageLoader.showLoader(context);
+        String location = await _getCurrentLocation();
+        if (!mounted) return;
+
+        final res = await JobService.closeLeg(
+            leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
+            location: location,
+            isCompleted: false);
+        if (mounted) Navigator.pop(context);
+
+        res.when(success: (data) {
+          context.read<JobProvider>().updateLeg(data: data, isCompleted: false);
+        }, failure: (error) {
+          showErrorSheet(context: context, exception: error);
+          return;
+        });
+      } catch (e) {
+        if (mounted) {
+          Navigator.pop(context);
+          showToastSheet(
+              context: context,
+              title: "Error!",
+              message: e.toString(),
+              isError: true);
+        }
+        return;
+      }
+    }
+    if (!mounted) return;
     PageLoader.showLoader(context);
     final res = await JobService.breakDown(
         jobId: context.read<JobProvider>().currentlyRunningJob!.id,
@@ -213,31 +244,24 @@ class _JobDetailsState extends State<JobDetails> {
               if (!(job.status == 9))
                 IconButton(
                   onPressed: () {
-                    if (job.status == 6) {
-                      showToastSheet(
-                          context: context,
-                          title: "Stop Job to Report",
-                          message:
-                              "You need to stop this job first to report a breakdown or delay.",
-                          isError: true);
-                    } else {
-                      Navigator.push(
-                          context,
-                          HeroDialogRoute(
-                            builder: (_) => ConfirmationPopup(
-                              title: job.status == 8
-                                  ? "Breakdown/Delay Resolved"
-                                  : "Breakdown/Delay",
-                              message: job.status == 8
-                                  ? "Are you sure you want to mark the breakdown/delay as complete?"
-                                  : "Are you sure you want to perform this action?",
-                              leftBtnText: "No",
-                              rightBtnText: "Yes",
-                              onRightTap: () =>
-                                  _breakDownOrDelay(job.status != 8),
-                            ),
-                          ));
-                    }
+                    Navigator.push(
+                        context,
+                        HeroDialogRoute(
+                          builder: (_) => ConfirmationPopup(
+                            title: job.status == 8
+                                ? "Breakdown/Delay Resolved"
+                                : "Breakdown/Delay",
+                            message: job.status == 8
+                                ? 'Has the breakdown/delay been resolved? Please tap the "Start" button after the popup to continueyour journey.'
+                                : "Report a breakdown or delay?",
+                            leftBtnText: "No",
+                            rightBtnText: "Yes",
+                            rightBtnColor:
+                                job.status == 6 ? Colors.redAccent : null,
+                            onRightTap: () => _breakDownOrDelay(
+                                job.status == 6, job.status != 8),
+                          ),
+                        ));
                   },
                   visualDensity: VisualDensity.compact,
                   icon: SvgPicture.asset(
