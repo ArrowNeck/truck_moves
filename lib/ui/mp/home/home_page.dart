@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
     PageLoader.showLoader(context);
     await AuthService.logout();
     if (mounted) Navigator.pop(context);
-    CacheManger.removeDriver().then((_) {
+    await CacheManger.removeDriver();
+    if (mounted) {
       CustomHttp.setInterceptor(token: null);
       context.read<AuthProvider>().removeDriver();
       Navigator.pushAndRemoveUntil(
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(builder: (_) => const LoginPage()),
         (route) => false,
       );
-    });
+    }
   }
 
   @override

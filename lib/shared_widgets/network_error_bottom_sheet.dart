@@ -136,9 +136,10 @@ class NetworkErrorBottomSheet extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: 20.h, bottom: 25.h, left: 16.w, right: 16.w),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
-                  CacheManger.removeDriver().then((_) {
+                  await CacheManger.removeDriver();
+                  if (context.mounted) {
                     CustomHttp.setInterceptor(token: null);
                     context.read<AuthProvider>().removeDriver();
                     Navigator.pushAndRemoveUntil(
@@ -146,7 +147,7 @@ class NetworkErrorBottomSheet extends StatelessWidget {
                       MaterialPageRoute(builder: (_) => const LoginPage()),
                       (route) => false,
                     );
-                  });
+                  }
                 },
                 child: Container(
                   alignment: Alignment.center,

@@ -12,7 +12,7 @@ class PageLoader {
       builder: (BuildContext context) {
         return PopScope(
           canPop: false,
-          onPopInvoked: (didPop) => Future.value(false),
+          onPopInvokedWithResult: (didPop, results) => Future.value(false),
           child: loader(),
         );
       },
@@ -42,7 +42,7 @@ class PageLoader {
       builder: (BuildContext context) {
         return PopScope(
           canPop: false,
-          onPopInvoked: (didPop) => Future.value(false),
+          onPopInvokedWithResult: (didPop, results) => Future.value(false),
           child: Container(
             color: Colors.transparent,
           ),

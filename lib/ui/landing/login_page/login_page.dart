@@ -48,8 +48,9 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
     if (mounted) Navigator.pop(context);
-    res.when(success: (data) {
-      CacheManger.saveDriver(driver: data).then((_) {
+    res.when(success: (data) async {
+      await CacheManger.saveDriver(driver: data);
+      if (mounted) {
         CustomHttp.setInterceptor(token: data.jwtToken);
         context.read<AuthProvider>().setDriver(data);
         Navigator.pushAndRemoveUntil(
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (_) => const HomePage()),
           (route) => false,
         );
-      });
+      }
     }, failure: (error) {
       showErrorSheet(context: context, exception: error, login: true);
     });
