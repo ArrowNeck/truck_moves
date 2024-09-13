@@ -34,7 +34,10 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void breakdownStatus(bool occurred) {
+  void breakdownStatus(bool occurred, {String? endLocation}) {
+    if (endLocation != null) {
+      currentlyRunningJob!.legs.last.endLocation = endLocation;
+    }
     currentlyRunningJob!.status = occurred ? 8 : 7;
     notifyListeners();
   }
@@ -51,10 +54,9 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateLeg({required Leg data, required bool isCompleted}) {
-    currentlyRunningJob!.legs[currentlyRunningJob!.legs
-        .indexWhere((leg) => leg.id == data.id)] = data;
-    currentlyRunningJob!.status = isCompleted ? 9 : 7;
+  void updateLeg({required String endLocation, required int jobStatus}) {
+    currentlyRunningJob!.legs.last.endLocation = endLocation;
+    currentlyRunningJob!.status = jobStatus; //7|9|15
     notifyListeners();
   }
 

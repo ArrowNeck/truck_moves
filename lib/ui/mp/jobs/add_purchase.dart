@@ -11,6 +11,7 @@ import 'package:truck_moves/services/job_service.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
+import 'package:truck_moves/utils/image_compress.dart';
 
 class AddPurchase extends StatefulWidget {
   const AddPurchase({super.key});
@@ -24,7 +25,9 @@ class _AddPurchaseState extends State<AddPurchase> {
 
   _pickImage(ImageSource source) async {
     try {
-      file = await ImagePicker().pickImage(source: source);
+      file = await ImagePicker().pickImage(
+        source: source,
+      );
       setState(() {});
     } catch (e) {
       debugPrint(e.toString());
@@ -33,7 +36,8 @@ class _AddPurchaseState extends State<AddPurchase> {
 
   _uploadReceipt() async {
     PageLoader.showLoader(context);
-    final imageRes = await JobService.upload(path: file!.path);
+    final imageRes =
+        await JobService.upload(path: (await compressFile(file!.path))!);
     imageRes.when(success: (data) async {
       final purchaseRes = await JobService.addPurchase(
           driverId: context.read<AuthProvider>().driver.id,

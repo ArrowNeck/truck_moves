@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,6 +17,8 @@ import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/submit_button.dart';
 import 'package:truck_moves/ui/mp/home/home_page.dart';
+import 'package:truck_moves/utils/extensions.dart';
+import 'package:truck_moves/utils/image_compress.dart';
 
 class PreDepartureChecklistPage extends StatefulWidget {
   final int jobId;
@@ -44,85 +44,86 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
 
   @override
   void initState() {
-    images = [];
-    log(json.encode(widget.preChecklist));
     _textController = TextEditingController(
         text: widget.preChecklist?.notes.firstOrNull?.noteText);
     fuelLevel = widget.preChecklist?.fuelLevel ?? 0;
     imagesAlreadyHave = widget.preChecklist?.images ?? [];
+    if (imagesAlreadyHave.length > 5) {
+      imagesAlreadyHave.removeRange(5, imagesAlreadyHave.length);
+    }
     checklist = [
       PreCheck(
           id: "water",
           name: "Water (Used Vehicles)",
-          type: _getCheckType(widget.preChecklist?.water)),
+          type: (widget.preChecklist?.water).type),
       PreCheck(
           id: "spareRim",
           name: "Spare Rim",
-          type: _getCheckType(widget.preChecklist?.spareRim)),
+          type: (widget.preChecklist?.spareRim).type),
       PreCheck(
           id: "allLightsAndIndicators",
           name: "All lights & Indicators",
-          type: _getCheckType(widget.preChecklist?.allLightsAndIndicators)),
+          type: (widget.preChecklist?.allLightsAndIndicators).type),
       PreCheck(
           id: "jackAndTools",
           name: "Jack and Tools",
-          type: _getCheckType(widget.preChecklist?.jackAndTools)),
+          type: (widget.preChecklist?.jackAndTools).type),
       PreCheck(
           id: "ownersManual",
           name: "Owners Manual",
-          type: _getCheckType(widget.preChecklist?.ownersManual)),
+          type: (widget.preChecklist?.ownersManual).type),
       PreCheck(
           id: "airAndElectrics",
           name: "Air & Electrics [Secure]",
-          type: _getCheckType(widget.preChecklist?.airAndElectrics)),
+          type: (widget.preChecklist?.airAndElectrics).type),
       PreCheck(
           id: "tyresCondition",
           name: "Tyres Condition",
-          type: _getCheckType(widget.preChecklist?.tyresCondition)),
+          type: (widget.preChecklist?.tyresCondition).type),
       PreCheck(
           id: "visuallyDipAndCheckTaps",
           name: "Visually Dip Fuel & Check Taps",
-          type: _getCheckType(widget.preChecklist?.visuallyDipAndCheckTaps)),
+          type: (widget.preChecklist?.visuallyDipAndCheckTaps).type),
       PreCheck(
           id: "windscreenDamageWipers",
           name: "Windscreen Damage / Wipers",
-          type: _getCheckType(widget.preChecklist?.windscreenDamageWipers)),
+          type: (widget.preChecklist?.windscreenDamageWipers).type),
       PreCheck(
           id: "vehicleCleanFreeOfRubbish",
           name: "Vehicle Clean & Free of Rubbish",
-          type: _getCheckType(widget.preChecklist?.vehicleCleanFreeOfRubbish)),
+          type: (widget.preChecklist?.vehicleCleanFreeOfRubbish).type),
       PreCheck(
           id: "keysFobTotalKeys",
           name: "Keys / Fob - Total Keys",
-          type: _getCheckType(widget.preChecklist?.keysFobTotalKeys)),
+          type: (widget.preChecklist?.keysFobTotalKeys).type),
       PreCheck(
           id: "checkInsideTruckTrailer",
           name: "Check Inside Truck & Trailer for loose or unrestrained loads",
-          type: _getCheckType(widget.preChecklist?.checkInsideTruckTrailer)),
+          type: (widget.preChecklist?.checkInsideTruckTrailer).type),
       PreCheck(
           id: "oil",
           name: "Oil (Used Vehicles)",
-          type: _getCheckType(widget.preChecklist?.oil)),
+          type: (widget.preChecklist?.oil).type),
       PreCheck(
           id: "checkTruckHeight",
           name: "Check Truck Height (4.3m)",
-          type: _getCheckType(widget.preChecklist?.checkTruckHeight)),
+          type: (widget.preChecklist?.checkTruckHeight).type),
       PreCheck(
           id: "leftHandDamage",
           name: "Left Hand Damage",
-          type: _getCheckType(widget.preChecklist?.leftHandDamage)),
+          type: (widget.preChecklist?.leftHandDamage).type),
       PreCheck(
           id: "rightHandDamage",
           name: "Right Hand Damage",
-          type: _getCheckType(widget.preChecklist?.rightHandDamage)),
+          type: (widget.preChecklist?.rightHandDamage).type),
       PreCheck(
           id: "frontDamage",
           name: "Front Damage",
-          type: _getCheckType(widget.preChecklist?.frontDamage)),
+          type: (widget.preChecklist?.frontDamage).type),
       PreCheck(
           id: "rearDamage",
           name: "Rear Damage",
-          type: _getCheckType(widget.preChecklist?.rearDamage)),
+          type: (widget.preChecklist?.rearDamage).type),
     ];
     super.initState();
   }
@@ -131,19 +132,6 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   void dispose() {
     _textController.dispose();
     super.dispose();
-  }
-
-  _getCheckType(String? value) {
-    if (value == "NO") {
-      return 0;
-    }
-    if (value == "YES") {
-      return 1;
-    }
-    if (value == "NA") {
-      return 2;
-    }
-    return 3;
   }
 
   _imageFromCamera() async {
@@ -172,7 +160,9 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
     } else {
       if (images.isNotEmpty) {
         PageLoader.showLoader(context);
-        final res = await JobService.uploadMultiple(paths: images);
+        List<String> compressImages = await Future.wait(
+            images.map((x) async => (await compressFile(x))!).toList());
+        final res = await JobService.uploadMultiple(paths: compressImages);
         if (!mounted) return;
         Navigator.pop(context);
 
@@ -218,14 +208,11 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
           .map((x) => {"id": 0, "checklistId": 0, "url": x})
           .toList()
     };
-
-    log(json.encode(data));
     final res = await JobService.saveChecklist(data: data);
     if (!mounted) return;
     Navigator.pop(context);
 
     res.when(success: (data) {
-      log(data.toString());
       if (widget.isArrival) {
         showToastSheet(
           context: context,
@@ -676,69 +663,21 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
                         ),
                       ),
                     ),
-                    PopupMenuItem<int>(
-                      value: 2,
-                      child: Center(
-                        child: Icon(
-                          Icons.more_horiz_rounded,
-                          size: 25.h,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                    // PopupMenuItem<int>(
+                    //   value: 2,
+                    //   child: Center(
+                    //     child: Icon(
+                    //       Icons.more_horiz_rounded,
+                    //       size: 25.h,
+                    //       color: Colors.grey,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )),
           )
         ],
       ),
     );
-  }
-}
-
-extension GetIcon on int {
-  IconData get icon {
-    if (this == 0) {
-      return Icons.close_rounded;
-    }
-    if (this == 1) {
-      return Icons.check;
-    }
-    if (this == 2) {
-      return Icons.remove;
-    } else {
-      return Icons.more_horiz_rounded;
-    }
-  }
-}
-
-extension GetIconColor on int {
-  Color get clr {
-    if (this == 0) {
-      return Colors.redAccent;
-    }
-    if (this == 1) {
-      return Colors.greenAccent;
-    }
-    if (this == 2) {
-      return Colors.white;
-    } else {
-      return Colors.grey;
-    }
-  }
-}
-
-extension GetStatusText on int {
-  String get txt {
-    if (this == 0) {
-      return "NO";
-    }
-    if (this == 1) {
-      return "YES";
-    }
-    if (this == 2) {
-      return "NA";
-    } else {
-      return "...";
-    }
   }
 }

@@ -12,7 +12,7 @@ class CustomHttp {
       print("Intercept called...............");
       print(token);
     }
-    _dio.interceptors.add(InterceptorsWrapper(
+    _dio.interceptors.first = (InterceptorsWrapper(
       onRequest: (options, handler) async {
         options.headers["Content-Type"] = "application/json";
         options.headers["fromMobile"] = "true";
@@ -25,15 +25,17 @@ class CustomHttp {
         return handler.next(options);
       },
       onResponse: (response, handler) async {
-        log("URL : ${response.realUri}");
-        log("RESPONSE : ${json.encode(response.data)}");
+        if (kDebugMode) {
+          log("URL : ${response.realUri}");
+          log("RESPONSE : ${json.encode(response.data)}");
+        }
         return handler.resolve(response);
       },
       onError: (error, handler) async {
         debugPrint('!----------Error-----------!');
         debugPrint(error.response.toString());
-        log("STATUS CODE : ${error.response?.statusCode}");
-        log(error.response?.realUri.toString() ?? "");
+        debugPrint("STATUS CODE : ${error.response?.statusCode}");
+        debugPrint(error.response?.realUri.toString() ?? "");
         debugPrint('!--------------------------!');
 
         return handler.next(error);

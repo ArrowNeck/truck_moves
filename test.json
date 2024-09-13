@@ -1,39 +1,375 @@
-{
-    "id": 0,
-    "jobId": 4101,
-    "water": "YES",
-    "spareRim": "YES",
-    "allLightsAndIndicators": "YES",
-    "jackAndTools": "YES",
-    "ownersManual": "YES",
-    "airAndElectrics": "YES",
-    "tyresCondition": "YES",
-    "visuallyDipAndCheckTaps": "YES",
-    "windscreenDamageWipers": "YES",
-    "vehicleCleanFreeOfRubbish": "YES",
-    "keysFobTotalKeys": "YES",
-    "checkInsideTruckTrailer": "YES",
-    "oil": "YES",
-    "checkTruckHeight": "YES",
-    "leftHandDamage": "YES",
-    "rightHandDamage": "YES",
-    "frontDamage": "YES",
-    "rearDamage": "NO",
-    "fuelLevel": 0.25,
-    "isPre": false,
-    "notes": [
-        {
-            "id": 0,
-            "jobId": null,
-            "vehicleId": null,
-            "trailerId": null,
-            "checklistId": 0,
-            "visibletoDriver": true,
-            "permitAndPlatesId": null,
-            "accommodationId": null,
-            "publicTransportId": null,
-            "noteText": "Job Completed"
-        }
-    ],
-    "checkListImages": []
-}
+[
+    {
+        "id": 3912,
+        "status": 7,
+        "pickupLocation": "7VF9+P8 Bannerton VIC, Australia",
+        "dropOfLocation": "Hardrock, 939 Mountain Ash Road, Gundary NSW 2580, Australia",
+        "pickupCoordinates": "-34.7257139, 142.8682829",
+        "dropOfCoordinates": "-34.810601, 149.8249159",
+        "pickupDate": "2024-07-12T18:29:59.06",
+        "estimatedDeliveryDate": "2024-07-12T18:29:59.06",
+        "vehicleId": 762,
+        "totalDistance": 777.544,
+        "totalDrivingTime": 505,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 762,
+            "jobId": 3912,
+            "make": "ferarri",
+            "model": "gt28",
+            "rego": "w34234",
+            "vin": "3252345",
+            "year": "2020",
+            "colour": "black",
+            "jobStatus": "7"
+        },
+        "checklists": [
+            {
+                "id": 4,
+                "jobId": 3912,
+                "water": "YES",
+                "spareRim": "YES",
+                "allLightsAndIndicators": "YES",
+                "jackAndTools": "YES",
+                "ownersManual": "YES",
+                "airAndElectrics": "YES",
+                "tyresCondition": "YES",
+                "visuallyDipAndCheckTaps": "YES",
+                "windscreenDamageWipers": "YES",
+                "vehicleCleanFreeOfRubbish": "YES",
+                "keysFobTotalKeys": "YES",
+                "checkInsideTruckTrailer": "YES",
+                "oil": "YES",
+                "checkTruckHeight": "YES",
+                "leftHandDamage": "YES",
+                "rightHandDamage": "YES",
+                "frontDamage": "NO",
+                "rearDamage": "NA",
+                "fuelLevel": 0.5,
+                "isPre": true,
+                "notes": [],
+                "checkListImages": []
+            }
+        ],
+        "wayPoints": [
+            {
+                "id": 60075,
+                "jobId": 3912,
+                "location": "Sturt Hwy, Hay South NSW 2711, Australia",
+                "coordinates": "-34.6129557, 144.476902"
+            },
+            {
+                "id": 60076,
+                "jobId": 3912,
+                "location": "5RCV+CR Grong Grong NSW, Australia",
+                "coordinates": "-34.8289517, 146.8445665"
+            }
+        ],
+        "trailers": [
+            {
+                "hookupTypeNavigation": {
+                    "id": 1,
+                    "type": "HU_Single",
+                    "description": "HU Single",
+                    "trailers": []
+                },
+                "notes": [],
+                "images": [],
+                "id": 50,
+                "hookupType": 1,
+                "jobId": 3912,
+                "hookupLocation": "7VF9+P8 Bannerton VIC, Australia",
+                "dropOffLocation": "Hardrock, 939 Mountain Ash Road, Gundary NSW 2580, Australia",
+                "rego": "2344",
+                "type": "ascsac",
+                "hookupCoordinate": null,
+                "dropoffCoordinate": null
+            },
+            {
+                "hookupTypeNavigation": {
+                    "id": 3,
+                    "type": "FOUR_RA",
+                    "description": "4RA (4 Rigid Axle )",
+                    "trailers": []
+                },
+                "notes": [],
+                "images": [],
+                "id": 51,
+                "hookupType": 3,
+                "jobId": 3912,
+                "hookupLocation": "FV95+FW, Benerembah NSW 2680, Australia",
+                "dropOffLocation": "Tangmangaroo Rd, Kangiara NSW 2582, Australia",
+                "rego": "2344",
+                "type": "sdfdf",
+                "hookupCoordinate": null,
+                "dropoffCoordinate": null
+            }
+        ],
+        "legs": [
+            {
+                "id": 3,
+                "jobId": 3912,
+                "legNumber": 1,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "jobStatus": 0
+            },
+            {
+                "id": 6,
+                "jobId": 3912,
+                "legNumber": 2,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "jobStatus": 0
+            },
+            {
+                "id": 7,
+                "jobId": 3912,
+                "legNumber": 3,
+                "startLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "endLocation": "2–16 Ellis St, San Francisco, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "jobStatus": 0
+            },
+            {
+                "id": 62,
+                "jobId": 3912,
+                "legNumber": 4,
+                "startLocation": "100 E De La Guerra St, Santa Barbara, CA, United States",
+                "endLocation": "100 E De La Guerra St, Santa Barbara, CA, United States",
+                "status": 3,
+                "acknowledged": false,
+                "jobStatus": 0
+            }
+        ]
+    },
+    {
+        "id": 4480,
+        "status": 3,
+        "pickupLocation": "Sturt Hwy, Yarragundry NSW 2650, Australia",
+        "dropOfLocation": "2 Schiller St, Wagga Wagga NSW 2650, Australia",
+        "pickupCoordinates": "-35.105743, 147.2023145",
+        "dropOfCoordinates": "-35.1273273, 147.4170887",
+        "pickupDate": "2024-08-28T18:29:59.06",
+        "estimatedDeliveryDate": "2024-08-28T18:29:59.06",
+        "vehicleId": 927,
+        "totalDistance": 21.271,
+        "totalDrivingTime": 20,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 927,
+            "jobId": 4480,
+            "make": "c",
+            "model": null,
+            "rego": null,
+            "vin": null,
+            "year": null,
+            "colour": null,
+            "jobStatus": "3"
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [],
+        "legs": []
+    },
+    {
+        "id": 4446,
+        "status": 3,
+        "pickupLocation": "Sturt Hwy, Yarragundry NSW 2650, Australia",
+        "dropOfLocation": "Oura Rd, Oura NSW 2650, Australia",
+        "pickupCoordinates": "-35.1057618, 147.2025397",
+        "dropOfCoordinates": "-35.0828134, 147.6181779",
+        "pickupDate": "2024-08-25T18:29:59.06",
+        "estimatedDeliveryDate": "2024-08-25T18:29:59.06",
+        "vehicleId": 919,
+        "totalDistance": 43.539,
+        "totalDrivingTime": 31,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 919,
+            "jobId": 4446,
+            "make": "c",
+            "model": null,
+            "rego": null,
+            "vin": null,
+            "year": null,
+            "colour": null,
+            "jobStatus": "3"
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [],
+        "legs": []
+    },
+    {
+        "id": 4450,
+        "status": 3,
+        "pickupLocation": "V6WG+HR Yarragundry NSW, Australia",
+        "dropOfLocation": "287 Jessops Lagoon Rd, South Gundagai NSW 2722, Australia",
+        "pickupCoordinates": "-35.1036063, 147.2270376",
+        "dropOfCoordinates": "-35.098776, 148.0723027",
+        "pickupDate": "2024-08-25T18:29:59.06",
+        "estimatedDeliveryDate": "2024-08-25T18:29:59.06",
+        "vehicleId": 914,
+        "totalDistance": 91.291,
+        "totalDrivingTime": 67,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 914,
+            "jobId": 4450,
+            "make": "vv",
+            "model": "vv",
+            "rego": "vv",
+            "vin": null,
+            "year": null,
+            "colour": null,
+            "jobStatus": "3"
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [],
+        "legs": []
+    },
+    {
+        "id": 4451,
+        "status": 3,
+        "pickupLocation": "National Highway 1, Caiguna WA 6443, Australia",
+        "dropOfLocation": "JW58+6J Back Creek NSW, Australia",
+        "pickupCoordinates": "-32.3037106, 125.2148154",
+        "dropOfCoordinates": "-35.3919424, 149.9165579",
+        "pickupDate": "2024-08-25T18:29:59.06",
+        "estimatedDeliveryDate": "2024-08-27T18:29:59.06",
+        "vehicleId": 916,
+        "totalDistance": 2732.863,
+        "totalDrivingTime": 1728,
+        "estimatedDaysofTravel": 3,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 916,
+            "jobId": 4451,
+            "make": "s",
+            "model": null,
+            "rego": null,
+            "vin": null,
+            "year": null,
+            "colour": null,
+            "jobStatus": "3"
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [],
+        "legs": []
+    },
+    {
+        "id": 4481,
+        "status": 3,
+        "pickupLocation": "1796 A20, Yarragundry NSW 2650, Australia",
+        "dropOfLocation": "3454 Sturt Hwy, Forest Hill NSW 2651, Australia",
+        "pickupCoordinates": "-35.1034949, 147.186889",
+        "dropOfCoordinates": "-35.148006, 147.4657411",
+        "pickupDate": "2024-01-28T18:29:59.06",
+        "estimatedDeliveryDate": "2024-01-28T18:29:59.06",
+        "vehicleId": 928,
+        "totalDistance": 79.455,
+        "totalDrivingTime": 76,
+        "estimatedDaysofTravel": 1,
+        "vehicleNavigation": {
+            "notes": [],
+            "images": [],
+            "id": 928,
+            "jobId": 4481,
+            "make": "m",
+            "model": null,
+            "rego": null,
+            "vin": null,
+            "year": null,
+            "colour": null,
+            "jobStatus": "3"
+        },
+        "checklists": [],
+        "wayPoints": [],
+        "trailers": [
+            {
+                "hookupTypeNavigation": {
+                    "id": 1,
+                    "type": "HU_Single",
+                    "description": "HU Single",
+                    "trailers": []
+                },
+                "notes": [
+                    {
+                        "id": 544,
+                        "jobId": null,
+                        "vehicleId": null,
+                        "trailerId": 153,
+                        "checklistId": null,
+                        "visibletoDriver": null,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "delayId": null,
+                        "noteText": null
+                    }
+                ],
+                "images": [],
+                "id": 153,
+                "hookupType": 1,
+                "jobId": 4481,
+                "hookupLocation": "1796 A20, Yarragundry NSW 2650, Australia",
+                "dropOffLocation": "3454 Sturt Hwy, Forest Hill NSW 2651, Australia",
+                "rego": "test 1",
+                "type": "test type 1",
+                "hookupCoordinate": "-35.1075872, 147.2214039",
+                "dropoffCoordinate": "-35.1480082, 147.4657407"
+            },
+            {
+                "hookupTypeNavigation": {
+                    "id": 1,
+                    "type": "HU_Single",
+                    "description": "HU Single",
+                    "trailers": []
+                },
+                "notes": [
+                    {
+                        "id": 545,
+                        "jobId": null,
+                        "vehicleId": null,
+                        "trailerId": 154,
+                        "checklistId": null,
+                        "visibletoDriver": null,
+                        "permitAndPlatesId": null,
+                        "accommodationId": null,
+                        "publicTransportId": null,
+                        "delayId": null,
+                        "noteText": null
+                    }
+                ],
+                "images": [],
+                "id": 154,
+                "hookupType": 1,
+                "jobId": 4481,
+                "hookupLocation": "1796 A20, Yarragundry NSW 2650, Australia",
+                "dropOffLocation": "3454 Sturt Hwy, Forest Hill NSW 2651, Australia",
+                "rego": "test 2",
+                "type": "test type 2",
+                "hookupCoordinate": "-35.1075872, 147.2214039",
+                "dropoffCoordinate": "-35.1480082, 147.4657407"
+            }
+        ],
+        "legs": []
+    }
+]

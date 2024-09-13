@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_moves/models/driver.dart';
@@ -7,7 +6,7 @@ import 'package:truck_moves/models/driver.dart';
 class CacheManger {
   static Future<void> saveDriver({required Driver driver}) async {
     final prefs = await SharedPreferences.getInstance();
-    log(json.encode(driver));
+
     prefs.setString("DRIVER", json.encode(driver));
   }
 

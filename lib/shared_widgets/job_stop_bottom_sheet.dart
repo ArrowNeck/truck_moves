@@ -12,7 +12,7 @@ class JobStopBottomSheet extends StatefulWidget {
 }
 
 class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
-  int? selected;
+  int? selectedJobStatus;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,21 +47,21 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
                     _btn(
                         title: "Stop for the \nnight",
                         icon: "assets/icons/bed.svg",
-                        select: 0),
+                        jobStatus: 7),
                     SizedBox(
                       width: 12.w,
                     ),
                     _btn(
                         title: "Delivered to final \nlocation",
                         icon: "assets/icons/truck.svg",
-                        select: 1),
+                        jobStatus: 9),
                   ],
                 ),
               ),
               SubmitButton(
                 onTap: () {
                   Navigator.pop(context,
-                      selected == 1); // if this true mean job is completed.
+                      selectedJobStatus); // if this true mean job is completed.
                 },
                 label: "Confirm",
                 radius: 10.h,
@@ -75,12 +75,12 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
   }
 
   Expanded _btn(
-      {required String title, required String icon, required int select}) {
+      {required String title, required String icon, required int jobStatus}) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
           setState(() {
-            selected = select;
+            selectedJobStatus = jobStatus;
           });
         },
         child: Stack(
@@ -115,7 +115,7 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
                 ],
               ),
             ),
-            if (selected == select)
+            if (selectedJobStatus == jobStatus)
               Positioned.fill(
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),

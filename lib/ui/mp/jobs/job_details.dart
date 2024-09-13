@@ -118,7 +118,7 @@ class _JobDetailsState extends State<JobDetails> {
     }
   }
 
-  _closeLeg({required bool isJobCompleted}) async {
+  _closeLeg({required int selectedJobStatus}) async {
     try {
       PageLoader.showLoader(context);
       String location = await _getCurrentLocation();
@@ -127,19 +127,19 @@ class _JobDetailsState extends State<JobDetails> {
       final res = await JobService.closeLeg(
           leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
           location: location,
-          isCompleted: isJobCompleted);
+          jobStatus: selectedJobStatus);
       if (mounted) Navigator.pop(context);
 
       res.when(success: (data) {
         context
             .read<JobProvider>()
-            .updateLeg(data: data, isCompleted: isJobCompleted);
+            .updateLeg(endLocation: location, jobStatus: selectedJobStatus);
         showToastSheet(
             context: context,
             title: "Stopped Driving!",
-            icon: isJobCompleted ? "final-destination" : "stay-night",
+            icon: selectedJobStatus.iconName,
             message:
-                "You have successfully stopped ${isJobCompleted ? "your current job upon reaching the final destination" : "driving and will stay for the night"}.");
+                "You have successfully stopped ${selectedJobStatus.message}.");
       }, failure: (error) {
         showErrorSheet(context: context, exception: error);
       });
@@ -155,25 +155,17 @@ class _JobDetailsState extends State<JobDetails> {
     }
   }
 
-  _breakDownOrDelay(bool inProgress, bool delayOccurred) async {
-    if (inProgress) {
+  _breakDownOrDelay() async {
+    final jobProvider = context.read<JobProvider>();
+    String? location;
+    int jobId = jobProvider.currentlyRunningJob!.id;
+    int? legId;
+    if (jobProvider.currentlyRunningJob!.status == 6) {
       try {
+        legId = jobProvider.currentlyRunningJob!.legs.last.id;
         PageLoader.showLoader(context);
-        String location = await _getCurrentLocation();
-        if (!mounted) return;
-
-        final res = await JobService.closeLeg(
-            leg: context.read<JobProvider>().currentlyRunningJob!.legs.last,
-            location: location,
-            isCompleted: false);
+        location = await _getCurrentLocation();
         if (mounted) Navigator.pop(context);
-
-        res.when(success: (data) {
-          context.read<JobProvider>().updateLeg(data: data, isCompleted: false);
-        }, failure: (error) {
-          showErrorSheet(context: context, exception: error);
-          return;
-        });
       } catch (e) {
         if (mounted) {
           Navigator.pop(context);
@@ -186,15 +178,20 @@ class _JobDetailsState extends State<JobDetails> {
         return;
       }
     }
+
     if (!mounted) return;
     PageLoader.showLoader(context);
-    final res = await JobService.breakDown(
-        jobId: context.read<JobProvider>().currentlyRunningJob!.id,
-        delayOccurred: delayOccurred);
+    final res = jobProvider.currentlyRunningJob!.status != 8
+        ? await JobService.reportDelay(
+            jobId: jobId, legId: legId, endLocation: location)
+        : await JobService.resolveDelay(
+            jobId: jobId,
+          );
     if (!mounted) return;
     Navigator.pop(context);
     res.when(success: (data) {
-      context.read<JobProvider>().breakdownStatus(delayOccurred);
+      jobProvider.breakdownStatus(jobProvider.currentlyRunningJob!.status != 8,
+          endLocation: location);
     }, failure: (error) {
       showErrorSheet(context: context, exception: error);
     });
@@ -259,8 +256,7 @@ class _JobDetailsState extends State<JobDetails> {
                             rightBtnText: "Yes",
                             rightBtnColor:
                                 job.status == 6 ? Colors.redAccent : null,
-                            onRightTap: () => _breakDownOrDelay(
-                                job.status == 6, job.status != 8),
+                            onRightTap: () => _breakDownOrDelay(),
                           ),
                         ));
                   },
@@ -381,7 +377,6 @@ class _JobDetailsState extends State<JobDetails> {
                             ),
                             child: Text(
                               "${i + 1}",
-                              // "10",
                               style: TextStyle(
                                   fontSize: 14.sp,
                                   color: Colors.white,
@@ -430,9 +425,9 @@ class _JobDetailsState extends State<JobDetails> {
                             isDismissible: true,
                             context: context,
                             builder: (context) => const JobStopBottomSheet())
-                        .then((select) {
-                      if (select != null) {
-                        _closeLeg(isJobCompleted: select);
+                        .then((jobStatus) {
+                      if (jobStatus != null) {
+                        _closeLeg(selectedJobStatus: jobStatus);
                       }
                     });
                   } else if (job.status == 9) {

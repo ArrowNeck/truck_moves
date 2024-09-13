@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart' as pt;
 import 'package:truck_moves/constant.dart';
@@ -16,7 +15,7 @@ class JobService {
     try {
       final response = await CustomHttp.getDio().get(
           "$baseUrl$jobHeader?\$filter=status eq 3 or status eq 4 or status eq 5 or status eq 6 or status eq 7 or status eq 8 or status eq 9&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
-      log(json.encode(response.data));
+
       return ApiResult.success(
           data: (response.data as List).map((e) => Job.fromJson(e)).toList());
     } catch (e) {
@@ -29,7 +28,7 @@ class JobService {
     try {
       final response = await CustomHttp.getDio().get(
           "$baseUrl$jobHeader?\$filter=status eq 1 or status eq 2&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
-      log(json.encode(response.data));
+
       return ApiResult.success(
           data: (response.data as List).map((e) => Job.fromJson(e)).toList());
     } catch (e) {
@@ -71,21 +70,21 @@ class JobService {
     }
   }
 
-  static Result<Leg> closeLeg(
+  static Result<void> closeLeg(
       {required Leg leg,
       required String location,
-      required bool isCompleted}) async {
+      required int jobStatus}) async {
     try {
-      final response = await CustomHttp.getDio().post("$baseUrl$legUrl",
+      await CustomHttp.getDio().post("$baseUrl$legUrl",
           options: Options(headers: {"jobId": leg.jobId}),
           data: {
             "id": leg.id,
             "jobId": leg.jobId,
             "startLocation": leg.startLocation,
             "endLocation": location,
-            "isCompleted": isCompleted
+            "jobStatus": jobStatus
           });
-      return ApiResult.success(data: Leg.fromJson(response.data));
+      return const ApiResult.success(data: null);
     } catch (e) {
       ErrorLog.show(e);
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -168,11 +167,30 @@ class JobService {
     }
   }
 
-  static Result<bool> breakDown(
-      {required int jobId, required bool delayOccurred}) async {
+  static Result<bool> reportDelay(
+      {required int jobId, int? legId, String? endLocation}) async {
+    try {
+      Map<String, dynamic> params = {
+        "jobId": jobId,
+        if (legId != null) "legId": legId,
+        if (endLocation != null) "endLocation": endLocation
+      };
+      await CustomHttp.getDio().post(
+        "$baseUrl$reportDelayEndpoint",
+        queryParameters: params,
+        options: Options(headers: {"jobId": jobId}),
+      );
+      return const ApiResult.success(data: true);
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  static Result<bool> resolveDelay({required int jobId}) async {
     try {
       await CustomHttp.getDio().post(
-        "$baseUrl$updateStatus?jobId=$jobId&delayOccurred=$delayOccurred&Stoped=${!delayOccurred}",
+        "$baseUrl$resolveDelayEndpoint?jobId=$jobId",
         options: Options(headers: {"jobId": jobId}),
       );
       return const ApiResult.success(data: true);
