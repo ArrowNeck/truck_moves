@@ -7,23 +7,23 @@ import 'package:truck_moves/shared_widgets/no_data.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/ui/mp/home/job_card.dart';
 
-class CurrentJobs extends StatefulWidget {
-  const CurrentJobs({super.key});
+class StoreJobs extends StatefulWidget {
+  const StoreJobs({super.key});
 
   @override
-  State<CurrentJobs> createState() => _CurrentJobsState();
+  State<StoreJobs> createState() => _StoreJobsState();
 }
 
-class _CurrentJobsState extends State<CurrentJobs> {
+class _StoreJobsState extends State<StoreJobs> {
   int skip = 0;
   bool allLoad = false;
   bool inLoading = false;
   late ScrollController scrollController;
   @override
   void initState() {
-    context.read<JobProvider>().currentJobs.clear();
+    context.read<JobProvider>().storeJobs.clear();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _getCurrentJobs();
+      _getStoreJobs();
     });
     scrollController = ScrollController()..addListener(_scrollListener);
     super.initState();
@@ -38,27 +38,27 @@ class _CurrentJobsState extends State<CurrentJobs> {
   void _scrollListener() {
     if (!allLoad && !inLoading && scrollController.position.extentAfter == 0) {
       skip += 7;
-      _getCurrentJobs();
+      _getStoreJobs();
     }
   }
 
-  _getCurrentJobs() async {
+  _getStoreJobs() async {
     PageLoader.showLoader(context);
     inLoading = true;
-    final res = await JobService.currentJobsHeader(skip: skip);
+    final res = await JobService.storeJobsHeader(skip: skip);
     if (mounted) Navigator.pop(context);
     inLoading = false;
     res.when(success: (data) {
       if (data.length < 7) {
         allLoad = true;
       }
-      context.read<JobProvider>().setCurrentJobs(data);
+      context.read<JobProvider>().setStoreJobs(data);
     }, failure: (error) {
       showErrorSheet(
         context: context,
         exception: error,
         onTap: () {
-          _getCurrentJobs();
+          _getStoreJobs();
         },
       );
     });
@@ -66,16 +66,16 @@ class _CurrentJobsState extends State<CurrentJobs> {
 
   @override
   Widget build(BuildContext context) {
-    final currentJobs = context.watch<JobProvider>().currentJobs;
-    return currentJobs.isEmpty
+    final storeJobs = context.watch<JobProvider>().storeJobs;
+    return storeJobs.isEmpty
         ? const NoData(
-            label: "There are no jobs assigned to you",
+            label: "There are no jobs in store",
           )
         : ListView.builder(
             controller: scrollController,
-            itemCount: currentJobs.length,
+            itemCount: storeJobs.length,
             itemBuilder: (context, index) {
-              return JobCard(job: currentJobs[index]);
+              return JobCard(job: storeJobs[index]);
             });
   }
 }

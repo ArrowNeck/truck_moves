@@ -64,11 +64,14 @@ class ToastBottomSheet extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          SvgPicture.asset(
-            "assets/icons/${icon ?? (isError ? "fail" : "success")}.svg",
-            height: 225.w,
-            width: 275.w,
-            fit: BoxFit.fill,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
+            child: SvgPicture.asset(
+              "assets/icons/${icon ?? (isError ? "fail" : "success")}.svg",
+              height: 225.w,
+              width: 275.w,
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),

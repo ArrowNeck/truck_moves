@@ -40,100 +40,113 @@ class _JobStopBottomSheetState extends State<JobStopBottomSheet> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                child: Row(
-                  children: [
-                    _btn(
-                        title: "Stop for the \nnight",
-                        icon: "assets/icons/bed.svg",
-                        jobStatus: 7),
-                    SizedBox(
-                      width: 12.w,
-                    ),
-                    _btn(
-                        title: "Delivered to final \nlocation",
-                        icon: "assets/icons/truck.svg",
-                        jobStatus: 9),
-                  ],
-                ),
+              SizedBox(
+                height: 5.h,
+              ),
+              _btn(
+                  title: "Stop for the night",
+                  icon: "assets/icons/bed.svg",
+                  jobStatus: 7),
+              SizedBox(
+                height: 10.h,
+              ),
+              _btn(
+                  title: "Delivered to final location",
+                  icon: "assets/icons/truck.svg",
+                  jobStatus: 9),
+              SizedBox(
+                height: 10.h,
+              ),
+              _btn(
+                  title: "Delivered to store location",
+                  icon: "assets/icons/store.svg",
+                  jobStatus: 15),
+              SizedBox(
+                height: 20.h,
               ),
               SubmitButton(
                 onTap: () {
-                  Navigator.pop(context,
-                      selectedJobStatus); // if this true mean job is completed.
+                  Navigator.pop(context, selectedJobStatus);
                 },
                 label: "Confirm",
                 radius: 10.h,
               ),
               SizedBox(
-                height: 12.h,
+                height: 15.h,
               )
             ],
           ),
         ));
   }
 
-  Expanded _btn(
-      {required String title, required String icon, required int jobStatus}) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedJobStatus = jobStatus;
-          });
-        },
-        child: Stack(
-          children: [
-            Container(
-              height: 200.h,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(8.w),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: const Color(0xFF416188)),
-                  borderRadius: BorderRadius.circular(10.h)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SvgPicture.asset(
-                    icon,
-                    height: 80.w,
-                    width: 80.w,
-                    fit: BoxFit.fill,
-                    colorFilter:
-                        ColorFilter.mode(Colors.grey[350]!, BlendMode.srcIn),
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            if (selectedJobStatus == jobStatus)
-              Positioned.fill(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.h),
-                    child: Container(
-                      color: Colors.black38,
-                      child: Icon(
-                        Icons.check_rounded,
-                        size: 80.w,
-                        color: Colors.green,
+  _btn({required String title, required String icon, required int jobStatus}) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedJobStatus = jobStatus;
+        });
+      },
+      child: Stack(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            margin: EdgeInsets.symmetric(horizontal: 16.w),
+            decoration: BoxDecoration(
+                border: Border.all(width: 2, color: const Color(0xFF416188)),
+                borderRadius: BorderRadius.circular(10.h)),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  height: 35.h,
+                  width: 35.h,
+                  fit: BoxFit.fill,
+                  colorFilter:
+                      ColorFilter.mode(Colors.grey[350]!, BlendMode.srcIn),
+                ),
+                SizedBox(
+                  width: 16.w,
+                ),
+                Expanded(
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
                 ),
-              )
-          ],
-        ),
+              ],
+            ),
+          ),
+          if (selectedJobStatus == jobStatus)
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(2.0)
+                    .add(EdgeInsets.symmetric(horizontal: 16.w)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.h),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 8.w),
+                    color: Colors.black.withOpacity(.25),
+                    child: Icon(
+                      Icons.check_rounded,
+                      size: 40.h,
+                      color: Colors.amber,
+                    ),
+                  ),
+                ),
+              ),
+            )
+        ],
       ),
     );
   }

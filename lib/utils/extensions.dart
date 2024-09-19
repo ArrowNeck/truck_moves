@@ -9,7 +9,7 @@ extension ToastTitle on int {
   String get iconName => switch (this) {
         7 => "stay-night",
         9 => "final-destination",
-        15 => "",
+        15 => "warehouse",
         _ => "",
       };
 }
@@ -18,7 +18,7 @@ extension ToastMessage on int {
   String get message => switch (this) {
         7 => "driving and will stay for the night",
         9 => "your current job upon reaching the final destination",
-        15 => "",
+        15 => "your current job upon reaching the store",
         _ => "",
       };
 }

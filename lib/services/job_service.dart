@@ -37,6 +37,19 @@ class JobService {
     }
   }
 
+  static Result<List<Job>> storeJobsHeader({required int skip}) async {
+    try {
+      final response = await CustomHttp.getDio().get(
+          "$baseUrl$jobHeader?\$filter=status eq 15&orderby=Status desc,PickupDate desc&\$top=7&\$skip=$skip");
+
+      return ApiResult.success(
+          data: (response.data as List).map((e) => Job.fromJson(e)).toList());
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
   static Result<PreDepartureChecklist> saveChecklist(
       {required Map<String, dynamic> data}) async {
     try {

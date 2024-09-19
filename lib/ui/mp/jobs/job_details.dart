@@ -14,6 +14,7 @@ import 'package:truck_moves/shared_widgets/job_stop_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
+import 'package:truck_moves/ui/mp/home/home_page.dart';
 import 'package:truck_moves/ui/mp/jobs/add_purchase.dart';
 import 'package:truck_moves/ui/mp/jobs/map_view.dart';
 import 'package:truck_moves/ui/mp/jobs/pre_departure_checklist.dart';
@@ -135,11 +136,21 @@ class _JobDetailsState extends State<JobDetails> {
             .read<JobProvider>()
             .updateLeg(endLocation: location, jobStatus: selectedJobStatus);
         showToastSheet(
-            context: context,
-            title: "Stopped Driving!",
-            icon: selectedJobStatus.iconName,
-            message:
-                "You have successfully stopped ${selectedJobStatus.message}.");
+          context: context,
+          title: "Stopped Driving!",
+          icon: selectedJobStatus.iconName,
+          message:
+              "You have successfully stopped ${selectedJobStatus.message}.",
+          onTap: () {
+            if (selectedJobStatus == 15) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const HomePage()),
+                (route) => false,
+              );
+            }
+          },
+        );
       }, failure: (error) {
         showErrorSheet(context: context, exception: error);
       });

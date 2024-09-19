@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:truck_moves/models/job.dart';
 
 class JobProvider with ChangeNotifier {
-  List<Job>? currentJobs;
-  List<Job>? futureJobs;
+  List<Job> currentJobs = [];
+  List<Job> futureJobs = [];
+  List<Job> storeJobs = [];
 
   Job? currentlyRunningJob;
 
@@ -17,20 +18,17 @@ class JobProvider with ChangeNotifier {
   }
 
   void setCurrentJobs(List<Job> jobs) {
-    if (currentJobs == null) {
-      currentJobs = jobs;
-    } else {
-      currentJobs?.addAll(jobs);
-    }
+    currentJobs.addAll(jobs);
     notifyListeners();
   }
 
   void setFutureJobs(List<Job> jobs) {
-    if (futureJobs == null) {
-      futureJobs = jobs;
-    } else {
-      futureJobs?.addAll(jobs);
-    }
+    futureJobs.addAll(jobs);
+    notifyListeners();
+  }
+
+  void setStoreJobs(List<Job> jobs) {
+    storeJobs.addAll(jobs);
     notifyListeners();
   }
 
@@ -62,7 +60,7 @@ class JobProvider with ChangeNotifier {
 
   bool canAccessThisJob({required int jobId}) {
     int? higherStatusJobId;
-    for (var job in currentJobs!) {
+    for (var job in currentJobs) {
       if (job.status > 3) {
         higherStatusJobId = job.id;
       }

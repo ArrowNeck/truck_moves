@@ -9,6 +9,7 @@ import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/ui/landing/login_page/login_page.dart';
 import 'package:truck_moves/ui/mp/home/current_jobs.dart';
 import 'package:truck_moves/ui/mp/home/future_jobs.dart';
+import 'package:truck_moves/ui/mp/home/store_jobs.dart';
 import 'package:truck_moves/utils/cache_manager.dart';
 import 'package:truck_moves/utils/custom_http.dart';
 import 'package:truck_moves/utils/hero_dialog_route.dart';
@@ -108,8 +109,15 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(8.h),
               child: Row(
                 children: [
-                  _tabButton(label: "Current Jobs", index: 0),
-                  _tabButton(label: "Future Jobs", index: 1),
+                  _tabButton(label: "Current", index: 0),
+                  const VerticalDivider(
+                    width: 1,
+                  ),
+                  _tabButton(label: "Future", index: 1),
+                  const VerticalDivider(
+                    width: 1,
+                  ),
+                  _tabButton(label: "Store", index: 2),
                 ],
               ),
             ),
@@ -121,6 +129,7 @@ class _HomePageState extends State<HomePage> {
             children: const [
               CurrentJobs(),
               FutureJobs(),
+              StoreJobs(),
             ],
           ))
         ],

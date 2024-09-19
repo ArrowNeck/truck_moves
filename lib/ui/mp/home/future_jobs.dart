@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/services/job_service.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
+import 'package:truck_moves/shared_widgets/no_data.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
 import 'package:truck_moves/ui/mp/home/job_card.dart';
 
@@ -21,7 +21,7 @@ class _FutureJobsState extends State<FutureJobs> {
   late ScrollController scrollController;
   @override
   void initState() {
-    context.read<JobProvider>().futureJobs = null;
+    context.read<JobProvider>().futureJobs.clear();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getFutureJobs();
     });
@@ -67,23 +67,15 @@ class _FutureJobsState extends State<FutureJobs> {
   @override
   Widget build(BuildContext context) {
     final futureJobs = context.watch<JobProvider>().futureJobs;
-    return ListView.builder(
-        controller: scrollController,
-        itemCount: futureJobs?.length ?? 1,
-        itemBuilder: (context, index) {
-          return futureJobs == null
-              ? Padding(
-                  padding: EdgeInsets.symmetric(vertical: 300.h),
-                  child: Text(
-                    "There are no jobs assigned to you",
-                    style: TextStyle(
-                        fontSize: 15.sp,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              : JobCard(job: futureJobs[index]);
-        });
+    return futureJobs.isEmpty
+        ? const NoData(
+            label: "There are no jobs in future",
+          )
+        : ListView.builder(
+            controller: scrollController,
+            itemCount: futureJobs.length,
+            itemBuilder: (context, index) {
+              return JobCard(job: futureJobs[index]);
+            });
   }
 }
