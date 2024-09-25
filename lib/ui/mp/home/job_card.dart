@@ -20,9 +20,15 @@ class JobCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (context.read<JobProvider>().canAccessThisJob(jobId: job.id)) {
-          context.read<JobProvider>().setCurrentlyRunningJob(job);
+          context.read<JobProvider>()
+            ..setCurrentlyRunningJob(job)
+            ..setPreviousStatus(job.status);
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const JobDetails()));
+            context,
+            MaterialPageRoute(
+              builder: (_) => const JobDetails(),
+            ),
+          );
         }
       },
       child: Container(

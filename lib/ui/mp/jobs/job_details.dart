@@ -103,7 +103,16 @@ class _JobDetailsState extends State<JobDetails> {
             title: "All Set to Drive!",
             icon: "ready",
             message:
-                "Your job has been successfully initiated, and you are now ready to begin driving.");
+                "Your job has been successfully initiated, and you are now ready to begin driving.",
+            onTap: () {
+              if (context.read<JobProvider>().previousStatus == 15) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HomePage()),
+                  (route) => false,
+                );
+              }
+            });
       }, failure: (error) {
         showErrorSheet(context: context, exception: error);
       });

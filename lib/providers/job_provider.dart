@@ -7,6 +7,7 @@ class JobProvider with ChangeNotifier {
   List<Job> storeJobs = [];
 
   Job? currentlyRunningJob;
+  int? previousStatus;
 
   void setCurrentlyRunningJob(Job job) {
     currentlyRunningJob = job;
@@ -15,6 +16,10 @@ class JobProvider with ChangeNotifier {
 
   void removeCurrentlyRunningJob() {
     currentlyRunningJob = null;
+  }
+
+  void setPreviousStatus(int status) {
+    previousStatus = status;
   }
 
   void setCurrentJobs(List<Job> jobs) {
