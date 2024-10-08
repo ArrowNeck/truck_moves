@@ -151,26 +151,29 @@ class Trailer {
   String type;
   String? hookupCoordinate;
   String? dropoffCoordinate;
+  int status;
 
-  Trailer(
-      {required this.hookupTypeNavigation,
-      required this.notes,
-      required this.images,
-      required this.id,
-      required this.hookupType,
-      required this.jobId,
-      required this.hookupLocation,
-      required this.dropOffLocation,
-      required this.rego,
-      required this.type,
-      this.hookupCoordinate,
-      this.dropoffCoordinate});
+  Trailer({
+    required this.hookupTypeNavigation,
+    required this.notes,
+    required this.images,
+    required this.id,
+    required this.hookupType,
+    required this.jobId,
+    required this.hookupLocation,
+    required this.dropOffLocation,
+    required this.rego,
+    required this.type,
+    this.hookupCoordinate,
+    this.dropoffCoordinate,
+    required this.status,
+  });
 
   factory Trailer.fromJson(Map<String, dynamic> json) => Trailer(
         hookupTypeNavigation:
             HookupTypeNavigation.fromJson(json["hookupTypeNavigation"]),
         notes: (json["notes"] as List<dynamic>)
-            .map((x) => (x["noteText"]))
+            .map((x) => (x["noteText"] ?? ""))
             .toList()
             .whereType<String>()
             .toList(),
@@ -184,6 +187,7 @@ class Trailer {
         type: json["type"] ?? " -",
         hookupCoordinate: json["hookupCoordinate"],
         dropoffCoordinate: json["dropoffCoordinate"],
+        status: json["statusNavigation"]["id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -198,36 +202,37 @@ class Trailer {
         "rego": rego,
         "type": type,
         "hookupCoordinate": hookupCoordinate,
-        "dropoffCoordinate": dropoffCoordinate
+        "dropoffCoordinate": dropoffCoordinate,
+        "statusNavigation": {"id": status}
       };
 }
 
 class HookupTypeNavigation {
   int id;
   String type;
-  String description;
-  List<dynamic> trailers;
+  // String description;
+  // List<dynamic> trailers;
 
   HookupTypeNavigation({
     required this.id,
     required this.type,
-    required this.description,
-    required this.trailers,
+    // required this.description,
+    // required this.trailers,
   });
 
   factory HookupTypeNavigation.fromJson(Map<String, dynamic> json) =>
       HookupTypeNavigation(
         id: json["id"],
         type: json["type"],
-        description: json["description"],
-        trailers: List<dynamic>.from(json["trailers"].map((x) => x)),
+        // description: json["description"],
+        // trailers: List<dynamic>.from(json["trailers"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "type": type,
-        "description": description,
-        "trailers": List<dynamic>.from(trailers.map((x) => x)),
+        // "description": description,
+        // "trailers": List<dynamic>.from(trailers.map((x) => x)),
       };
 }
 

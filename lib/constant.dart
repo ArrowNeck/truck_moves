@@ -2,35 +2,38 @@ import 'package:flutter/material.dart';
 
 //-------------------APP COLORS-------------------//
 
-Color primaryColor = const Color(0xFFFFD000);
-Color bgColor = const Color(0xFF1E3959);
+const primaryColor = Color(0xFFFFD000);
+const bgColor = Color(0xFF1E3959);
 
 //----------------------------------------------//
 
 //-------------------APP KEYS-------------------//
 
-const String googleMapApiKey = "AIzaSyAN16fDB2zBn_sbqDusfHQYWO0H2kJT5uA";
+const googleMapApiKey = "AIzaSyAN16fDB2zBn_sbqDusfHQYWO0H2kJT5uA";
 
 //----------------------------------------------//
 
 //-------------------APP URLS-------------------//
 
-const String baseUrl = "https://vtmtruckmove.api.dev.riverina.digital:444/";
-// const String baseUrl = "https://vtmtruckmove.api.staging.riverina.digital:444/";
-const String userLogin = "login";
-const String userLogout = "logout";
-const String jobHeader = "Odata/Job/Get";
-const String getDepartureChecklist =
-    "DepartureCheck/PreDepartureChecklistFields";
-const String saveDepartureChecklist = "Mobile/CheckList/PostPut";
-const String legUrl = "Mobile/Leg/Post";
-const String purchase = "Mobile/Purchase/PostPut";
-const String imageUpload = "Shared/ImageAndAttachments/Upload";
-const String multipleImageUpload = "Shared/ImageAndAttachments/UploadMutiple";
-// const String updateStatus = "Mobile/UpdateStatus";
+const baseUrl = "https://vtmtruckmove.api.dev.riverina.digital:444/";
+// const  baseUrl = "https://vtmtruckmove.api.staging.riverina.digital:444/";
+const userLogin = "login";
+const userLogout = "logout";
+const jobHeader = "Odata/Job/Get";
+const getDepartureChecklist = "DepartureCheck/PreDepartureChecklistFields";
+const saveDepartureChecklist = "Mobile/CheckList/PostPut";
+const legUrl = "Mobile/Leg/Post";
+const purchase = "Mobile/Purchase/PostPut";
+const imageUpload = "Shared/ImageAndAttachments/Upload";
+const multipleImageUpload = "Shared/ImageAndAttachments/UploadMutiple";
+// const  updateStatus = "Mobile/UpdateStatus";
 
-const String reportDelayEndpoint = "Mobile/ReportDelay";
-const String resolveDelayEndpoint = "Mobile/ResolveDelay";
+const reportDelayEndpoint = "Mobile/ReportDelay";
+const resolveDelayEndpoint = "Mobile/ResolveDelay";
+
+const hookupTrailerEndpoint = "Mobile/HookupTrailer";
+const dropTrailerEndpoint = "Mobile/DropTrailer";
+
 
 
 

@@ -63,6 +63,12 @@ class JobProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTrailerStatus({required int id, required bool isHookup}) {
+    currentlyRunningJob!.trailers.firstWhere((e) => e.id == id).status =
+        isHookup ? 1 : 2;
+    notifyListeners();
+  }
+
   bool canAccessThisJob({required int jobId}) {
     int? higherStatusJobId;
     for (var job in currentJobs) {

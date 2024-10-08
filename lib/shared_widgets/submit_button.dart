@@ -10,15 +10,20 @@ class SubmitButton extends StatelessWidget {
   final double? marginH;
   final double? marginW;
   final double? radius;
-  const SubmitButton(
-      {super.key,
-      required this.onTap,
-      required this.label,
-      this.height,
-      this.width,
-      this.marginH,
-      this.marginW,
-      this.radius});
+  final Color? color;
+  final Color? labelColor;
+  const SubmitButton({
+    super.key,
+    required this.onTap,
+    required this.label,
+    this.height,
+    this.width,
+    this.marginH,
+    this.marginW,
+    this.radius,
+    this.color,
+    this.labelColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +36,16 @@ class SubmitButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             vertical: marginH ?? 0, horizontal: marginW ?? 0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius ?? 25.h),
-            color: primaryColor),
+          borderRadius: BorderRadius.circular(radius ?? 25.h),
+          color: color ?? primaryColor,
+        ),
         child: Text(
           label,
           style: TextStyle(
-              color: const Color(0xFF010101),
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w600),
+            color: labelColor ?? const Color(0xFF010101),
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

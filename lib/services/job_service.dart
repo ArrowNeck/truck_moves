@@ -212,4 +212,21 @@ class JobService {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  static Result<bool> hookupOrDropTrailer({
+    required int jobId,
+    required int trailerId,
+    required bool isHookup,
+  }) async {
+    try {
+      await CustomHttp.getDio().post(
+        "$baseUrl${isHookup ? hookupTrailerEndpoint : dropTrailerEndpoint}?trailerId=$trailerId",
+        options: Options(headers: {"JobId": jobId}),
+      );
+      return const ApiResult.success(data: true);
+    } catch (e) {
+      ErrorLog.show(e);
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }

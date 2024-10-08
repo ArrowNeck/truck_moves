@@ -98,7 +98,7 @@ class ToastBottomSheet extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 height: 50.h,
-                decoration: BoxDecoration(color: primaryColor),
+                color: primaryColor,
                 child: Text(
                   "CLOSE",
                   style: TextStyle(

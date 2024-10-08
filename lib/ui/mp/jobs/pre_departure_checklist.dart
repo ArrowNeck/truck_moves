@@ -11,7 +11,6 @@ import 'package:truck_moves/models/job.dart';
 import 'package:truck_moves/models/pre_check.dart';
 import 'package:truck_moves/providers/job_provider.dart';
 import 'package:truck_moves/services/job_service.dart';
-import 'package:truck_moves/shared_widgets/app_bar.dart';
 import 'package:truck_moves/shared_widgets/network_error_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/toast_bottom_sheet.dart';
 import 'package:truck_moves/shared_widgets/page_loaders.dart';
@@ -249,8 +248,25 @@ class _PreDepartureChecklistPageState extends State<PreDepartureChecklistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.build(
-          label: widget.isArrival ? "Arrival-Checklist" : "Pre-Checklist"),
+      appBar: AppBar(
+        backgroundColor: bgColor,
+        centerTitle: true,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        elevation: 0,
+        title: FittedBox(
+          alignment: Alignment.center,
+          fit: BoxFit.scaleDown,
+          child: Text(
+            widget.isArrival ? "Arrival-Checklist" : "Pre-Checklist",
+            style: TextStyle(
+                fontSize: 23.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.w800),
+          ),
+        ),
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
